@@ -1,0 +1,123 @@
+---
+title: String manipulation  
+description: Advanced text operations
+icon: "font"
+---
+
+## Working with text
+
+Now that you know what strings are, let's learn how to manipulate them. Python gives you powerful tools to work with text.
+
+## String operations
+
+### Concatenation (joining)
+
+```python
+first_name = "Jane"
+last_name = "Doe"
+
+# Using +
+full_name = first_name + " " + last_name  # "Jane Doe"
+
+# Using f-strings (modern Python way!)
+greeting = f"Hello, {first_name}!"  # "Hello, Jane!"
+
+# Multiple variables
+age = 25
+intro = f"I'm {first_name} and I'm {age} years old"
+```
+
+### Repetition
+
+```python
+star = "*"
+stars = star * 10  # "**********"
+
+separator = "-" * 20  # "--------------------"
+```
+
+## String methods
+
+Python strings come with many built-in methods - functions you can call directly on any string. These methods let you transform text, search for patterns, and clean up data. The best part? You can often guess what they do from their names - `upper()` makes text uppercase, `replace()` replaces text, and so on.
+
+### Changing case
+
+```python
+text = "Python Programming"
+
+print(text.lower())      # "python programming"
+print(text.upper())      # "PYTHON PROGRAMMING"
+print(text.title())      # "Python Programming"
+```
+
+### Cleaning strings
+
+```python
+messy = "  hello world  "
+print(messy.strip())     # "hello world" (removes whitespace)
+
+price = "$19.99"
+print(price.strip("$"))  # "19.99"
+```
+
+### Finding and replacing
+
+```python
+message = "I love Python programming with Python"
+
+# Check if something exists
+print("Python" in message)        # True
+print(message.startswith("I"))   # True
+print(message.endswith("Python")) # True
+
+# Find position
+print(message.find("Python"))     # 7 (first occurrence)
+print(message.count("Python"))    # 2 (number of times)
+
+# Replace
+new_message = message.replace("Python", "JavaScript")
+print(new_message)  # "I love JavaScript programming with JavaScript"
+```
+
+<Note>
+  Python has over 40 string methods! We've covered the most common ones here. For a complete list, check the [official Python documentation](https://docs.python.org/3/library/stdtypes.html#string-methods).
+</Note>
+
+## Common mistakes
+
+<AccordionGroup>
+  <Accordion title="Forgetting the f in f-strings">
+    ```python
+    # Wrong
+    name = "Alice"
+    message = "Hello {name}"  # Prints: "Hello {name}"
+    
+    # Right
+    message = f"Hello {name}"  # Prints: "Hello Alice"
+    ```
+  </Accordion>
+
+  <Accordion title="Wrong quotes in strings">
+    ```python
+    # Wrong - mismatched quotes
+    text = 'It's Python'
+    
+    # Right - escape or use different quotes
+    text = "It's Python"  # Double quotes outside
+    text = 'It\'s Python'  # Escape the apostrophe
+    ```
+  </Accordion>
+</AccordionGroup>
+
+
+## What's next?
+
+You've mastered working with data! Ready to make your programs smart with decision-making?
+
+<Card
+  title="Control flow"
+  icon="code-branch"
+  href="/control-flow"
+>
+  Learn if statements and loops
+</Card>

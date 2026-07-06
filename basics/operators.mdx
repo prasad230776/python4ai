@@ -1,0 +1,167 @@
+---
+title: Operators
+description: Math, comparisons, and logic in Python
+icon: "calculator"
+---
+
+## What are operators?
+
+Operators are symbols that perform operations on values. Think of them as the "verbs" of programming - they make things happen!
+
+You already know most operators from math class:
+- Calculate: `+`, `-`, `*`, `/`
+- Compare: `>`, `<`, `==`
+- Combine: `and`, `or`, `not`
+
+## Arithmetic operators
+
+These work just like your calculator:
+
+```python
+# Basic math
+print(10 + 3)   # 13 - Addition
+print(10 - 3)   # 7  - Subtraction
+print(10 * 3)   # 30 - Multiplication
+print(10 / 3)   # 3.333... - Division (always gives float)
+
+# Special operators
+print(10 // 3)  # 3  - Floor division (rounds down)
+print(10 % 3)   # 1  - Modulo (remainder)
+print(10 ** 3)  # 1000 - Exponent (power)
+```
+
+### Order of operations
+
+Python follows math rules (PEMDAS):
+
+```python
+result = 2 + 3 * 4      # 14 (not 20!)
+result = (2 + 3) * 4    # 20 (parentheses first)
+```
+
+## Comparison operators
+
+These compare values and return True or False:
+
+```python
+age = 18
+
+print(age == 18)    # True  - Equal to
+print(age != 21)    # True  - Not equal to
+print(age > 17)     # True  - Greater than
+print(age < 20)     # True  - Less than
+print(age >= 18)    # True  - Greater than or equal
+print(age <= 18)    # True  - Less than or equal
+```
+
+<Warning>
+  Don't confuse `=` (assignment) with `==` (comparison)!
+  - `age = 18` stores 18 in age
+  - `age == 18` checks if age equals 18
+</Warning>
+
+## Logical operators
+
+These combine boolean values and conditions:
+
+```python
+age = 25
+has_license = True
+
+# AND - both must be true
+can_drive = age >= 16 and has_license
+print(can_drive)  # True
+
+# OR - at least one must be true
+day = "Saturday"
+is_weekend = day == "Saturday" or day == "Sunday"
+print(is_weekend)  # True
+
+# NOT - reverses the value
+is_adult = age >= 18
+is_child = not is_adult
+print(is_child)  # False
+```
+
+### Truth tables
+
+Understanding how `and`, `or`, and `not` work:
+
+```python
+# AND: Both must be True
+print(True and True)    # True
+print(True and False)   # False
+print(False and False)  # False
+
+# OR: At least one must be True  
+print(True or False)    # True
+print(False or False)   # False
+
+# NOT: Flips the value
+print(not True)         # False
+print(not False)        # True
+```
+
+## Assignment shortcuts
+
+These shortcuts update variables in place:
+
+```python
+# Instead of:
+score = score + 10
+
+# Write:
+score += 10
+
+# Works with all operators
+x = 10
+x += 5    # x is now 15
+x *= 2    # x is now 30
+```
+
+## Common mistakes
+
+<AccordionGroup>
+  <Accordion title="Division always returns float">
+    ```python
+    # Regular division
+    result = 10 / 2    # 5.0 (not 5)
+    
+    # Integer division
+    result = 10 // 2   # 5
+    ```
+  </Accordion>
+
+  <Accordion title="Order of operations">
+    ```python
+    # Wrong
+    average = 10 + 20 + 30 / 3  # 40.0
+    
+    # Right
+    average = (10 + 20 + 30) / 3  # 20.0
+    ```
+  </Accordion>
+
+  <Accordion title="Confusing = and ==">
+    ```python
+    # = assigns a value
+    age = 18
+    
+    # == compares values
+    if age == 18:
+        print("Just turned adult!")
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## What's next?
+
+You know operators! Let's dive deeper into working with text strings.
+
+<Card
+  title="String manipulation"
+  icon="font"
+  href="/basics/string-manipulation"
+>
+  Advanced text operations
+</Card>

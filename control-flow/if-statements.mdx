@@ -1,0 +1,159 @@
+---
+title: If statements
+description: Make decisions in your code
+icon: "code-branch"
+---
+
+## What are if statements?
+
+If statements let your program make decisions. They check if something is true or false, then act accordingly.
+
+Real-life logic:
+- IF it's raining THEN take umbrella
+- IF battery < 20% THEN charge phone  
+- IF password correct THEN allow access
+
+## Basic if statement
+
+```python
+age = 18
+
+if age >= 18:
+    print("You can vote!")
+    print("You're an adult")
+```
+
+How it works:
+1. Check the condition (`age >= 18`)
+2. If True, run the indented code
+3. If False, skip it
+
+<Note>
+  The colon `:` and indentation are required! This is how Python knows what code belongs to the if statement.
+</Note>
+
+## If-else statements
+
+Handle both True and False cases:
+
+```python
+temperature = 25
+
+if temperature > 30:
+    print("It's hot!")
+else:
+    print("Nice weather!")
+```
+
+## If-elif-else chains
+
+For multiple conditions:
+
+```python
+score = 85
+
+if score >= 90:
+    print("A - Excellent!")
+elif score >= 80:
+    print("B - Good job!")
+elif score >= 70:
+    print("C - Keep it up!")
+else:
+    print("F - Need improvement")
+```
+
+Python checks each condition in order and runs the first True one.
+
+<Note>
+  Why `elif` instead of multiple `if` statements? With `elif`, Python stops checking once it finds a true condition. This is more efficient and prevents multiple blocks from running. The order matters - always put more specific conditions first!
+</Note>
+
+## Multiple conditions
+
+Combine conditions with `and`, `or`, `not`:
+
+```python
+age = 25
+has_license = True
+
+# Both must be True
+if age >= 18 and has_license:
+    print("You can drive!")
+
+# At least one must be True
+if weekend or holiday:
+    print("No work today!")
+
+# Reverse the condition
+if not raining:
+    print("Let's go outside!")
+```
+
+## Nested if statements
+
+Put if statements inside other if statements:
+
+```python
+has_ticket = True
+age = 15
+
+if has_ticket:
+    if age >= 18:
+        print("Enjoy the movie!")
+    else:
+        print("Need adult supervision")
+else:
+    print("Buy a ticket first")
+```
+
+## Common mistakes
+
+<AccordionGroup>
+  <Accordion title="Forgetting the colon">
+    ```python
+    # Wrong
+    if x > 5
+        print("Big")
+    
+    # Right
+    if x > 5:
+        print("Big")
+    ```
+  </Accordion>
+
+  <Accordion title="Using = instead of ==">
+    ```python
+    # Wrong (assignment)
+    if x = 5:
+        print("Five")
+    
+    # Right (comparison)
+    if x == 5:
+        print("Five")
+    ```
+  </Accordion>
+
+  <Accordion title="Wrong indentation">
+    ```python
+    # Wrong
+    if True:
+    print("Hello")  # IndentationError
+    
+    # Right
+    if True:
+        print("Hello")
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## What's next?
+
+Now let's learn about loops to repeat code efficiently!
+
+<Card
+  title="Loops"
+  icon="rotate"
+  href="/basics/loops"
+>
+  Repeat code without copying
+</Card>

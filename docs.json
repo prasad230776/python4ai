@@ -1,0 +1,309 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Python for AI Beginner Course",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "background": {
+    "color": {
+      "dark": "#0a0d1a"
+    }
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Introduction",
+        "groups": [
+          {
+            "group": "Start here",
+            "pages": [
+              "index",
+              "introduction/welcome",
+              "introduction/is-this-for-you"
+            ]
+          },
+          {
+            "group": "Course guide",
+            "pages": [
+              "introduction/how-to-follow"
+            ]
+          },
+          {
+            "group": "Before you begin",
+            "pages": [
+              "introduction/why-python",
+              "introduction/ai-assistants"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Getting Started",
+        "groups": [
+          {
+            "group": "Python setup",
+            "pages": [
+              "getting-started/index",
+              "getting-started/what-is-python",
+              "getting-started/installing-python"
+            ]
+          },
+          {
+            "group": "Platform guides",
+            "pages": [
+              "getting-started/installing-python-windows",
+              "getting-started/installing-python-macos",
+              "getting-started/installing-python-linux"
+            ]
+          },
+          {
+            "group": "Code editor",
+            "pages": [
+              "getting-started/vscode-introduction",
+              "getting-started/vscode-setup",
+              "getting-started/vscode-workspace",
+              "getting-started/first-python-file"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "getting-started/course-resources"
+            ]
+          },
+          {
+            "group": "Python environment",
+            "pages": [
+              "getting-started/virtual-environments",
+              "getting-started/packages-and-pip",
+              "getting-started/interactive-python"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Python Basics",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "basics/index",
+              "basics/intro-to-programming",
+              "basics/python-syntax",
+              "basics/python-errors",
+              "basics/formatting",
+              "basics/variables",
+              "basics/comments"
+            ]
+          },
+          {
+            "group": "Data types",
+            "pages": [
+              "data-types/index",
+              "data-types/numbers",
+              "data-types/strings",
+              "data-types/booleans"
+            ]
+          },
+          {
+            "group": "Working with data",
+            "pages": [
+              "basics/operators",
+              "basics/string-manipulation"
+            ]
+          },
+          {
+            "group": "Control flow",
+            "pages": [
+              "control-flow/index",
+              "control-flow/if-statements",
+              "basics/loops"
+            ]
+          },
+          {
+            "group": "Data structures",
+            "pages": [
+              "data-structures/index",
+              "data-structures/lists",
+              "data-structures/dictionaries",
+              "data-structures/tuples",
+              "data-structures/sets"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Building Programs",
+        "groups": [
+          {
+            "group": "Functions",
+            "pages": [
+              "functions/index",
+              "functions/defining-functions",
+              "functions/parameters",
+              "functions/return-values"
+            ]
+          },
+          {
+            "group": "External tools",
+            "pages": [
+              "libraries-apis/index",
+              "libraries-apis/importing-modules",
+              "libraries-apis/working-with-apis",
+              "libraries-apis/working-with-data"
+            ]
+          },
+          {
+            "group": "Practical Python",
+            "pages": [
+              "practical-python/index",
+              "practical-python/project-structure",
+              "practical-python/python-paths",
+              "practical-python/working-with-files",
+              "practical-python/organizing-code"
+            ]
+          },
+          {
+            "group": "Error handling",
+            "pages": [
+              "advanced/error-handling/index",
+              "advanced/error-handling/try-except",
+              "advanced/error-handling/common-errors"
+            ]
+          },
+          {
+            "group": "Classes",
+            "pages": [
+              "advanced/classes/index",
+              "advanced/classes/first-class",
+              "advanced/classes/methods-attributes",
+              "advanced/classes/inheritance",
+              "advanced/classes/when-to-use"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Tools",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "tools/index"
+            ]
+          },
+          {
+            "group": "Git & GitHub",
+            "pages": [
+              "tools/git/index",
+              "tools/git/version-control",
+              "tools/git/github-setup",
+              "tools/git/clone-create",
+              "tools/git/vscode-git"
+            ]
+          },
+          {
+            "group": "Environment & secrets",
+            "pages": [
+              "tools/environment/index",
+              "tools/environment/variables",
+              "tools/environment/dotenv"
+            ]
+          },
+          {
+            "group": "Code quality",
+            "pages": [
+              "tools/code-quality/index"
+            ]
+          },
+          {
+            "group": "Modern Python",
+            "pages": [
+              "tools/dependencies/index",
+              "tools/dependencies/uv-intro",
+              "tools/dependencies/virtual-env",
+              "tools/dependencies/complete-setup"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Next Steps",
+        "groups": [
+          {
+            "group": "Continue learning",
+            "pages": [
+              "next-steps/course-summary",
+              "next-steps/feedback",
+              "next-steps/ai-agents"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": []
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "YouTube",
+        "href": "#"
+      },
+      {
+        "label": "Resources",
+        "href": "#"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Academy",
+      "href": "https://sgrinfo.tech"
+    }
+  },
+  "footer": {
+    "copyright": "Free to Use!",
+    "socials": {
+      "github": "https://github.com/#",
+      "instagram": "https://www.instagram.com/#",
+      "linkedin": "https://linkedin.com/in/#",
+      "youtube": "https://www.youtube.com/#"
+    }
+  },
+  "appearance": {
+    "defaultMode": "light",
+    "toggleButton": true
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true
+  },
+  "modeToggle": {
+    "default": "light",
+    "isHidden": false
+  },
+  "typography": {
+    "fontSize": 16,
+    "lineHeight": 1.6,
+    "headings": {
+      "weight": 600
+    }
+  },
+  "layout": {
+    "maxWidth": "1200px"
+  },
+  "seo": {
+    "site": "https://sgrinfo.tech",
+    "title": "Python for AI Beginner Course",
+    "description": "Learn Python from scratch with a focus on AI development. This beginner course teaches you the foundations you need to confidently work with Python in AI applications."
+  }
+}

@@ -1,0 +1,91 @@
+---
+title: Code formatting
+description: Keep your code clean and readable
+icon: "wand-magic-sparkles"
+---
+
+## What is code formatting?
+
+Writing clean, consistent code is important. Code formatting means organizing your code so it's easy to read and follows Python's style guidelines.
+
+## Basic formatting principles
+
+Follow these basic rules for readability:
+
+### Indentation
+Use 4 spaces for indentation (not tabs):
+
+```python
+def greet(name):
+    if name:
+        print(f"Hello, {name}!")
+    else:
+        print("Hello!")
+```
+
+### Spacing
+Add spaces around operators and after commas:
+
+```python
+# Good
+x = 1 + 2
+numbers = [1, 2, 3, 4]
+
+# Bad
+x=1+2
+numbers=[1,2,3,4]
+```
+
+### Blank lines
+Use blank lines to separate functions and logical sections:
+
+```python
+def first_function():
+    pass
+
+
+def second_function():
+    pass
+```
+
+### Line length
+Keep lines under 80-100 characters. Break long lines for readability:
+
+```python
+# Good - readable
+long_string = (
+    "This is a very long string that "
+    "spans multiple lines for readability"
+)
+
+# Bad - too long
+long_string = "This is a very long string that spans multiple lines for readability but keeps going and going"
+```
+
+<Tip>
+  Later in the course, you'll learn about Ruff - a tool that automatically formats your code. But understanding these basics first helps you write better code naturally.
+</Tip>
+
+## Automatic formatting with Ruff
+
+Want to format your code automatically? Check out the Ruff guide in the tools section:
+
+<Card
+  title="Code quality with Ruff"
+  icon="wand-magic-sparkles"
+  href="/tools/code-quality"
+>
+  Automatically format and lint your code
+</Card>
+
+## What's next?
+
+Now that you understand formatting, let's learn about variables!
+
+<Card
+  title="Variables"
+  icon="arrow-right"
+  href="/basics/variables"
+>
+  Learn how to store and use data in Python
+</Card>

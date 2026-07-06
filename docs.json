@@ -238,8 +238,7 @@
             "group": "Continue learning",
             "pages": [
               "next-steps/course-summary",
-              "next-steps/feedback",
-              "next-steps/ai-agents"
+              "next-steps/gen-ai"
             ]
           }
         ]

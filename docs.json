@@ -270,12 +270,8 @@
   "navbar": {
     "links": [
       {
-        "label": "YouTube",
-        "href": "#"
-      },
-      {
         "label": "Resources",
-        "href": "#"
+        "href": "/resources"
       }
     ],
     "primary": {

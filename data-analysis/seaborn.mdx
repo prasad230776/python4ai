@@ -1,0 +1,65 @@
+---
+title: "Seaborn"
+description: "Statistical data visualization built on top of Matplotlib"
+icon: "chart-simple"
+---
+
+## Introduction to Seaborn
+
+**Seaborn** is a statistical data visualization library built on top of Matplotlib. It integrates closely with Pandas DataFrames and provides a high-level interface for drawing attractive, informative, and modern statistical graphics.
+
+### Why use Seaborn?
+- Beautiful default themes and color palettes.
+- Simplifies complex plots (like heatmaps, distribution plots, and linear regressions) into a single line of code.
+- Automatically handles Pandas DataFrames.
+
+---
+
+## Creating a Seaborn Plot
+
+Here's how to create a simple scatter plot with a regression line:
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load a built-in dataset
+tips = sns.load_dataset("tips")
+
+# Create a scatter plot with regression line
+sns.lmplot(data=tips, x="total_bill", y="tip", hue="smoker")
+
+# Add a title and show
+plt.title("Tips vs Total Bill by Smoker Status")
+plt.show()
+```
+
+---
+
+## Key Plot Types
+
+### 1. Distribution Plots
+Visualize how your data is distributed:
+```python
+sns.histplot(data=tips, x="total_bill", kde=True)
+```
+
+### 2. Categorical Plots
+Compare different categories (like box plots or bar plots):
+```python
+sns.boxplot(data=tips, x="day", y="total_bill")
+```
+
+### 3. Correlation Heatmaps
+Perfect for finding relationships between numerical columns:
+```python
+# Select only numerical columns
+numerical_tips = tips.select_dtypes(include=["number"])
+sns.heatmap(numerical_tips.corr(), annot=True, cmap="coolwarm")
+```
+
+---
+
+## Summary
+
+By combining **NumPy**, **Pandas**, **Matplotlib**, and **Seaborn**, you have a full stack of tools to load, process, analyze, and visualize data in Python.

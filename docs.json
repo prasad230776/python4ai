@@ -184,6 +184,15 @@
               "advanced/classes/inheritance",
               "advanced/classes/when-to-use"
             ]
+          },
+          {
+            "group": "Data Analysis",
+            "pages": [
+              "data-analysis/numpy",
+              "data-analysis/pandas",
+              "data-analysis/matplotlib",
+              "data-analysis/seaborn"
+            ]
           }
         ]
       },

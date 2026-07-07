@@ -1,0 +1,54 @@
+---
+title: "Matplotlib"
+description: "Creating static, animated, and interactive visualizations in Python"
+icon: "chart-line"
+---
+
+## Introduction to Matplotlib
+
+**Matplotlib** is the standard plotting library for Python. It allows you to create high-quality, customizable visualizations such as line plots, scatter plots, bar charts, histograms, and more.
+
+### Why use Matplotlib?
+- Full control over every element in a chart (titles, axes, colors, labels).
+- Exportable to many file formats (PNG, PDF, SVG).
+- Integrates seamlessly with NumPy and Pandas.
+
+---
+
+## Creating Your First Plot
+
+The most common way to use Matplotlib is via the `pyplot` module:
+
+```python
+import matplotlib.pyplot as plt
+
+# Data
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# Create a line plot
+plt.plot(x, y, label="Double Value", color="green", marker="o")
+
+# Add labels and title
+plt.xlabel("X Axis")
+plt.ylabel("Y Axis")
+plt.title("Simple Line Plot")
+plt.legend()
+
+# Display the plot
+plt.show()
+```
+
+---
+
+## Common Plot Types
+
+- **`plt.scatter(x, y)`**: Creates a scatter plot (points).
+- **`plt.bar(x, height)`**: Creates a vertical bar chart.
+- **`plt.hist(data)`**: Creates a histogram to see data distribution.
+
+---
+
+## Next Steps
+
+While Matplotlib is powerful, it can require a lot of code to make plots look modern. Let's look at **Seaborn**, which builds on Matplotlib to provide beautiful, statistical charts with less code.

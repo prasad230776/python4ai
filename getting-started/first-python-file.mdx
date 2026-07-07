@@ -114,27 +114,44 @@ This tells your computer:
 Here's what happens when you run `python hello.py`:
 
 1. **Python reads your file** - Opens `hello.py` and reads the text
-2. **Python interprets the code** - Converts your code into instructions the computer understands
-3. **Python executes line by line** - Runs each instruction from top to bottom, left to right
-4. **Output appears in terminal** - Any `print()` statements display their results
+2. **Checks syntax correctness** - Before translating or running anything, Python checks the code for any syntax errors. If it finds an error, it stops immediately, displays an error message, and does not run any code. If there are no errors, it proceeds to the next step.
+3. **Python interprets the code** - Converts your code into instructions (bytecode) that the computer can understand
+4. **Python executes line by line** - Runs each instruction from top to bottom, left to right, displaying any output (like `print()` statements) in your terminal
 
 <Note>
   Python always executes code **top to bottom** (one line after another) and **left to right** (within each line). This means the order of your code matters!
 </Note>
 
 ```python
-print("Hello, World!")  # Line 1: Python reads this
-                        # Python converts it to machine instructions
-                        # Python executes: display "Hello, World!"
+# Step 1: Python checks if the entire file is syntactically correct.
+# Step 2: Once it passes this syntax phase, it interprets and executes line by line:
+
+print("Hello, World!")  # Line 1: Python reads, interprets, and executes this first
                         # You see: Hello, World!
 
-print("I'm learning Python")  # Line 2: Same process
+print("I'm learning Python")  # Line 2: Follows the same process next
+                              # You see: I'm learning Python
 ```
 
 This execution order means:
 - Line 2 can't run before Line 1
 - What you write first happens first
 - Later in the course, you'll see how to control this flow with conditions and loops
+
+### What happens on a syntax error?
+
+To understand how the syntax check prevents execution, look at this example:
+
+```python
+print("This line is correct")
+print("This line is also correct")
+print("This line has a syntax error  # Oops! Missing closing quotes
+```
+
+If you run this program, Python's syntax check (Step 1) fails immediately on line 3. Because the entire file must be syntactically correct before interpretation starts:
+- **Nothing is executed.**
+- Python will **not** run Line 1 or Line 2.
+- The program stops immediately and displays a `SyntaxError` in the terminal, without showing any print outputs.
 
 ### Running manually from the terminal
 

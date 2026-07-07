@@ -184,15 +184,6 @@
               "advanced/classes/inheritance",
               "advanced/classes/when-to-use"
             ]
-          },
-          {
-            "group": "Data Analysis",
-            "pages": [
-              "data-analysis/numpy",
-              "data-analysis/pandas",
-              "data-analysis/matplotlib",
-              "data-analysis/seaborn"
-            ]
           }
         ]
       },
@@ -236,6 +227,21 @@
               "tools/dependencies/uv-intro",
               "tools/dependencies/virtual-env",
               "tools/dependencies/complete-setup"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Data Analysis",
+        "groups": [
+          {
+            "group": "Libraries",
+            "pages": [
+              "data-analysis/numpy",
+              "data-analysis/pandas",
+              "data-analysis/matplotlib",
+              "data-analysis/seaborn",
+              "data-analysis/visualization-guide"
             ]
           }
         ]

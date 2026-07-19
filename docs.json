@@ -149,6 +149,29 @@
             ]
           },
           {
+            "group": "Error handling",
+            "pages": [
+              "advanced/error-handling/index",
+              "advanced/error-handling/try-except",
+              "advanced/error-handling/common-errors"
+            ]
+          },
+          {
+            "group": "Classes",
+            "pages": [
+              "advanced/classes/index",
+              "advanced/classes/first-class",
+              "advanced/classes/methods-attributes",
+              "advanced/classes/inheritance",
+              "advanced/classes/when-to-use"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Developing Projects",
+        "groups": [
+          {
             "group": "External tools",
             "pages": [
               "libraries-apis/index",
@@ -165,24 +188,6 @@
               "practical-python/python-paths",
               "practical-python/working-with-files",
               "practical-python/organizing-code"
-            ]
-          },
-          {
-            "group": "Error handling",
-            "pages": [
-              "advanced/error-handling/index",
-              "advanced/error-handling/try-except",
-              "advanced/error-handling/common-errors"
-            ]
-          },
-          {
-            "group": "Classes",
-            "pages": [
-              "advanced/classes/index",
-              "advanced/classes/first-class",
-              "advanced/classes/methods-attributes",
-              "advanced/classes/inheritance",
-              "advanced/classes/when-to-use"
             ]
           }
         ]
@@ -227,6 +232,19 @@
               "tools/dependencies/uv-intro",
               "tools/dependencies/virtual-env",
               "tools/dependencies/complete-setup"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Practice",
+        "groups": [
+          {
+            "group": "Practice Notebooks",
+            "pages": [
+              "practice/basics",
+              "practice/advanced",
+              "practice/data-analysis"
             ]
           }
         ]

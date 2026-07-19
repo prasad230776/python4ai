@@ -42,17 +42,63 @@ A **Higher-Order Function** is a function that does at least one of the followin
 * Takes one or more functions as arguments.
 * Returns a function as its result.
 
-Python's built-in functions `map()`, `filter()`, and `reduce()` are classic examples of higher-order functions because they require another function to be passed in as their first argument.
+Let's look at three examples of higher-order functions:
 
-#### Custom Higher-Order Function Example:
+#### Example 1: Passing a Function
 ```python
-def apply_twice(func, value):
-    """Takes a function and applies it twice to the value."""
-    return func(func(value))
+def process_numbers(numbers, operation):
+    result = []
+    for num in numbers:
+        result.append(operation(num))
+    return result
 
-add_five = lambda x: x + 5
-print(apply_twice(add_five, 10))  # Output: 20 (10 + 5 + 5)
+def square(x):
+    return x * x
+
+def cube(x):
+    return x ** 3
+
+nums = [1, 2, 3, 4, 5]
+
+print(process_numbers(nums, square))            # Output: [1, 4, 9, 16, 25]
+print(process_numbers(nums, cube))              # Output: [1, 8, 27, 64, 125]
+print(process_numbers(nums, lambda x: x + 10))  # Output: [11, 12, 13, 14, 15]
 ```
+**Interpretation:** `process_numbers()` doesn't know what operation to perform. It simply calls whatever function is passed to it.
+
+#### Example 2: Returning a Function (Closure)
+```python
+def multiplier(factor):
+    def multiply(number):
+        return number * factor
+    return multiply
+
+double = multiplier(2)
+triple = multiplier(3)
+
+print(double(10))  # Output: 20
+print(triple(10))  # Output: 30
+```
+**Interpretation:** Here, `multiplier()` returns another function, making it a higher-order function.
+
+#### Example 3: Real-World Example (Strategy Pattern)
+Suppose you want to process employee salaries differently depending on different policies.
+```python
+def process_salary(salary, policy):
+    return policy(salary)
+
+def tax(salary):
+    return salary * 0.9
+
+def bonus(salary):
+    return salary * 1.2
+
+salary = 50000
+
+print(process_salary(salary, tax))    # Output: 45000.0
+print(process_salary(salary, bonus))  # Output: 60000.0
+```
+**Interpretation:** This demonstrates the **Strategy Pattern**: `process_salary()` remains generic, and different policies (`tax`, `bonus`) can be plugged in dynamically.
 
 ---
 

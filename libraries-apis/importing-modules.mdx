@@ -1,81 +1,192 @@
 ---
-title: Import packages
-description: Use Python packages and libraries
-icon: "download"
+title: Working with Built-in Modules
+description: Learn to use Python's built-in standard library modules (math, random, datetime, os)
+icon: "cubes"
 ---
 
-## Using packages
+## Using Built-in Modules
 
-Python packages add new functionality to your programs. There are two types:
-- **Built-in**: Come with Python (no installation needed)
-- **External**: Need to install first with pip
+Python comes with a rich set of built-in modules called the **Standard Library** that are ready to use immediately without installing anything from the internet. This design philosophy is often referred to as "batteries included."
 
-## Understanding the terminology
+## Understanding the Terminology
 
 Let's clarify what these terms mean:
 
-- **Module**: A single Python file (like `math.py`)
-- **Package**: A folder containing multiple modules
-- **Function**: A reusable block of code (like `print()` or `sqrt()`)
-- **Class**: A blueprint for creating objects (we'll cover this later)
+- **Module**: A single Python file containing code (like `math.py`).
+- **Package**: A directory (folder) containing multiple modules and an `__init__.py` file.
+- **Function**: A reusable block of code that performs a specific action (like `sqrt()`).
+- **Class**: A template/blueprint for creating objects (we'll cover this later).
 
 Think of it like this:
-- A **module** is like a toolbox
-- A **package** is like a garage with multiple toolboxes
-- A **function** is like a specific tool (hammer, screwdriver)
-- A **class** is like a blueprint for building tools
+- A **module** is like a toolbox.
+- A **package** is like a garage containing multiple toolboxes.
+- A **function** is like a specific tool (a hammer or a screwdriver).
+- A **class** is like a blueprint for building custom tools.
 
-## Import patterns explained
+## Import Patterns Explained
+
+To use a module, you must first import it. The two most common ways to import a module are:
 
 ```python
 # Pattern 1: Import the whole module
 import math
-# Now use: math.sqrt(16)
+# Now you access functions using the module name: math.sqrt(16)
 
 # Pattern 2: Import specific items from a module
 from math import sqrt, pi
-# Now use: sqrt(16)
+# Now you can use the function directly: sqrt(16)
 ```
 
 What's happening:
-- `import math` - brings in the entire math toolbox
-- `from math import sqrt` - takes just the sqrt tool from the math toolbox
+- `import math` brings the entire math toolbox into your script.
+- `from math import sqrt` reaches into the math toolbox and pulls out only the `sqrt` tool.
 
-## Built-in modules
+---
 
-Python includes many useful modules:
+## Python's Standard Library: Common Built-in Modules
+
+Let's look at four of the most commonly used standard library modules: `math`, `random`, `datetime`, and `os`.
+
+### 1. The `math` Module
+
+The `math` module provides access to mathematical functions for trigonometric, logarithmic, and rounding operations.
 
 ```python
-# Import entire module
+import math
+
+# Constants
+print(math.pi)        # 3.141592653589793 (Ratio of circle's circumference to diameter)
+print(math.e)         # 2.718281828459045 (Euler's number)
+
+# Rounding Functions
+print(math.ceil(4.2))   # 5 (Rounds UP to nearest integer)
+print(math.floor(4.8))  # 4 (Rounds DOWN to nearest integer)
+
+# Power and Roots
+print(math.sqrt(16))    # 4.0 (Square root - always returns a float)
+print(math.pow(2, 3))   # 8.0 (2 raised to power of 3, equivalent to 2 ** 3)
+
+# Trigonometry (Angles must be in radians)
+radians_90 = math.radians(90)
+print(math.sin(radians_90))  # 1.0
+```
+
+<Tip>
+  Remember that `math.sqrt()` always returns a floating-point number (e.g., `4.0`), whereas operators like `**` or functions like `math.floor()` return integers depending on their input.
+</Tip>
+
+### 2. The `random` Module
+
+The `random` module provides tools to generate pseudo-random numbers and make random selections from collections.
+
+```python
 import random
 
-# Use module functions
-number = random.randint(1, 10)
-choice = random.choice(["apple", "banana", "orange"])
+# Generating random numbers
+print(random.random())          # Generates a random float between 0.0 and 1.0 (exclusive)
+print(random.randint(1, 10))    # Generates a random integer between 1 and 10 (inclusive)
+print(random.uniform(1.5, 5.5))  # Generates a random float between 1.5 and 5.5
+
+# Selecting from a list
+fruits = ["apple", "banana", "cherry", "date"]
+print(random.choice(fruits))    # Randomly picks one item (e.g., "banana")
+
+# Sampling multiple items (2 unique items without replacement)
+print(random.sample(fruits, 2)) # e.g., ["cherry", "apple"]
+
+# Shuffling a list in-place
+numbers = [1, 2, 3, 4, 5]
+random.shuffle(numbers)
+print(numbers)                  # The list is now reordered randomly (e.g., [3, 5, 1, 4, 2])
 ```
 
-### Common built-in modules
+<Warning>
+  **Security Warning:** The `random` module is **not** cryptographically secure. For security-sensitive applications (such as password generation or security tokens), use Python's built-in `secrets` module instead.
+</Warning>
+
+### 3. The `datetime` Module
+
+The `datetime` module offers classes for manipulating dates and times in both simple and complex ways.
 
 ```python
-# Date and time
 import datetime
+
+# Getting current Date and Time
 today = datetime.date.today()
-print(today)  # 2024-01-15
+print(today)                    # Current date: YYYY-MM-DD (e.g., 2026-07-19)
 
-# Operating system
-import os
-current_dir = os.getcwd()
-print(current_dir)
+now = datetime.datetime.now()
+print(now)                      # Current date and time: YYYY-MM-DD HH:MM:SS.mmmmmm
 
-# JSON data
-import json
-data = {"name": "Alice", "age": 30}
-json_string = json.dumps(data)
+# Creating specific dates
+birthday = datetime.date(1995, 10, 25)
+print(birthday.year)            # 1995
+
+# Date Arithmetic (using timedelta)
+ten_days_later = today + datetime.timedelta(days=10)
+print(ten_days_later)
+
+# Calculate difference between two dates
+delta = today - birthday
+print(delta.days)               # Total days elapsed since birthday
 ```
 
-## Import methods
+#### Formatting Dates as Strings (`strftime`)
+To convert a datetime object into a readable string format, use `.strftime()` (string format time):
+```python
+now = datetime.datetime.now()
+# %Y = Year, %m = Month, %d = Day, %H = Hour, %M = Minute
+formatted = now.strftime("%d-%m-%Y %H:%M")
+print(formatted)  # e.g., "19-07-2026 18:15"
+```
 
-Different ways to import:
+#### Parsing Strings into Dates (`strptime`)
+To convert a date string back into a datetime object, use `.strptime()` (string parse time):
+```python
+date_string = "2026-07-19"
+parsed_date = datetime.datetime.strptime(date_string, "%Y-%m-%d")
+print(parsed_date)  # 2026-07-19 00:00:00
+```
+
+### 4. The `os` Module
+
+The `os` module provides a way of interacting with your operating system, allowing you to manage files, folders, and file paths.
+
+```python
+import os
+
+# Working Directory
+print(os.getcwd())              # Get Current Working Directory
+
+# Listing files in the current directory
+print(os.listdir("."))          
+
+# Creating Directories
+if not os.path.exists("temp_folder"):
+    os.mkdir("temp_folder")
+
+# Checking Paths
+print(os.path.exists("temp_folder"))  # True
+
+# Splitting and Joining Paths
+full_path = os.path.join("temp_folder", "data.txt")
+print(full_path)                # e.g., "temp_folder/data.txt" (on Mac/Linux)
+
+# Extract directory name and filename
+dir_name = os.path.dirname(full_path)
+file_name = os.path.basename(full_path)
+print(f"Dir: {dir_name}, File: {file_name}") # Dir: temp_folder, File: data.txt
+```
+
+<Tip>
+  Always use `os.path.join()` instead of manually concatenating paths with string operations (like `"folder/" + "file.txt"`). This guarantees that your code will run correctly on Windows, macOS, and Linux without modification.
+</Tip>
+
+---
+
+## Import Methods Recap
+
+Here are the different ways you can import built-in modules:
 
 ```python
 # Import entire module
@@ -85,11 +196,10 @@ result = math.sqrt(16)
 # Import specific functions
 from math import sqrt, pi
 result = sqrt(16)
-circle_area = pi * radius ** 2
 
-# Import with alias
-import pandas as pd
-df = pd.DataFrame(data)
+# Import with alias (for convenience)
+import datetime as dt
+print(dt.date.today())
 
 # Import everything (avoid this!)
 from math import *
@@ -99,135 +209,16 @@ from math import *
   Avoid `from module import *` as it can cause naming conflicts and makes code harder to understand.
 </Warning>
 
-## Installing packages
-
-External packages need installation:
-
-```bash
-# Install a package
-pip install requests
-
-# Install specific version
-pip install requests==2.28.0
-
-# Install multiple packages
-pip install pandas numpy matplotlib
-```
-
-<Tip>
-  Always ensure your virtual environment is activated before installing! This is the #1 source of import errors. If you get "ModuleNotFoundError" after installing, you probably installed to the wrong environment. [Learn more about virtual environments](/getting-started/virtual-environments).
-</Tip>
-
-## Sharing your project: requirements.txt
-
-When you share your Python project, others need to know which packages to install. The standard way is using a `requirements.txt` file:
-
-### Creating requirements.txt
-
-List all your project's packages:
-
-```bash
-pip freeze > requirements.txt
-```
-
-This creates a file like:
-```
-certifi==2024.2.2
-charset-normalizer==3.3.2
-idna==3.6
-requests==2.31.0
-urllib3==2.2.0
-```
-
-### Installing from requirements.txt
-
-When someone gets your project, they run:
-
-```bash
-pip install -r requirements.txt
-```
-
-This installs all the packages at once!
-
-<Note>
-  Later in the course, we'll learn about `uv` - a modern, faster alternative to pip that makes package management even easier.
-</Note>
-
-## Using external packages
-
-After installation, import and use:
-
-```python
-# Web requests
-import requests
-
-response = requests.get("https://api.example.com/data")
-data = response.json()
-
-# Data analysis
-import pandas as pd
-
-# Create a simple DataFrame
-data = {
-    'name': ['Alice', 'Bob', 'Charlie'],
-    'age': [25, 30, 35],
-    'city': ['NYC', 'LA', 'Chicago']
-}
-df = pd.DataFrame(data)
-print(df)
-```
-
-<Note>
-  Always use virtual environments for projects. They prevent package conflicts between different projects.
-</Note>
-
-## Finding packages
-
-Where to find packages:
-- [PyPI](https://pypi.org) - Official Python package index
-- [Awesome Python](https://github.com/vinta/awesome-python) - Curated list
-- **ChatGPT** - Ask "What Python package should I use for [task]?" - Great for recommendations and comparisons
-- Google "Python package for [task]"
-
-<Tip>
-  ChatGPT is excellent for finding packages. Try asking: "What's the best Python package for reading Excel files?" or "Compare pandas vs polars for data analysis." It can explain which package to use and why.
-</Tip>
-
-## Common mistakes
-
-<AccordionGroup>
-  <Accordion title="Import errors">
-    ```python
-    # Wrong - package not installed or venv not activated
-    import pandas  # ModuleNotFoundError
-    
-    # Right - install first
-    # Run: pip install pandas
-    import pandas
-    ```
-  </Accordion>
-
-  <Accordion title="Name conflicts">
-    ```python
-    # Wrong - overwrites built-in
-    import datetime
-    datetime = "2024-01-01"  # Now module is gone!
-    
-    # Right - use different names
-    import datetime
-    date_string = "2024-01-01"
-    ```
-  </Accordion>
-</AccordionGroup>
+---
 
 ## What's next?
 
-Learn to connect to APIs and fetch data from the internet!
+Now that you know how to use Python's built-in modules, let's learn how to read, write, and process text, JSON, and CSV data formats using only Python's built-in tools.
 
 <Card
-  title="Working with APIs"
+  title="Working with Data"
   icon="arrow-right"
-  href="/libraries-apis/working-with-apis"
+  href="/libraries-apis/working-with-data"
 >
-  Connect to online services
+  Learn to process text, JSON, and CSV data files
 </Card>

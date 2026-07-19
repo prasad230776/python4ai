@@ -1,0 +1,198 @@
+---
+title: Pydantic
+description: Learn to parse and validate complex data structures at runtime using Pydantic models
+icon: "shield"
+---
+
+While Python's standard type hints and dataclasses help organize and document code, they **do not enforce types at runtime**. 
+
+If you pass a string `"100"` to a dataclass attribute annotated as an integer, Python will allow it without raising any errors. To guarantee that data actually conforms to your types at runtime, we use **Pydantic** — the most popular data validation library in Python.
+
+---
+
+## Dataclasses vs. Pydantic
+
+| Feature | Standard Dataclasses | Pydantic Models |
+| :--- | :--- | :--- |
+| **Runtime Enforcement** | No (Type hints are ignored at runtime) | Yes (Raises `ValidationError` on bad data) |
+| **Data Parsing (Coercion)** | No (Stores input exactly as-is) | Yes (Automatically casts `"123"` to `123`) |
+| **Custom Validators** | Complex (Requires writing manual `__post_init__` checks) | Simple (Supports powerful `@field_validator` decorator) |
+| **JSON Serialization** | Requires custom helpers | Built-in via `.model_dump()` and `.model_dump_json()` |
+| **Ecosystem Integration** | Basic | Industry standard (Core of FastAPI, SQLModel, etc.) |
+
+---
+
+## 1. Installation
+
+Install Pydantic using `pip` or `uv`:
+
+```bash
+# Using pip
+pip install pydantic
+
+# Using uv (fastest!)
+uv pip install pydantic
+```
+
+---
+
+## 2. Basic BaseModel Example
+
+To define a schema in Pydantic, you create a class that inherits from `pydantic.BaseModel`.
+
+```python
+from pydantic import BaseModel, ValidationError
+
+# Define the schema
+class User(BaseModel):
+    id: int
+    username: str
+    email: str
+    is_active: bool = True  # Default value
+
+# 1. Successful Instantiation with Type Coercion
+# Notice that '123' (string) is automatically coerced/cast to 123 (integer)
+user = User(id="123", username="alice", email="alice@example.com")
+print(user.id)        # 123 (Successfully converted to int!)
+print(type(user.id))  # <class 'int'>
+
+# 2. Validation Failure
+# If the data cannot be coerced, Pydantic raises a ValidationError
+try:
+    bad_user = User(id="not-an-int", username="bob", email="bob@example.com")
+except ValidationError as e:
+    print(e)
+    # Output displays precise error details:
+    # id: Input should be a valid integer, unable to parse string as an integer
+```
+
+---
+
+## 3. Advanced Pydantic Usages
+
+### A. Field Constraints (`Field`)
+You can use `Field` to add validation constraints like minimum/maximum numeric values, string length limits, or regex patterns:
+
+```python
+from pydantic import BaseModel, Field
+
+class Product(BaseModel):
+    name: str = Field(min_length=2, max_length=50)
+    price: float = Field(gt=0, description="Price must be greater than zero")
+    stock: int = Field(default=0, ge=0)
+
+# This will fail because price is negative
+try:
+    Product(name="Coffee", price=-2.50)
+except ValidationError as e:
+    print(e)
+```
+
+### B. Custom Field Validators (`@field_validator`)
+For complex validation logic, write custom validators using the `@field_validator` decorator:
+
+```python
+from pydantic import BaseModel, field_validator
+
+class SignUp(BaseModel):
+    username: str
+    password: str
+
+    @field_validator("password")
+    @classmethod
+    def password_must_be_strong(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        if not any(char.isdigit() for char in v):
+            raise ValueError("Password must contain at least one digit")
+        return v
+```
+
+### C. Nested Models
+Pydantic handles nested schemas gracefully, allowing you to model complex JSON responses easily:
+
+```python
+from pydantic import BaseModel
+
+class Item(BaseModel):
+    name: str
+    price: float
+
+class Order(BaseModel):
+    order_id: str
+    items: list[Item]  # List of another BaseModel
+    tax_rate: float = 0.08
+
+# Instantiation
+my_order = Order(
+    order_id="ORD-100",
+    items=[
+        {"name": "Keyboard", "price": 49.99},
+        {"name": "Mouse", "price": 19.99}
+    ]
+)
+
+print(my_order.items[0].name)  # Keyboard
+```
+
+### D. Pydantic Models with Collections & Unions
+Pydantic handles collections (`list`, `set`, `dict`) and unions (`|`) seamlessly, automatically validating and coercing types.
+
+```python
+from pydantic import BaseModel
+
+class DeveloperProfile(BaseModel):
+    name: str
+    programming_languages: list[str]
+    unique_certifications: set[str]
+    monthly_contributions: dict[str, int]
+    
+    # Union: Accepts either an integer or a float (Python 3.10+ syntax)
+    experience_years: int | float
+    
+    # Optional: Accepts a string or None (defaults to None)
+    github_url: str | None = None
+
+# Instantiation
+# Pydantic will cast elements (e.g., string '250' to int, string '5.5' to float)
+dev = DeveloperProfile(
+    name="Bob",
+    programming_languages=["Python", "JavaScript"],
+    unique_certifications={"AWS Certified", "Scrum Master", "AWS Certified"},
+    monthly_contributions={"commits": "250", "prs": "12"},
+    experience_years="5.5"  # Automatically cast to float 5.5
+    # github_url is omitted, so it defaults to None
+)
+
+print(dev.unique_certifications)  # {'AWS Certified', 'Scrum Master'}
+print(dev.monthly_contributions)   # {'commits': 250, 'prs': 12}
+print(dev.experience_years)        # 5.5
+print(dev.github_url)              # None
+```
+
+### E. Exporting Data
+Convert Pydantic instances back into standard Python structures:
+
+```python
+# Convert to dictionary
+data_dict = user.model_dump()
+print(data_dict)  # {'id': 123, 'username': 'alice', ...}
+
+# Convert to JSON string
+json_string = user.model_dump_json()
+print(json_string)  # '{"id":123,"username":"alice",...}'
+```
+
+---
+
+## What's next?
+
+Now let's learn how to organize files, modules, packages, and isolate dependencies in virtual environments!
+
+<Card
+  title="Project Handling"
+  icon="arrow-right"
+  href="/advanced-python/project-handling"
+>
+  Learn modules, packages, and virtual environments
+</Card>

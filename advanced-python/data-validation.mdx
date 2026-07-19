@@ -1,0 +1,145 @@
+---
+title: Data Validation
+description: Learn to validate data types and structures in Python using Type Hints and Dataclasses
+icon: "shield-check"
+---
+
+Writing robust code requires ensuring that data conforms to expected types and structures. Python provides built-in mechanisms to document and enforce data layout at development time.
+
+This section covers **Type Hints** and **Dataclasses** — essential tools for modern Python developers.
+
+---
+
+## 1. Type Hints
+
+Python is a dynamically-typed language, meaning variables can dynamically change types. While convenient, this can lead to runtime errors when functions receive unexpected data types.
+
+**Type Hints** allow you to explicitly declare what data types variables, function arguments, and return values should be.
+
+### Autocompletion and Tooling
+* Type hints do not raise runtime errors.
+* However, they enable code editors (like VS Code or PyCharm) to provide autocompletion and static analysis.
+* Static checkers like **`mypy`** can analyze your codebase to catch type bugs before running the code.
+
+### Basic Type Hinting
+
+```python
+# Annotating simple variables
+age: int = 25
+name: str = "Alice"
+is_active: bool = True
+
+# Annotating function parameters and return types
+def calculate_total(price: float, quantity: int) -> float:
+    return price * quantity
+```
+
+### Complex Type Annotations
+For collections (like lists, dictionaries, sets, or tuples) and special scenarios (like union types or optional parameters), you can use Python's modern built-in type hints (Python 3.10+) directly without importing anything:
+
+```python
+# List of floats (using built-in list type)
+prices: list[float] = [10.99, 5.50, 20.00]
+
+# Dictionary (using built-in dict type)
+user_roles: dict[str, str] = {"admin": "Alice", "user": "Bob"}
+
+# Union: Accepts either an integer OR a float (using the | operator)
+result: int | float = 10.5
+
+# Optional: Accepts a string OR None
+middle_name: str | None = None
+```
+
+---
+
+## 2. Dataclasses
+
+A **Dataclass** (introduced in Python 3.7) is a class specifically designed to hold data. The `@dataclass` decorator automatically generates boilerplate methods like `__init__()`, `__repr__()` (for nice print representations), and `__eq__()` (for comparing instances by value).
+
+### Traditional Class vs. Dataclass
+
+#### 1. Traditional Class (Verbose)
+```python
+class Product:
+    def __init__(self, name: str, price: float, stock: int):
+        self.name = name
+        self.price = price
+        self.stock = stock
+
+    def __repr__(self):
+        return f"Product(name={self.name}, price={self.price}, stock={self.stock})"
+```
+
+#### 2. Dataclass Equivalent (Clean)
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Product:
+    name: str
+    price: float
+    stock: int
+
+# Instantiation
+item = Product("Laptop", 999.99, 5)
+
+# Prints automatically with nice formatting!
+print(item)  # Product(name='Laptop', price=999.99, stock=5)
+
+# Automatically supports value comparison!
+item_two = Product("Laptop", 999.99, 5)
+print(item == item_two)  # True
+```
+
+### Default Values in Dataclasses
+You can assign default values directly to dataclass attributes:
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class User:
+    username: str
+    email: str
+    is_admin: bool = False  # Default value
+```
+
+### Dataclasses with Collections
+Here is an example showing how to declare lists, sets, and dictionaries inside a dataclass using Python's built-in collection types:
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class StudentProfile:
+    name: str
+    scores: list[int]
+    skills: set[str]
+    metadata: dict[str, str]
+
+# Instantiation
+profile = StudentProfile(
+    name="Alice",
+    scores=[95, 88, 92],
+    skills={"Python", "SQL", "Python"},  # Set removes duplicates automatically
+    metadata={"cohort": "2026", "advisor": "Dr. Smith"}
+)
+
+print(profile.scores)    # [95, 88, 92]
+print(profile.skills)    # {'Python', 'SQL'}
+```
+
+---
+
+## What's next?
+
+Now let's look at the Pydantic library for powerful, runtime data validation and parsing!
+
+<Card
+  title="Pydantic"
+  icon="arrow-right"
+  href="/advanced-python/pydantic"
+>
+  Learn runtime type checking and data parsing with Pydantic
+</Card>

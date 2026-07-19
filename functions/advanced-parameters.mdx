@@ -1,0 +1,125 @@
+---
+title: Flexible Argument Handling
+description: Master variable-length arguments (*args, **kwargs), positional-only, and keyword-only parameters
+icon: "sliders"
+---
+
+Python provides powerful ways to handle function arguments flexibly. Beyond standard positional and keyword arguments, you can work with variable-length inputs, enforce how arguments are passed, and control parameters precisely.
+
+## Variable-length arguments (`*args`)
+
+When you want a function to accept any number of positional arguments, prefix a parameter name with a single asterisk `*`. By convention, we use `*args`.
+
+Within the function, `args` is a **tuple** containing all the positional arguments passed.
+
+```python
+def sum_all(*numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+
+# Pass any number of arguments
+print(sum_all(1, 2))        # 3
+print(sum_all(5, 10, 15))   # 30
+print(sum_all())            # 0
+```
+
+<Warning>
+  **Precaution:** You can only have one `*args` parameter in a function definition. Standard positional arguments should come *before* `*args`.
+</Warning>
+
+## Variable keyword arguments (`**kwargs`)
+
+To accept any number of keyword arguments, prefix a parameter name with a double asterisk `**`. By convention, we use `**kwargs`.
+
+Within the function, `kwargs` is a **dictionary** mapping the parameter names to their values.
+
+```python
+def show_profile(**info):
+    for key, value in info.items():
+        print(f"{key}: {value}")
+
+show_profile(name="Alice", age=25, city="NYC")
+# Output:
+# name: Alice
+# age: 25
+# city: NYC
+```
+
+<Tip>
+  `*args` collects positional arguments as a **tuple**, while `**kwargs` collects keyword arguments as a **dictionary**.
+</Tip>
+
+## Mixing `*args` and `**kwargs`
+
+You can use standard arguments, `*args`, and `**kwargs` in the same function. 
+
+<Warning>
+  **Important Order Rule:** The order of parameters in the function definition **must** be:
+  1. Standard positional arguments
+  2. `*args`
+  3. Keyword-only arguments (with or without defaults)
+  4. `**kwargs`
+  
+  Mixing this order will result in a `SyntaxError`.
+</Warning>
+
+```python
+def master_function(required_arg, *args, default_arg="val", **kwargs):
+    print(f"Required: {required_arg}")
+    print(f"args: {args}")
+    print(f"Default: {default_arg}")
+    print(f"kwargs: {kwargs}")
+
+master_function("First", 1, 2, 3, default_arg="override", name="Bob")
+# Output:
+# Required: First
+# args: (1, 2, 3)
+# Default: override
+# kwargs: {'name': 'Bob'}
+```
+
+## Positional-only parameters (`/`)
+
+Introduced in Python 3.8, the forward slash `/` indicates that the parameters before it **must** be passed as positional arguments, and cannot be passed as keyword arguments.
+
+```python
+def print_name(first, last, /):
+    print(f"{first} {last}")
+
+# Correct
+print_name("Alice", "Smith")
+
+# ERROR: keyword argument used for positional-only parameter
+print_name(first="Alice", last="Smith")  # TypeError!
+```
+
+## Keyword-only parameters (`*`)
+
+To enforce that certain parameters can **only** be passed as keyword arguments, place an asterisk `*` in the parameter list. Every parameter after the `*` must be passed as a keyword argument.
+
+```python
+def calculate_tax(price, *, rate):
+    return price * rate
+
+# Correct: rate must be specified by name
+calculate_tax(100, rate=0.08)
+
+# ERROR: positional argument used for keyword-only parameter
+calculate_tax(100, 0.08)  # TypeError!
+```
+
+---
+
+## What's next?
+
+Now let's learn how nested functions work, how variable scopes are resolved via the LEGB rule, and how to use the global and nonlocal keywords!
+
+<Card
+  title="Scopes & Nested Functions"
+  icon="arrow-right"
+  href="/functions/scopes-nested-functions"
+>
+  Learn about nested functions and variable scopes
+</Card>

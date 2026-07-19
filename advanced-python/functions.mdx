@@ -1,0 +1,173 @@
+---
+title: Advanced Functions
+description: Master lambdas, closures, custom decorators, and flexible arguments
+icon: "brackets-curly"
+---
+
+Python supports multi-paradigm programming, allowing functions to be treated with first-class citizens status. Let's explore how to write advanced and powerful functions.
+
+---
+
+## Functions as First-Class Objects
+
+In Python, functions are first-class objects. This means you can:
+1. Assign them to variables.
+2. Pass them as arguments to other functions.
+3. Return them from other functions.
+4. Store them inside lists, tuples, or dictionaries.
+
+```python
+# 1. Pass a function as an argument (Higher-Order Function)
+def square(x):
+    return x * x
+
+def process_number(number, func):
+    return func(number)
+
+print(process_number(5, square))  # 25
+```
+
+---
+
+## Lambda Functions
+
+A **lambda** function is a small, anonymous (unnamed) function defined using the `lambda` keyword.
+
+### Syntax
+```python
+lambda arguments: expression
+```
+* Lambda functions can have any number of arguments, but only **one single expression**.
+* The expression is evaluated and returned automatically (no `return` keyword is used).
+
+```python
+# Standard function
+def add(x, y):
+    return x + y
+
+# Lambda equivalent
+add_lambda = lambda x, y: x + y
+
+print(add_lambda(3, 7))  # 10
+```
+
+<Tip>
+  Lambdas are best used as quick arguments for higher-order functions like `sorted()`, `map()`, or `filter()`:
+  
+  ```python
+  points = [(1, 2), (3, 1), (5, 0)]
+  # Sort points based on the Y-coordinate (index 1 of tuple)
+  sorted_points = sorted(points, key=lambda p: p[1])
+  print(sorted_points)  # [(5, 0), (3, 1), (1, 2)]
+  ```
+</Tip>
+
+---
+
+## Closures
+
+A **closure** is a nested function that retains access to variables from its enclosing (outer) function's scope, even after the outer function has finished executing.
+
+To create a closure:
+1. You must have a nested function.
+2. The nested function must refer to a value defined in the enclosing function.
+3. The enclosing function must return the nested function.
+
+```python
+def make_multiplier(factor):
+    def multiplier(number):
+        # Accesses 'factor' from outer scope
+        return number * factor
+    return multiplier
+
+# Create specialized multiplier functions
+double = make_multiplier(2)
+triple = make_multiplier(3)
+
+print(double(10))  # 20
+print(triple(10))  # 30
+```
+
+---
+
+## Decorators
+
+A **decorator** is a design pattern in Python that allows you to modify or extend the behavior of a function or class without permanently changing its source code.
+
+Under the hood, a decorator is a higher-order function that takes another function as an argument, wraps it with additional behavior, and returns the wrapper.
+
+### Writing a Custom Decorator
+
+```python
+# 1. Define the decorator
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()  # Execute the original function
+        print("Something is happening after the function is called.")
+    return wrapper
+
+# 2. Apply it using the @ symbol
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# Output:
+# Something is happening before the function is called.
+# Hello!
+# Something is happening after the function is called.
+```
+
+### Decorating Functions with Arguments
+To decorate functions that take arguments, use `*args` and `**kwargs` inside the wrapper function:
+
+```python
+def log_arguments(func):
+    def wrapper(*args, **kwargs):
+        print(f"Calling {func.__name__} with args: {args}, kwargs: {kwargs}")
+        result = func(*args, **kwargs)
+        print(f"{func.__name__} returned: {result}")
+        return result
+    return wrapper
+
+@log_arguments
+def add_numbers(a, b):
+    return a + b
+
+add_numbers(10, 20)
+```
+
+---
+
+## Variable-Length Arguments (`*args` and `**kwargs`)
+
+When defining functions, you can accept an arbitrary number of arguments:
+
+* **`*args` (Positional):** Collects additional positional arguments into a **tuple**.
+* **`**kwargs` (Keyword):** Collects additional keyword arguments into a **dictionary**.
+
+```python
+def print_everything(*args, **kwargs):
+    print("Positional args:", args)
+    print("Keyword args:", kwargs)
+
+print_everything(1, 2, 3, name="Alice", age=25)
+# Output:
+# Positional args: (1, 2, 3)
+# Keyword args: {'name': 'Alice', 'age': 25}
+```
+
+---
+
+## What's next?
+
+Now let's explore Pythonic programming patterns: comprehensions, the iterator protocol, generators, and context managers!
+
+<Card
+  title="Comprehensions"
+  icon="arrow-right"
+  href="/advanced-python/comprehensions"
+>
+  Learn comprehensions, iterators, and context managers
+</Card>

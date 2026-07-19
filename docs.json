@@ -133,6 +133,12 @@
               "data-structures/tuples",
               "data-structures/sets"
             ]
+          },
+          {
+            "group": "Packing & Unpacking",
+            "pages": [
+              "basics/packing-unpacking"
+            ]
           }
         ]
       },
@@ -145,15 +151,16 @@
               "functions/index",
               "functions/defining-functions",
               "functions/parameters",
-              "functions/return-values"
+              "functions/return-values",
+              "functions/advanced-parameters",
+              "functions/scopes-nested-functions",
+              "functions/recursion"
             ]
           },
           {
-            "group": "Error handling",
+            "group": "Modules & Packages",
             "pages": [
-              "advanced/error-handling/index",
-              "advanced/error-handling/try-except",
-              "advanced/error-handling/common-errors"
+              "functions/modules-packages"
             ]
           },
           {
@@ -165,6 +172,43 @@
               "advanced/classes/inheritance",
               "advanced/classes/when-to-use"
             ]
+          },
+          {
+            "group": "Error handling",
+            "pages": [
+              "advanced/error-handling/index",
+              "advanced/error-handling/try-except",
+              "advanced/error-handling/custom-exceptions",
+              "advanced/error-handling/common-errors"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Advanced Python",
+        "groups": [
+          {
+            "group": "Advanced Concepts",
+            "pages": [
+              "advanced-python/internals",
+              "advanced-python/functions",
+              "advanced-python/comprehensions",
+              "advanced-python/functional-programming",
+              "advanced-python/data-validation",
+              "advanced-python/pydantic",
+              "advanced-python/project-handling"
+            ]
+          },
+          {
+            "group": "Extending Python",
+            "pages": [
+              "libraries-apis/index",
+              "libraries-apis/importing-modules",
+              "libraries-apis/working-with-data",
+              "libraries-apis/external-modules",
+              "libraries-apis/working-with-apis",
+              "libraries-apis/working-with-env"
+            ]
           }
         ]
       },
@@ -172,21 +216,13 @@
         "tab": "Developing Projects",
         "groups": [
           {
-            "group": "External tools",
-            "pages": [
-              "libraries-apis/index",
-              "libraries-apis/importing-modules",
-              "libraries-apis/working-with-apis",
-              "libraries-apis/working-with-data"
-            ]
-          },
-          {
             "group": "Practical Python",
             "pages": [
               "practical-python/index",
               "practical-python/project-structure",
               "practical-python/python-paths",
               "practical-python/working-with-files",
+              "practical-python/project-with-data",
               "practical-python/organizing-code"
             ]
           }
@@ -237,19 +273,6 @@
         ]
       },
       {
-        "tab": "Practice",
-        "groups": [
-          {
-            "group": "Practice Notebooks",
-            "pages": [
-              "practice/basics",
-              "practice/advanced",
-              "practice/data-analysis"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Data Analysis",
         "groups": [
           {
@@ -260,6 +283,19 @@
               "data-analysis/matplotlib",
               "data-analysis/seaborn",
               "data-analysis/visualization-guide"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Practice",
+        "groups": [
+          {
+            "group": "Practice Notebooks",
+            "pages": [
+              "practice/basics",
+              "practice/advanced",
+              "practice/data-analysis"
             ]
           }
         ]

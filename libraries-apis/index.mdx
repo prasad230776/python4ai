@@ -1,12 +1,20 @@
 ---
-title: External tools
+title: Extending Python
 description: Extend Python with packages
 icon: "puzzle-piece"
 ---
 
-## Beyond built-in Python
+## Extending Python
 
-Python comes with many built-in functions, but its real power comes from external packages. These are pre-written code libraries that add new capabilities.
+Python provides the programming syntax and core features. Libraries and frameworks add specialized functionality.
+
+Depending on the libraries you import, the same Python code can be used to:
+
+* **Build frontend applications** (user interfaces)
+* **Develop backend web APIs and servers**
+* **Perform data analysis and visualization**
+* **Build AI/ML models**
+* **Create Generative AI applications** such as chatbots, RAG systems, and AI assistants.
 
 ## What are packages really?
 
@@ -19,23 +27,29 @@ Two types of packages:
 ## Python's ecosystem
 
 Python has packages for everything:
-- **Web scraping**: Extract data from websites
-- **Data analysis**: Process spreadsheets and databases
-- **AI/ML**: Build intelligent applications
-- **APIs**: Connect to online services
-- **Automation**: Control your computer
+- **Build frontend applications** (user interfaces) (e.g., `streamlit`, `gradio`)
+- **Develop backend web APIs and servers** (e.g., `fastapi`, `flask`, `django`)
+- **Perform data analysis and visualization** (e.g., `pandas`, `matplotlib`, `seaborn`)
+- **Build AI/ML models** (e.g., `scikit-learn`, `pytorch`, `tensorflow`)
+- **Create Generative AI applications** such as chatbots, RAG systems, and AI assistants (e.g., `openai`, `langchain`)
 
 ## What you'll learn
 
-<CardGroup cols={3}>
-  <Card title="Import packages" icon="download" href="/libraries-apis/importing-modules">
-    Use external code
+<CardGroup cols={2}>
+  <Card title="Built-in Modules" icon="cubes" href="/libraries-apis/importing-modules">
+    Use standard modules: math, random, datetime, and os
+  </Card>
+  <Card title="Working with Data" icon="database" href="/libraries-apis/working-with-data">
+    Process text, JSON, and CSV files
+  </Card>
+  <Card title="External Modules" icon="download" href="/libraries-apis/external-modules">
+    Manage packages with pip, PyPI, and uv
   </Card>
   <Card title="Work with APIs" icon="globe" href="/libraries-apis/working-with-apis">
-    Connect to services
+    Connect to online services
   </Card>
-  <Card title="Working with data" icon="database" href="/libraries-apis/working-with-data">
-    Process data efficiently
+  <Card title="Environment Variables" icon="key" href="/libraries-apis/working-with-env">
+    Manage secrets and load parameters using .env
   </Card>
 </CardGroup>
 
@@ -44,7 +58,7 @@ Python has packages for everything:
 Here are packages you'll likely use:
 - `requests` - Make web requests
 - `pandas` - Work with data tables
-- `beautifulsoup4` - Parse HTML
+- `scikit-learn` - Build machine learning models
 - `openai` - Use AI models
 - `python-dotenv` - Manage secrets
 
@@ -54,12 +68,12 @@ Here are packages you'll likely use:
 
 ## Let's begin!
 
-Start by learning how to import and use packages.
+Start by learning how to work with Python's built-in standard library modules.
 
 <Card
-  title="Import packages"
+  title="Working with Built-in Modules"
   icon="arrow-right"
   href="/libraries-apis/importing-modules"
 >
-  Add new capabilities
+  Learn to use math, random, datetime, and os
 </Card>

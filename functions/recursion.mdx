@@ -1,0 +1,138 @@
+---
+title: Recursion
+description: Learn how functions can call themselves to solve complex problems
+icon: "arrows-rotate"
+---
+
+Recursion is a programming technique where a function calls itself to solve a problem. It works by breaking down a complex problem into smaller, more manageable sub-problems of the same type.
+
+A classic real-world analogy is a Russian nesting doll (Matryoshka): inside a big doll is a smaller doll, inside that is an even smaller doll, until you reach the smallest doll that cannot be opened.
+
+---
+
+## The Two Core Rules of Recursion
+
+Every recursive function must have two essential parts:
+
+1. **Base Case:** The stopping condition. This is the simplest possible case that can be answered directly without calling the function again. Without a base case, the function will call itself forever!
+2. **Recursive Case:** The part of the function where it calls itself with a modified, smaller input, moving closer to the base case.
+
+---
+
+## Example 1: Countdown
+
+Let's look at a simple function that counts down to zero.
+
+```python
+def countdown(n):
+    # 1. Base Case
+    if n <= 0:
+        print("Blast off! 🚀")
+        return
+    
+    # 2. Recursive Case
+    print(n)
+    countdown(n - 1)  # Calls itself with n - 1
+
+countdown(3)
+```
+
+### How it executes:
+1. `countdown(3)` is called. Prints `3`. Calls `countdown(2)`.
+2. `countdown(2)` is called. Prints `2`. Calls `countdown(1)`.
+3. `countdown(1)` is called. Prints `1`. Calls `countdown(0)`.
+4. `countdown(0)` is called. Since `0 <= 0`, it matches the base case, prints `"Blast off! 🚀"`, and returns. All function calls finish execution.
+
+---
+
+## Example 2: Factorial
+
+In mathematics, the factorial of a positive integer $n$ (written as $n!$) is the product of all positive integers less than or equal to $n$.
+For example: $4! = 4 \times 3 \times 2 \times 1 = 24$.
+
+Mathematically, we can define it recursively:
+* $1! = 1$ (Base Case)
+* $n! = n \times (n - 1)!$ (Recursive Case)
+
+```python
+def factorial(n):
+    # Base Case
+    if n == 1:
+        return 1
+    
+    # Recursive Case
+    return n * factorial(n - 1)
+
+print(factorial(4))  # 24
+```
+
+### Visualizing the trace:
+```text
+factorial(4)
+  |--> 4 * factorial(3)
+             |--> 3 * factorial(2)
+                        |--> 2 * factorial(1)
+                                   |--> 1 (returns 1)
+                        |--> 2 * 1 = 2 (returns 2)
+             |--> 3 * 2 = 6 (returns 6)
+  |--> 4 * 6 = 24 (returns 24)
+```
+
+---
+
+## Example 3: Fibonacci Sequence
+
+The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones: `0, 1, 1, 2, 3, 5, 8, 13, 21, ...`
+
+```python
+def fibonacci(n):
+    # Base Cases
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    
+    # Recursive Case (calls itself twice!)
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+# Find the 6th Fibonacci number (index starts at 0)
+print(fibonacci(6))  # 8
+```
+
+---
+
+## Precautions & Common Pitfalls
+
+### 1. Infinite Recursion (`RecursionError`)
+If a recursive function never reaches its base case, it keeps calling itself until Python reaches its maximum call stack depth limit and crashes.
+
+```python
+def run_forever():
+    run_forever()  # No base case!
+
+run_forever()
+# Output: RecursionError: maximum recursion depth exceeded
+```
+
+<Warning>
+  **Precaution:** Always ensure your recursive step modifies the input variable so that it eventually triggers the base case!
+</Warning>
+
+### 2. Performance Overhead
+Each recursive call is added to the system's "call stack" in memory. If the recursion is too deep (e.g., thousands of calls), it uses a lot of memory. 
+
+For example, calculating `fibonacci(40)` using the simple recursive function above is extremely slow because it recalculates the same values millions of times. In such cases, an iterative loop (`for` or `while`) or caching (memoization) is preferred.
+
+---
+
+## What's next?
+
+Now that you have completed all function concepts, let's learn how to organize your code into reusable modules and packages.
+
+<Card
+  title="Modules & Packages"
+  icon="cubes"
+  href="/functions/modules-packages"
+>
+  Organize your Python code cleanly
+</Card>

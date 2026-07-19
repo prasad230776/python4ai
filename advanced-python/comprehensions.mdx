@@ -1,0 +1,166 @@
+---
+title: Comprehensions
+description: Write clean and expressive code using Pythonic list, dictionary, and set comprehensions
+icon: "brackets-curly"
+---
+
+Writing "Pythonic" code means utilizing Python's unique features to make code clean, readable, and highly expressive. A primary example of this pythonic programming style is using **Comprehensions** to transform and filter collections, alongside other advanced constructs like Iterators, Generators, and Context Managers.
+
+---
+
+## Comprehensions
+
+Comprehensions provide a concise way to create lists, dictionaries, and sets from existing collections.
+
+### 1. List Comprehensions
+Create a new list by applying an expression to each item in a loop.
+```python
+# Traditional loop
+squares = []
+for x in range(5):
+    squares.append(x * x)
+
+# Pythonic List Comprehension
+squares = [x * x for x in range(5)]
+print(squares)  # [0, 1, 4, 9, 16]
+
+# With conditionals (only even squares)
+even_squares = [x * x for x in range(10) if x % 2 == 0]
+print(even_squares)  # [0, 4, 16, 36, 64]
+```
+
+### 2. Dictionary Comprehensions
+Create a dictionary dynamically:
+```python
+# Map numbers to their square
+squares_dict = {x: x * x for x in range(5)}
+print(squares_dict)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+```
+
+### 3. Set Comprehensions
+Similar to lists, but returns unique elements:
+```python
+names = ["alice", "bob", "alice", "charlie"]
+unique_lengths = {len(name) for name in names}
+print(unique_lengths)  # {5, 3, 7}
+```
+
+---
+
+## Iterators
+
+An **iterator** is an object representing a stream of data. It yields one element at a time when you call `next()` on it.
+
+### The Iterator Protocol
+To make an object iterable, it must implement two methods:
+1. `__iter__()`: Returns the iterator object itself.
+2. `__next__()`: Returns the next value in the stream. If there are no more values, it raises the `StopIteration` exception.
+
+```python
+# Custom iterator that counts up to a limit
+class Counter:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < self.limit:
+            self.current += 1
+            return self.current
+        else:
+            raise StopIteration
+
+for num in Counter(3):
+    print(num)  # Prints: 1, 2, 3
+```
+
+---
+
+## Generators
+
+Generators are a simple way to create iterators using the `yield` keyword. Unlike standard functions that use `return` and exit, a generator function pauses and yields a value to the caller, remembering its state for the next call.
+
+### 1. Generator Functions
+
+```python
+def simple_generator():
+    yield "First"
+    yield "Second"
+    yield "Third"
+
+gen = simple_generator()
+print(next(gen))  # "First"
+print(next(gen))  # "Second"
+```
+
+### 2. Generator Expressions
+Syntactically similar to list comprehensions, but wrapped in **parentheses** `()`. They do not store values in memory; instead, they generate items on demand:
+
+```python
+# List comprehension (creates list in memory immediately)
+list_comp = [x * x for x in range(1000000)]
+
+# Generator expression (computes values lazily on the fly)
+gen_exp = (x * x for x in range(1000000))
+
+print(next(gen_exp))  # 0
+print(next(gen_exp))  # 1
+```
+
+<Tip>
+  **Memory Advantage:** Generators are highly memory-efficient. Use them when working with massive datasets or infinite streams (e.g., reading large log files line-by-line).
+</Tip>
+
+---
+
+## Context Managers
+
+Context Managers manage resources, ensuring that files, database connections, or locks are properly acquired and released.
+
+### The `with` Statement
+The most common way to use context managers is via `with`.
+
+```python
+# File is automatically closed when exiting the block
+with open("data.txt", "w") as file:
+    file.write("Pythonic Programming")
+```
+
+### Creating Custom Context Managers
+You can create custom context managers using the `contextmanager` decorator from Python's built-in `contextlib` library:
+
+```python
+from contextlib import contextmanager
+
+@contextmanager
+def managed_resource():
+    print("Acquiring resource... 🔑")
+    try:
+        yield "Active Resource"  # Passes control to the 'with' block
+    finally:
+        print("Releasing resource... 🔒")
+
+with managed_resource() as res:
+    print(f"Using: {res}")
+# Output:
+# Acquiring resource... 🔑
+# Using: Active Resource
+# Releasing resource... 🔒
+```
+
+---
+
+## What's next?
+
+Now let's explore Functional Programming paradigms in Python, including map, filter, and reduce operations!
+
+<Card
+  title="Functional Programming"
+  icon="arrow-right"
+  href="/advanced-python/functional-programming"
+>
+  Learn map, filter, and reduce functions
+</Card>

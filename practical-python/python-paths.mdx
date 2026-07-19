@@ -101,19 +101,116 @@ from folder.utils import helper    # Looks for folder/utils.py
 
 ## How Python finds modules
 
-Python looks for modules (other .py files) in specific places. You can see these places:
+Python looks for modules (other `.py` files) in specific directories stored in `sys.path`. You can see these places by running:
 
 ```python
 import sys
 print(sys.path)  # List of folders Python checks
 ```
 
-The list includes:
-1. The folder containing your script
-2. Python's built-in library folders
-3. Installed packages
+The lookup order includes:
+1. The folder containing the script you ran.
+2. Python's built-in standard library folders.
+3. Installed third-party packages (located in `site-packages` directory).
 
-## Adding your own folders
+## Absolute vs. Relative Imports
+
+Within a package, you can refer to other modules in two ways:
+* **Absolute Import:** Uses the full path from the project root.
+  ```python
+  from mypackage.utils import format_text
+  ```
+* **Relative Import:** Uses leading dots (`.`) to refer to modules relative to the current module.
+  ```python
+  from .utils import format_text  # . means current directory
+  from ..core import database    # .. means parent directory
+  ```
+
+<Warning>
+  **Best Practice:** **Always prefer Absolute Imports.** 
+  
+  Absolute imports are much clearer, easier to read, and don't break if you move a file to a different directory. Furthermore, if you run a file containing relative imports directly as a script (e.g., `python mypackage/utils.py`), Python will raise:
+  `ImportError: attempted relative import with no known parent package`.
+</Warning>
+
+## Package Initialization: `__init__.py` and `__all__`
+
+When you import from a package, Python runs the package's `__init__.py` file. You can define what gets exposed to the public API when a user imports your package using the special `__all__` list:
+
+```python
+# mypackage/__init__.py
+# Only expose 'utils' module when using wildcard import 'from mypackage import *'
+__all__ = ['utils']
+```
+
+## The `__name__ == "__main__"` Block
+
+When a Python file is run directly, Python sets a special built-in variable `__name__` to `"__main__"`. If the file is imported by another script, `__name__` is set to the file's actual module name instead.
+
+We use this block to write code that only executes when the file is run directly, but is ignored when imported as a library:
+
+```python
+# calculator.py
+
+def add(a, b):
+    return a + b
+
+# This testing code will only run if you execute 'python calculator.py'
+# It will NOT run if you do 'import calculator' in another script
+if __name__ == "__main__":
+    print("Testing calculator...")
+    print(add(10, 5) == 15)  # True
+```
+
+## Running Modules & Troubleshooting Import Errors
+
+When working with local modules and packages, developers frequently run into path-related errors. Here is how to understand and solve them:
+
+### The Scenario
+Suppose you have a project structured like this:
+```text
+myproject/
+├── main.py
+└── mypackage/
+    ├── utils.py
+    └── helper.py
+```
+And inside `utils.py`, you have an absolute import: `from mypackage.helper import greet`.
+
+### The Mistake
+If you navigate inside the `mypackage/` folder and run `python utils.py`, Python will crash with:
+`ModuleNotFoundError: No module named 'mypackage'`.
+
+**Why?** Because Python adds the directory of the *executed script* (`myproject/mypackage/`) to `sys.path`. It does not know that `mypackage` exists one folder level up.
+
+### The Solutions
+
+#### Solution 1: Run as a module using the `-m` flag (Recommended)
+Always run your Python scripts from the **project root directory** (e.g., `myproject/`) using the `-m` (module) flag. This preserves the package hierarchy and correctly configures `sys.path`.
+
+```bash
+# 1. Navigate to the project root directory
+cd myproject
+
+# 2. Run the module using dot notation (no .py extension!)
+python -m mypackage.utils
+```
+
+#### Solution 2: Set the `PYTHONPATH` Environment Variable
+You can manually tell Python where to look for modules by setting the `PYTHONPATH` environment variable to your project root directory.
+
+* **macOS / Linux:**
+  ```bash
+  export PYTHONPATH=.
+  python mypackage/utils.py
+  ```
+* **Windows (PowerShell):**
+  ```powershell
+  $env:PYTHONPATH="."
+  python mypackage/utils.py
+  ```
+
+## Adding your own folders manually
 
 Sometimes you need Python to look in additional places:
 

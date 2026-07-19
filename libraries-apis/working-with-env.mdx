@@ -1,0 +1,143 @@
+---
+title: Working with Environment Variables
+description: Securely store and load API keys, passwords, and secrets using .env files and python-dotenv
+icon: "key"
+---
+
+When developing applications that connect to database servers, email systems, or online APIs (like OpenAI or weather services), your code requires access credentials, such as API keys, passwords, or secret tokens.
+
+**Hardcoding secrets directly into your source code is a major security risk.** If you upload your code to GitHub, anyone can see and steal your credentials. The industry standard solution is to use **Environment Variables** stored inside a `.env` file.
+
+---
+
+## 1. What is a `.env` File?
+
+A `.env` file is a plain text file placed in the root directory of your project. It stores configuration settings and secrets as key-value pairs.
+
+### Creating the `.env` File
+
+Create a file named precisely `.env` (note the leading dot, and no file extension) in your project root:
+
+```text
+# .env
+API_KEY=sk-proj-abc123xyz456
+API_PORT=8000
+DATABASE_URL=postgresql://user:password@localhost/db
+```
+
+---
+
+## 2. Preventing Leaks with `.gitignore`
+
+Because the `.env` file contains sensitive secrets, **you must never upload it to GitHub.**
+
+To ensure Git ignores this file, create a file named `.gitignore` in your project root and add the `.env` filename to it:
+
+```text
+# .gitignore
+.env
+```
+
+### The Best Practice: `.env.example`
+Since other developers need to know what environment variables your project requires to run, create a template file named `.env.example` containing only the variable names (with empty or placeholder values) and commit this file instead:
+
+```text
+# .env.example
+API_KEY=your_api_key_here
+API_PORT=8000
+DATABASE_URL=
+```
+
+---
+
+## 3. Loading Variables in Python
+
+To load variables from the `.env` file into your Python program, we use the third-party library **`python-dotenv`** along with Python's built-in **`os`** module.
+
+### Installation
+
+Install the package using `pip` or `uv`:
+
+```bash
+# Using pip
+pip install python-dotenv
+
+# Using uv
+uv pip install python-dotenv
+```
+
+### Loading and Accessing in Code
+
+Use `load_dotenv()` to read key-value pairs from `.env` and load them into Python's environment variables. Then, retrieve them using `os.getenv()` or `os.environ.get()`:
+
+```python
+import os
+from dotenv import load_dotenv
+
+# 1. Load variables from .env file into the system environment
+load_dotenv()
+
+# 2. Access the variables using os.getenv()
+api_key = os.getenv("API_KEY")
+port = os.getenv("API_PORT")
+
+# 3. Use fallback values if a variable is missing
+database_url = os.getenv("DATABASE_URL", "sqlite:///default.db")
+
+print(f"Loaded API Key: {api_key}")
+print(f"Server Port: {port}")
+print(f"Database URL: {database_url}")
+```
+
+---
+
+## Practical Example: Secure API Call
+
+Here is a practical example showing how to fetch weather data using an API key retrieved securely from environment variables:
+
+```python
+import os
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Retrieve API key
+api_key = os.getenv("WEATHER_API_KEY")
+
+if not api_key:
+    raise ValueError("Missing WEATHER_API_KEY environment variable. Please set it in your .env file.")
+
+# Pass the API key as a query parameter in the URL
+# Using the WeatherAPI endpoint: key=API_KEY&q=CITY
+url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q=Paris"
+
+response = requests.get(url)
+print(response.json())
+```
+
+---
+
+## Precautions & Best Practices
+
+1. **Never Commit `.env`:** Double-check that `.env` is listed inside `.gitignore` before making any git commits.
+2. **Handle Missing Variables Gracefully:** Always check if `os.getenv()` returns `None` for required credentials and raise descriptive configuration errors.
+3. **Use Default Fallbacks:** For non-sensitive settings (like ports, timeouts, or environment names), provide sensible fallback values:
+   ```python
+   # Defaults to 'development' if not set in .env
+   environment = os.getenv("APP_ENV", "development") 
+   ```
+
+---
+
+## What's next?
+
+Now that you have completed Extending Python (built-in modules, data handling, external packages, APIs, and secrets management), let's learn how to organize real projects and manage files in Python!
+
+<Card
+  title="Practical Python"
+  icon="arrow-right"
+  href="/practical-python/index"
+>
+  Build real programs with proper structure
+</Card>

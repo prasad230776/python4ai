@@ -1,0 +1,121 @@
+---
+title: Scopes & Nested Functions
+description: Learn about variable scope, the LEGB rule, nested functions, global, and nonlocal keywords
+icon: "brackets-curly"
+---
+
+## Nested Functions
+
+In Python, you can define functions inside other functions. These are known as **nested** or **inner** functions.
+
+```python
+def outer_function(message):
+    def inner_function():
+        # Inner function has access to variables in outer_function!
+        print(f"Message from inner: {message}")
+        
+    inner_function()
+
+outer_function("Hello from Outer!")
+```
+
+---
+
+## Scope of Variables
+
+The **scope** of a variable refers to the region of a program where a variable is recognized and can be accessed. Python defines three main scopes inside functions:
+
+1. **Local Scope:** Variables created inside a function. They only exist while the function is running.
+2. **Enclosing (Nonlocal) Scope:** Variables in the outer function of a nested function.
+3. **Global Scope:** Variables defined at the top level of the file.
+
+---
+
+## LEGB Rule
+
+When you reference a variable name, Python searches for it in a strict order:
+* **L**ocal: First, it looks inside the current function.
+* **E**nclosing: Next, it looks at any outer (enclosing) functions.
+* **G**lobal: Then, it looks at variables defined at the top level of the script.
+* **B**uilt-in: Finally, it looks at Python's pre-loaded built-in functions/constants (like `len`, `print`, `None`).
+
+If the variable is not found in any scope, Python raises a `NameError`.
+
+```python
+# Global variable
+x = "global"
+
+def outer():
+    # Enclosing variable
+    x = "enclosing"
+    
+    def inner():
+        # Local variable
+        x = "local"
+        print(x) # Prints "local"
+        
+    inner()
+
+outer()
+```
+
+---
+
+## The `global` Keyword
+
+If you want to **modify** a global variable from inside a function, you must declare it using the `global` keyword. Without it, Python creates a new local variable instead.
+
+```python
+counter = 0
+
+def increment():
+    global counter  # Tells Python to use the global 'counter'
+    counter += 1
+
+increment()
+print(counter)  # 1
+```
+
+<Warning>
+  **Precaution:** Avoid overusing `global` variables. They make code harder to debug and maintain because any function can change them at any time.
+</Warning>
+
+---
+
+## The `nonlocal` Keyword
+
+Similar to `global`, if you want to **modify** a variable in the enclosing (outer) function's scope from inside an inner function, you must use the `nonlocal` keyword.
+
+```python
+def count_tracker():
+    count = 0  # Enclosing variable
+    
+    def increment():
+        nonlocal count  # Tells Python to use 'count' from count_tracker
+        count += 1
+        return count
+        
+    return increment
+
+my_tracker = count_tracker()
+print(my_tracker())  # 1
+print(my_tracker())  # 2
+```
+
+<Note>
+  If you omit `nonlocal count` inside `increment()`, trying to do `count += 1` will raise an `UnboundLocalError` because Python assumes `count` is a new local variable that hasn't been defined yet.
+</Note>
+
+---
+
+## What's next?
+
+Now that you know how variable scopes work, let's look at Recursion — where a function calls itself to solve problems.
+
+<Card
+  title="Recursion"
+  icon="arrow-right"
+  href="/functions/recursion"
+>
+  Learn how functions call themselves
+</Card>

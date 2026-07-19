@@ -1,198 +1,140 @@
 ---
-title: Working with data
-description: Analyze and visualize data from APIs
-icon: "chart-line"
+title: Working with Data
+description: Learn to read, write, and process text, JSON, and CSV data using Python's built-in tools
+icon: "database"
 ---
 
-## Building on APIs
+Programs exist to process data. In Python, you can easily read, manipulate, and save different data formats. We will look at how to handle three of the most common data formats: raw Text, JSON, and CSV, using only Python's built-in capabilities.
 
-Let's take the weather API from the previous page and create something useful. We'll get weather data for the past 7 days, analyze it, visualize it, and save it.
+---
 
-This brings together everything you've learned: APIs, data processing, file handling, and visualization.
+## 1. Handling Text Data
 
-<Note>
-  Install required libraries: `pip install requests pandas matplotlib`
-</Note>
+The simplest format is plain text (`.txt`). Python provides a built-in `open()` function to read and write files.
 
-## Get 7 days of weather
-
-The Open-Meteo API can give us historical data:
+### Reading Text Files
+Always use the `with` statement when opening files. It automatically closes the file for you, even if an error occurs.
 
 ```python
-import requests
-from datetime import datetime, timedelta
+# Reading the entire file content at once
+with open("sample.txt", "r") as file:
+    content = file.read()
+    print(content)
 
-# Calculate dates
-today = datetime.now()
-week_ago = today - timedelta(days=7)
-
-# Format dates for API (YYYY-MM-DD)
-start_date = week_ago.strftime("%Y-%m-%d")
-end_date = today.strftime("%Y-%m-%d")
-
-# Get Paris weather for past week
-url = f"https://api.open-meteo.com/v1/forecast?latitude=48.85&longitude=2.35&start_date={start_date}&end_date={end_date}&daily=temperature_2m_max,temperature_2m_min"
-
-response = requests.get(url)
-data = response.json()
-print(data)
+# Reading file line-by-line (efficient for large files)
+with open("sample.txt", "r") as file:
+    for line in file:
+        print(line.strip())  # .strip() removes trailing newlines
 ```
 
-## Load into pandas
-
-Now let's organize this data:
+### Writing Text Files
+Use `"w"` to write (overwrites the file) or `"a"` to append (adds to the end).
 
 ```python
-import pandas as pd
-
-# Extract the daily data
-daily_data = data['daily']
-
-# Create a DataFrame
-df = pd.DataFrame({
-    'date': daily_data['time'],
-    'max_temp': daily_data['temperature_2m_max'],
-    'min_temp': daily_data['temperature_2m_min']
-})
-
-# Convert date strings to datetime
-df['date'] = pd.to_datetime(df['date'])
-
-print(df)
+# Writing to a file (creates it if it doesn't exist)
+with open("output.txt", "w") as file:
+    file.write("Hello, World!\n")
+    file.write("Writing data is easy in Python.")
 ```
 
-Output:
-```
-        date  max_temp  min_temp
-0 2024-01-08      12.3       5.1
-1 2024-01-09      11.8       4.2
-2 2024-01-10      13.5       6.0
-...
-```
+---
 
-## Visualize the data
+## 2. Handling JSON Data
 
-Create a simple line chart:
+**JSON** (JavaScript Object Notation) is the standard data format for web APIs and configuration files. Python has a built-in `json` module to parse and generate JSON.
+
+* **Parsing JSON (String to Python Dict):** Use `json.loads()`
+* **Generating JSON (Python Dict to String):** Use `json.dumps()`
+* **Reading/Writing JSON Files:** Use `json.load()` and `json.dump()`
+
+### JSON Example
 
 ```python
-import matplotlib.pyplot as plt
+import json
 
-# Create the plot
-plt.figure(figsize=(10, 6))
-plt.plot(df['date'], df['max_temp'], marker='o', label='Max Temp')
-plt.plot(df['date'], df['min_temp'], marker='o', label='Min Temp')
+# Python Dictionary
+user_profile = {
+    "name": "Alice",
+    "age": 25,
+    "skills": ["Python", "Machine Learning"],
+    "is_active": True
+}
 
-# Add labels and title
-plt.xlabel('Date')
-plt.ylabel('Temperature (°C)')
-plt.title('Paris Weather - Past 7 Days')
-plt.legend()
+# 1. Convert Python Dict to JSON String (Serialization)
+json_string = json.dumps(user_profile, indent=4)
+print(json_string)
 
-# Rotate x-axis labels for readability
-plt.xticks(rotation=45)
-plt.tight_layout()
+# 2. Convert JSON String back to Python Dict (Deserialization)
+data_dict = json.loads(json_string)
+print(data_dict["name"])  # Alice
 
-# Save the plot
-plt.savefig('weather_chart.png')
-plt.show()
+# 3. Writing JSON to a file
+with open("profile.json", "w") as file:
+    json.dump(user_profile, file, indent=4)
+
+# 4. Reading JSON from a file
+with open("profile.json", "r") as file:
+    loaded_data = json.load(file)
+    print(loaded_data["skills"])  # ['Python', 'Machine Learning']
 ```
 
-## Save to CSV
+---
 
-Let's save our data for later use:
+## 3. Handling CSV Data
+
+**CSV** (Comma-Separated Values) is the standard format for spreadsheets and tabular data. Python's built-in `csv` module makes it easy to read and write CSV files.
+
+### Reading CSV Files
+You can read rows as lists, or use `DictReader` to read rows as dictionaries where the keys are the column headers (highly recommended!).
 
 ```python
-import os
+import csv
 
-# Create data folder if it doesn't exist
-if not os.path.exists('data'):
-    os.makedirs('data')
+# Reading CSV as lists
+with open("employees.csv", "r") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)  # row is a list of strings: ['Name', 'Age', 'Role']
 
-# Save to CSV
-df.to_csv('data/paris_weather.csv', index=False)
-print("Data saved to data/paris_weather.csv")
+# Reading CSV as dictionaries (easier access)
+with open("employees.csv", "r") as file:
+    dict_reader = csv.DictReader(file)
+    for row in dict_reader:
+        print(f"Name: {row['Name']}, Role: {row['Role']}")
 ```
 
-## Complete example
-
-Here's everything together:
+### Writing CSV Files
+Similarly, you can write rows using lists, or write them using dictionaries with `DictWriter`.
 
 ```python
-import requests
-import pandas as pd
-import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
-import os
+import csv
 
-# 1. Get weather data
-today = datetime.now()
-week_ago = today - timedelta(days=7)
-start_date = week_ago.strftime("%Y-%m-%d")
-end_date = today.strftime("%Y-%m-%d")
+fieldnames = ["Product", "Price", "Stock"]
+products = [
+    {"Product": "Laptop", "Price": 999.99, "Stock": 10},
+    {"Product": "Mouse", "Price": 29.99, "Stock": 50}
+]
 
-url = f"https://api.open-meteo.com/v1/forecast?latitude=48.85&longitude=2.35&start_date={start_date}&end_date={end_date}&daily=temperature_2m_max,temperature_2m_min"
-response = requests.get(url)
-data = response.json()
-
-# 2. Process with pandas
-df = pd.DataFrame({
-    'date': pd.to_datetime(data['daily']['time']),
-    'max_temp': data['daily']['temperature_2m_max'],
-    'min_temp': data['daily']['temperature_2m_min']
-})
-
-# 3. Calculate average
-df['avg_temp'] = (df['max_temp'] + df['min_temp']) / 2
-
-# 4. Create visualization
-plt.figure(figsize=(10, 6))
-plt.plot(df['date'], df['max_temp'], 'r-o', label='Max')
-plt.plot(df['date'], df['min_temp'], 'b-o', label='Min')
-plt.plot(df['date'], df['avg_temp'], 'g--', label='Average')
-
-plt.xlabel('Date')
-plt.ylabel('Temperature (°C)')
-plt.title('Paris Weather - Past Week')
-plt.legend()
-plt.grid(True, alpha=0.3)
-plt.xticks(rotation=45)
-plt.tight_layout()
-
-# 5. Save everything
-if not os.path.exists('data'):
-    os.makedirs('data')
-
-plt.savefig('data/weather_chart.png')
-df.to_csv('data/paris_weather.csv', index=False)
-
-print(f"Average temperature: {df['avg_temp'].mean():.1f}°C")
-print("Files saved in 'data' folder")
+with open("inventory.csv", "w", newline="") as file:
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    
+    # Write the header row (Product, Price, Stock)
+    writer.writeheader()
+    
+    # Write the data rows
+    writer.writerows(products)
 ```
 
-## What you've accomplished
+---
 
-Look at what you just did:
-- Connected to a real API
-- Worked with dates and time
-- Processed data with pandas
-- Created a visualization
-- Handled files and folders
-- Saved your results
+## What's next?
 
-This is exactly how data analysis works in the real world!
-
-<Tip>
-  Try modifying the code to get weather for your city. Find your coordinates at [latlong.net](https://www.latlong.net/).
-</Tip>
-
-## Next steps
-
-Ready to organize your code like a pro? Let's learn proper project structure!
+Now that you know how to work with built-in modules and data formats, let's learn how to download, install, and manage third-party external libraries using PyPI, pip, and uv!
 
 <Card
-  title="Practical Python"
+  title="Working with External Modules"
   icon="arrow-right"
-  href="/practical-python"
+  href="/libraries-apis/external-modules"
 >
-  Build real programs with proper structure
+  Learn to use pip, PyPI, and uv
 </Card>

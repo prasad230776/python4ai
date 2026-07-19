@@ -1,0 +1,134 @@
+---
+title: Functional Programming
+description: Learn functional programming concepts in Python using map, filter, and reduce
+icon: "function"
+---
+
+Python supports multiple programming paradigms, including **Functional Programming (FP)**. In functional programming, code is structured around passing functions as arguments, returning functions, and avoiding changing state or mutable data.
+
+This section covers the core built-in functional tools in Python: `map()`, `filter()`, and `reduce()`.
+
+---
+
+## What is Functional Programming?
+
+Functional programming focuses on writing:
+* **Pure Functions:** Functions that always return the same output for the same input and have no side effects (like modifying a global variable or printing to the console).
+* **First-Class Functions:** Treating functions as data (assigning them to variables, passing them to other functions).
+* **Immutability:** Avoiding modifying existing data structures; instead, creating new ones.
+
+---
+
+## 1. The `map()` Function
+
+The `map()` function applies a given function to all items in an iterable (like a list) and returns an iterator yielding the results.
+
+### Syntax
+```python
+map(function, iterable)
+```
+
+### Example
+Suppose we want to calculate the length of several strings:
+
+```python
+names = ["Alice", "Bob", "Charlie"]
+
+# Using a standard function
+name_lengths = map(len, names)
+
+# Convert iterator to list to view results
+print(list(name_lengths))  # [5, 3, 7]
+```
+
+### Map with Lambdas
+`map()` is frequently paired with `lambda` functions:
+
+```python
+numbers = [1, 2, 3, 4]
+squared = map(lambda x: x * x, numbers)
+print(list(squared))  # [1, 4, 9, 16]
+```
+
+---
+
+## 2. The `filter()` Function
+
+The `filter()` function filters elements from an iterable based on whether a function returns `True` or `False` for that element.
+
+### Syntax
+```python
+filter(function, iterable)
+```
+
+### Example
+Filter out only the even numbers from a list:
+
+```python
+numbers = [1, 2, 3, 4, 5, 6]
+
+# The lambda returns True if even, False otherwise
+even_numbers = filter(lambda x: x % 2 == 0, numbers)
+
+print(list(even_numbers))  # [2, 4, 6]
+```
+
+---
+
+## 3. The `reduce()` Function
+
+Unlike `map()` and `filter()`, which are built-in, the `reduce()` function must be imported from the **`functools`** module.
+
+`reduce()` applies a function of two arguments cumulatively to the items of an iterable, from left to right, reducing the sequence to a single value.
+
+### Syntax
+```python
+from functools import reduce
+reduce(function, iterable[, initializer])
+```
+
+### Example
+Calculate the product of all numbers in a list:
+
+```python
+from functools import reduce
+
+numbers = [1, 2, 3, 4]
+
+# Step-by-step math:
+# 1 * 2 = 2
+# 2 * 3 = 6
+# 6 * 4 = 24
+product = reduce(lambda x, y: x * y, numbers)
+
+print(product)  # 24
+```
+
+---
+
+## Map/Filter vs. List Comprehensions
+
+In modern Python, list comprehensions are often preferred over `map()` and `filter()` because they are generally considered more readable and "Pythonic":
+
+| Functional Style | Pythonic Comprehension Equivalent |
+| :--- | :--- |
+| `list(map(lambda x: x*x, nums))` | `[x * x for x in nums]` |
+| `list(filter(lambda x: x % 2 == 0, nums))` | `[x for x in nums if x % 2 == 0]` |
+
+<Tip>
+  Use list comprehensions for simple transformations and filtering. Use `map()` and `filter()` when you already have an existing, pre-defined function (like `map(len, strings)`).
+</Tip>
+
+---
+
+## What's next?
+
+Now let's learn how to validate your data using Type Hints and Dataclasses!
+
+<Card
+  title="Data Validation"
+  icon="arrow-right"
+  href="/advanced-python/data-validation"
+>
+  Learn type hints and dataclasses
+</Card>

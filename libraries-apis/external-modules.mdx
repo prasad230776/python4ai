@@ -1,0 +1,163 @@
+---
+title: Working with External Modules
+description: Learn to install, manage, and use third-party packages using pip, PyPI, and uv
+icon: "download"
+---
+
+While Python's built-in standard library is incredibly powerful, the real superpower of Python is its massive ecosystem of third-party libraries. These are packages written by the open-source community to solve almost any programming task imaginable.
+
+---
+
+## What is PyPI?
+
+**PyPI** (pronounced *pie-pee-eye*), or the **Python Package Index**, is the official online repository for third-party Python software. 
+
+* Anyone can write a Python package and publish it to PyPI.
+* When you need a package (like `pandas` for data analysis or `requests` for fetching web data), you download it directly from PyPI.
+* You can browse available packages at [pypi.org](https://pypi.org).
+
+---
+
+## What is pip?
+
+**pip** is the standard package manager for Python. It comes pre-installed with modern Python installations and allows you to install and manage packages directly from PyPI.
+
+### Common `pip` Commands
+
+Run these commands in your shell/terminal (not inside the Python interpreter):
+
+```bash
+# 1. Install the latest version of a package
+pip install requests
+
+# 2. Install a specific version of a package
+pip install requests==2.28.0
+
+# 3. Upgrade an existing package
+pip install --upgrade requests
+
+# 4. Uninstall a package
+pip uninstall requests
+
+# 5. List all installed packages in the current environment
+pip list
+```
+
+<Tip>
+  **Important:** Always ensure your virtual environment is activated before installing packages! Otherwise, you will install packages globally, which can lead to version conflicts between different projects. [Learn about virtual environments](/getting-started/virtual-environments).
+</Tip>
+
+---
+
+## What is uv?
+
+**uv** is an extremely fast, modern Python package installer and resolver written in Rust by Astral. It is designed to be a drop-in, ultra-fast replacement for `pip`, `pip-tools`, and `virtualenv`.
+
+### Why use `uv`?
+* **Blazing Fast:** Often 10x to 100x faster than standard `pip` because of its Rust engine and aggressive caching.
+* **Modern Features:** It can manage virtual environments, install Python interpreters, and run scripts with self-contained dependencies automatically.
+
+### Common `uv` Commands
+
+If you have `uv` installed, you can replace standard `pip` commands with:
+
+```bash
+# 1. Install a package via uv (blazing fast!)
+uv pip install requests
+
+# 2. Create a new virtual environment
+uv venv
+
+# 3. Install packages from requirements.txt
+uv pip install -r requirements.txt
+```
+
+---
+
+## Sharing Dependencies: `requirements.txt`
+
+When sharing a project with other developers, you should never share your virtual environment folder (like `.venv/`). Instead, you share a list of the packages your project needs.
+
+The standard way to do this in Python is using a `requirements.txt` file.
+
+### 1. Generating `requirements.txt`
+To export a list of all packages installed in your current active virtual environment:
+
+```bash
+# Using pip
+pip freeze > requirements.txt
+
+# Using uv
+uv pip freeze > requirements.txt
+```
+
+This generates a text file that looks like this:
+```text
+certifi==2024.2.2
+charset-normalizer==3.3.2
+requests==2.31.0
+urllib3==2.2.0
+```
+
+### 2. Installing from `requirements.txt`
+When another developer downloads your project, they can install all the required packages at once:
+
+```bash
+# Using pip
+pip install -r requirements.txt
+
+# Using uv (fastest!)
+uv pip install -r requirements.txt
+```
+
+---
+
+## Using External Packages in Code
+
+Once installed, you import and use external packages exactly like built-in modules:
+
+```python
+# 1. Import the installed package
+import requests
+
+# 2. Use it to fetch data from an online API
+response = requests.get("https://api.github.com/events")
+data = response.json()
+
+print(f"Status Code: {response.status_code}")
+```
+
+---
+
+## Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="ModuleNotFoundError: No module named 'X'">
+    This is the most common error. It means Python cannot find the package you are trying to import.
+    
+    **Typical Causes & Fixes:**
+    1. **Not installed:** You forgot to install it. Run `pip install X`.
+    2. **Virtual environment not activated:** You installed it in a virtual environment but forgot to activate it in your terminal, so Python is looking in the global space.
+    3. **Wrong environment in VS Code:** VS Code is running a different Python interpreter than your terminal. Click the Python version in the bottom-right of VS Code and select your virtual environment (`.venv`).
+  </Accordion>
+
+  <Accordion title="Name Conflicts (Shadowing)">
+    Never name your own script files the same name as a built-in module or external package.
+    
+    *Example:* If you name your file `requests.py` and write `import requests` inside it, Python will try to import *your file* instead of the official library, resulting in `AttributeError` or circular import issues.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## What's next?
+
+Now let's learn how to connect to web services and fetch data from APIs using the `requests` library!
+
+<Card
+  title="Working with APIs"
+  icon="arrow-right"
+  href="/libraries-apis/working-with-apis"
+>
+  Connect to online services
+</Card>

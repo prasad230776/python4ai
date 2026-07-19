@@ -1,0 +1,238 @@
+---
+title: Modules & Packages
+description: Organize your Python code into reusable files and directories
+icon: "cubes"
+---
+
+As your programs grow larger, keeping all your code in a single file becomes unmanageable. Python allows you to group related code into separate files called **modules**, and group those modules into folders called **packages**.
+
+---
+
+## What is a Module?
+
+A **module** is simply a Python file (with a `.py` extension) containing variables, functions, or classes that you want to reuse in other parts of your program.
+
+### Creating and Importing a Module
+
+Suppose we create a file named `calculator.py`:
+
+```python
+# calculator.py
+
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+PI = 3.14159
+```
+
+Now, we can use these functions in another file (e.g., `main.py`) in the same folder by importing it:
+
+```python
+# main.py
+
+import calculator
+
+# Use module functions using the dot (.) notation
+result = calculator.add(5, 3)
+print(result)           # 8
+print(calculator.PI)    # 3.14159
+```
+
+---
+
+## What is a Package?
+
+A **package** is a directory (folder) that contains multiple modules. It allows you to organize related modules hierarchically.
+
+### The Role of `__init__.py`
+
+To turn a standard folder into a Python package, it must contain a file named `__init__.py`. 
+
+#### 1. Marking Directories
+The existence of `__init__.py` tells Python that this directory is a package, meaning Python is allowed to import modules from inside it. If this file is missing, Python might not recognize the directory as an importable package.
+
+#### 2. Running Package Initialization Code
+When you import the package or any module inside it, Python executes the package's `__init__.py` first. This file can be empty, or it can contain initialization logic, such as configuring logger settings or setting package-level constants.
+
+#### 3. Creating a Public API (Simplified Imports)
+Instead of forcing users to import from deep nested submodules, you can import them inside `__init__.py` so they are accessible directly from the package.
+
+**Example Structure:**
+```text
+myproject/
+│
+├── main.py
+└── mypackage/
+    ├── __init__.py
+    ├── utils.py
+    └── database.py
+```
+
+If we import a function inside `mypackage/__init__.py`:
+```python
+# mypackage/__init__.py
+from .utils import format_text
+```
+Now, instead of writing `from mypackage.utils import format_text` in `main.py`, users can write:
+```python
+# main.py
+from mypackage import format_text
+```
+
+#### 4. Controlling Wildcard Imports (`__all__`)
+When someone uses the wildcard import syntax `from mypackage import *`, Python will search for a special list named `__all__` inside `__init__.py`. You can define `__all__` to explicitly specify and control which submodules or functions should be imported.
+
+```python
+# mypackage/__init__.py
+
+# Only expose 'utils' and make 'database' private to the package
+__all__ = ['utils']
+```
+
+**How it works in practice:**
+```python
+# main.py
+from mypackage import *
+
+# This works because 'utils' is whitelisted in __all__
+utils.format_text("hello")
+
+# This raises an error because 'database' is not in __all__
+database.connect()  # NameError: name 'database' is not defined
+```
+
+### Importing from a Package
+
+You can import modules from a package using dot notation:
+
+```python
+# main.py
+
+# Import specific function from a module inside the package
+from mypackage.utils import format_text
+
+# Import an entire module from the package
+from mypackage import database
+```
+
+---
+
+## How Python Finds Modules
+
+When you import a module in your script (e.g., `import calculator`), Python needs to locate the corresponding file. It searches for it in a specific order of locations:
+
+1. **Current Directory:** The folder containing the script you are currently running.
+2. **Standard Library:** Python's built-in modules (like `math`, `os`, `sys`).
+3. **Third-Party Libraries:** External packages you have installed via `pip`.
+
+Python stores this list of search directories in `sys.path`. You can view it by importing `sys`:
+
+```python
+import sys
+# Print all folders Python checks
+for path in sys.path:
+    print(path)
+```
+
+---
+
+## The Special `__name__` Variable
+
+`__name__` is a built-in special variable in Python that gets set automatically. It tells your script **how** it is being executed:
+
+1. **Run Directly:** If you run the file directly (e.g., `python calculator.py`), Python sets `__name__` to the string `"__main__"`.
+2. **Imported:** If the file is imported by another script (e.g., `import calculator`), Python sets `__name__` to the module's filename (e.g., `"calculator"`).
+
+### The `if __name__ == "__main__"` Boilerplate
+
+We use this check to write code that only executes when the file is run directly (useful for tests or demonstrations), but is ignored when imported as a module:
+
+```python
+# calculator.py
+
+def add(a, b):
+    return a + b
+
+# This code will only execute when you run: python calculator.py
+# It will be ignored when you do: import calculator
+if __name__ == "__main__":
+    print("Testing calculator module...")
+    print(add(10, 5) == 15)  # True
+```
+
+---
+
+## Inspecting Modules with `dir()`
+
+Python provides a built-in function called `dir()` to inspect what is defined inside a module. It returns a sorted list of strings containing all the functions, classes, variables, and imported modules defined inside that module.
+
+```python
+import math
+
+# See all functions and attributes inside the math module
+print(dir(math))
+# Output: ['__doc__', '__file__', ..., 'cos', 'sin', 'sqrt', 'tan']
+```
+
+If you call `dir()` without any arguments, it returns the names defined in your current local scope.
+
+---
+
+## Import Best Practices (PEP 8)
+
+To keep your code clean, readable, and maintainable, follow the official PEP 8 style guide rules:
+
+### 1. Import Grouping and Order
+Imports should always be placed at the very top of your file, grouped in the following order (separated by blank lines):
+1. **Standard library imports** (e.g., `import os`, `import sys`)
+2. **Third-party library imports** (e.g., `import requests`, `import pandas as pd`)
+3. **Local application imports** (e.g., `from mypackage.utils import clean`)
+
+```python
+# 1. Standard Library
+import os
+import sys
+
+# 2. Third-Party
+import pandas as pd
+import requests
+
+# 3. Local Application
+from mypackage.utils import clean
+```
+
+### 2. Avoid Wildcard Imports
+Never use `from module import *`. It imports everything, cluttering your namespace and potentially overwriting existing functions (naming conflicts).
+
+```python
+# BAD: Hard to tell where 'sqrt' or 'pi' came from
+from math import *
+
+# GOOD: Explicit imports
+from math import sqrt, pi
+# OR
+import math
+```
+
+### 3. Conventions for Aliases
+Use standard, community-accepted aliases for common libraries:
+* `import pandas as pd`
+* `import numpy as np`
+* `import matplotlib.pyplot as plt`
+
+---
+
+## What's next?
+
+Now that you know how to organize your code into files and folders, let's learn about classes - Python's way of organizing code and data together.
+
+<Card
+  title="Classes"
+  icon="shapes"
+  href="/advanced/classes/index"
+>
+  Object-oriented programming
+</Card>

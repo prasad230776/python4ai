@@ -1,0 +1,98 @@
+---
+title: Custom Exceptions
+description: Define and raise your own domain-specific errors
+icon: "shield-exclamation"
+---
+
+As you build larger applications, Python's built-in exceptions (like `ValueError` or `TypeError`) might not be specific enough to represent domain-specific errors. You can define your own custom exceptions to handle specific error conditions in your application logic.
+
+---
+
+## Defining Custom Exceptions
+
+To create a custom exception, define a new class that inherits from Python's built-in `Exception` class (or one of its subclasses).
+
+```python
+# The simplest custom exception
+class MyCustomError(Exception):
+    pass
+```
+
+Usually, you'll want to customize your exceptions to accept additional details, such as custom error messages or values.
+
+---
+
+## Raising Exceptions with `raise`
+
+Use the `raise` keyword to manually trigger an exception when a specific condition is met.
+
+```python
+def check_age(age):
+    if age < 0:
+        raise ValueError("Age cannot be negative!")
+```
+
+---
+
+## Banking Example: Insufficient Balance
+
+Here is a practical banking scenario where attempting to withdraw more money than the account balance raises a custom `InsufficientBalanceError`.
+
+We store the current `balance` and the attempted withdrawal `amount` directly inside the error object so that the code catching the exception can use them.
+
+```python
+# 1. Define the custom exception by inheriting from Exception
+class InsufficientBalanceError(Exception):
+    """Exception raised when a withdrawal amount exceeds the account balance."""
+    def __init__(self, balance, amount):
+        self.balance = balance
+        self.amount = amount
+        # Pass a descriptive message to the parent Exception class
+        super().__init__(f"Attempted to withdraw ${amount} but only have ${balance}")
+
+# 2. Use it in a class or function
+class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            # Raise the custom exception
+            raise InsufficientBalanceError(self.balance, amount)
+        self.balance -= amount
+        print(f"Successfully withdrew ${amount}. Remaining balance: ${self.balance}")
+
+# 3. Catch the custom exception
+account = BankAccount(100)
+
+try:
+    account.withdraw(150)
+except InsufficientBalanceError as error:
+    print(f"Transaction Failed: {error}")
+    # You can access custom attributes defined on the error
+    print(f"Current Balance: ${error.balance}")
+    print(f"Attempted Withdrawal: ${error.amount}")
+    print(f"Shortage Amount: ${error.amount - error.balance}")
+```
+
+---
+
+## Precautions & Best Practices
+
+1. **Inherit from `Exception`:** Always inherit custom exceptions from `Exception` (or a subclass of it), not `BaseException`. `BaseException` is reserved for system-altering exceptions like keyboard interrupts.
+2. **Name with "Error" suffix:** By convention, end your custom exception class names with `Error` (e.g., `InsufficientBalanceError`, `UserNotFoundError`).
+3. **Keep them simple:** Custom exceptions don't need complex logic. Their main purpose is to help categorize error types for better try-except routing.
+
+---
+
+## What's next?
+
+Now let's look at the most common errors you'll encounter in Python and how to debug them.
+
+<Card
+  title="Common Errors"
+  icon="bug"
+  href="/advanced/error-handling/common-errors"
+>
+  Learn about common Python error types and messages
+</Card>

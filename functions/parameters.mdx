@@ -41,9 +41,24 @@ introduce("Bob", 30)
   The values you pass when calling a function are called "arguments". The variables in the function definition are "parameters". Many people use these terms interchangeably.
 </Note>
 
+## Positional arguments
+
+By default, Python matches the arguments you pass in a function call to the parameters in the function definition by their **position** (order).
+
+```python
+def describe_pet(animal_type, pet_name):
+    print(f"I have a {animal_type} named {pet_name}.")
+
+# Positional arguments: "hamster" maps to animal_type, "Harry" to pet_name
+describe_pet("hamster", "Harry")  # I have a hamster named Harry.
+
+# Changing the order changes the meaning!
+describe_pet("Harry", "hamster")  # I have a Harry named hamster.
+```
+
 ## Multiple parameters
 
-Functions can have multiple parameters:
+Functions can have multiple parameters of any type:
 
 ```python
 def calculate_total(price, tax_rate, discount):
@@ -51,8 +66,8 @@ def calculate_total(price, tax_rate, discount):
     final_price = price + tax - discount
     print(f"Total: ${final_price}")
 
-# Order matters!
-calculate_total(100, 0.08, 10)  # $98
+# Order matters when passing them positionally!
+calculate_total(100, 0.08, 10)  # $98.0
 ```
 
 ## Default values
@@ -90,6 +105,49 @@ create_profile("Alice", 25, "NYC")
 create_profile(city="NYC", age=25, name="Alice")
 create_profile(name="Bob", city="LA", age=30)
 ```
+
+## Mixing positional and keyword arguments
+
+You can combine positional and keyword arguments in the same function call. This is useful when you want to provide values for the first few parameters positionally, and use keyword names for the rest.
+
+```python
+def book_flight(destination, date, seat="window", class_type="economy"):
+    print(f"Flight to {destination} on {date}. Seat: {seat}, Class: {class_type}")
+
+# Mixing positional and keyword arguments
+# "Paris" and "Oct 15" are positional; class_type is keyword
+book_flight("Paris", "Oct 15", class_type="business")
+```
+
+<Warning>
+  **The Golden Rule:** Positional arguments **must always** come before keyword arguments in a function call.
+  
+  ```python
+  # ERROR: Positional argument follows keyword argument
+  book_flight(destination="London", "Oct 20")  # SyntaxError!
+  ```
+</Warning>
+
+## Key rules to remember
+
+Here is a quick summary of rules for parameters and arguments:
+
+1. **Order in Function Definition:**
+   - Always place required parameters (without default values) **before** optional parameters (with default values).
+   - `def greet(name, greeting="Hello")` is **correct**.
+   - `def greet(greeting="Hello", name)` is **incorrect** (will raise a `SyntaxError`).
+
+2. **Order in Function Calls:**
+   - Positional arguments must always come **before** keyword arguments.
+   - `greet("Alice", greeting="Hi")` is **correct**.
+   - `greet(name="Alice", "Hi")` is **incorrect** (will raise a `SyntaxError`).
+
+3. **No Double Assignment:**
+   - You cannot pass multiple values for the same parameter in a single call.
+   - `greet("Alice", name="Bob")` is **incorrect** (will raise a `TypeError`).
+
+4. **Beware of Mutable Defaults:**
+   - Never use mutable types (like lists `[]` or dictionaries `{}`) as default parameters. Use `None` instead.
 
 ## Common mistakes
 

@@ -6,43 +6,60 @@ icon: "function"
 
 Python supports multiple programming paradigms, including **Functional Programming (FP)**. In functional programming, code is structured around passing functions as arguments, returning functions, and avoiding changing state or mutable data.
 
-This section covers the core built-in functional tools in Python: `map()`, `filter()`, and `reduce()`.
+This paradigm relies heavily on two primary concepts: the **Declarative Approach** and **Higher-Order Functions**.
 
 ---
 
-## What is Functional Programming?
+## Key Aspects of Functional Programming
 
-Functional programming focuses on writing:
-* **Pure Functions:** Functions that always return the same output for the same input and have no side effects (like modifying a global variable or printing to the console).
-* **First-Class Functions:** Treating functions as data (assigning them to variables, passing them to other functions).
-* **Immutability:** Avoiding modifying existing data structures; instead, creating new ones.
+### 1. The Declarative Approach
+Unlike **Imperative Programming**, which focuses on *how* to solve a problem step-by-step (using loops, conditionals, and state updates), **Declarative Programming** focuses on *what* you want to accomplish. You express the logic of computation without describing its control flow.
+
+#### Comparison: Doubling a List
+
+* **Imperative Approach (How to do it):**
+  ```python
+  # We manually manage state, initialize a list, and loop
+  numbers = [1, 2, 3, 4]
+  doubled = []
+  for num in numbers:
+      doubled.append(num * 2)
+  print(doubled)  # [2, 4, 6, 8]
+  ```
+
+* **Declarative Approach (What to do):**
+  ```python
+  # We declare the transformation without managing loops or state
+  numbers = [1, 2, 3, 4]
+  doubled = list(map(lambda x: x * 2, numbers))
+  print(doubled)  # [2, 4, 6, 8]
+  ```
 
 ---
 
-## 1. The `map()` Function
+### 2. Higher-Order Functions
+A **Higher-Order Function** is a function that does at least one of the following:
+* Takes one or more functions as arguments.
+* Returns a function as its result.
 
-The `map()` function applies a given function to all items in an iterable (like a list) and returns an iterator yielding the results.
+Python's built-in functions `map()`, `filter()`, and `reduce()` are classic examples of higher-order functions because they require another function to be passed in as their first argument.
 
-### Syntax
+#### Custom Higher-Order Function Example:
 ```python
-map(function, iterable)
+def apply_twice(func, value):
+    """Takes a function and applies it twice to the value."""
+    return func(func(value))
+
+add_five = lambda x: x + 5
+print(apply_twice(add_five, 10))  # Output: 20 (10 + 5 + 5)
 ```
 
-### Example
-Suppose we want to calculate the length of several strings:
+---
 
-```python
-names = ["Alice", "Bob", "Charlie"]
+## Built-In Higher-Order Functions
 
-# Using a standard function
-name_lengths = map(len, names)
-
-# Convert iterator to list to view results
-print(list(name_lengths))  # [5, 3, 7]
-```
-
-### Map with Lambdas
-`map()` is frequently paired with `lambda` functions:
+### The `map()` Function
+Applies a given function to all items in an iterable and returns an iterator.
 
 ```python
 numbers = [1, 2, 3, 4]
@@ -50,73 +67,79 @@ squared = map(lambda x: x * x, numbers)
 print(list(squared))  # [1, 4, 9, 16]
 ```
 
----
-
-## 2. The `filter()` Function
-
-The `filter()` function filters elements from an iterable based on whether a function returns `True` or `False` for that element.
-
-### Syntax
-```python
-filter(function, iterable)
-```
-
-### Example
-Filter out only the even numbers from a list:
+### The `filter()` Function
+Filters elements from an iterable based on whether a function returns `True` or `False` for each element.
 
 ```python
 numbers = [1, 2, 3, 4, 5, 6]
-
-# The lambda returns True if even, False otherwise
 even_numbers = filter(lambda x: x % 2 == 0, numbers)
-
 print(list(even_numbers))  # [2, 4, 6]
 ```
 
----
-
-## 3. The `reduce()` Function
-
-Unlike `map()` and `filter()`, which are built-in, the `reduce()` function must be imported from the **`functools`** module.
-
-`reduce()` applies a function of two arguments cumulatively to the items of an iterable, from left to right, reducing the sequence to a single value.
-
-### Syntax
-```python
-from functools import reduce
-reduce(function, iterable[, initializer])
-```
-
-### Example
-Calculate the product of all numbers in a list:
+### The `reduce()` Function
+Must be imported from the `functools` module. It applies a function cumulatively to items of an iterable, reducing the sequence to a single value.
 
 ```python
 from functools import reduce
 
 numbers = [1, 2, 3, 4]
-
-# Step-by-step math:
-# 1 * 2 = 2
-# 2 * 3 = 6
-# 6 * 4 = 24
+# Calculated as: ((1 * 2) * 3) * 4 = 24
 product = reduce(lambda x, y: x * y, numbers)
-
 print(product)  # 24
 ```
 
 ---
 
-## Map/Filter vs. List Comprehensions
+## Combined Example: Sum of Squares of Even Numbers
 
-In modern Python, list comprehensions are often preferred over `map()` and `filter()` because they are generally considered more readable and "Pythonic":
+Let's combine the **declarative approach** and **higher-order functions** into a single pipeline. We will take a list of numbers and compute the **sum of the squares of the even numbers**.
 
-| Functional Style | Pythonic Comprehension Equivalent |
-| :--- | :--- |
-| `list(map(lambda x: x*x, nums))` | `[x * x for x in nums]` |
-| `list(filter(lambda x: x % 2 == 0, nums))` | `[x for x in nums if x % 2 == 0]` |
+### Step-by-Step Breakdown:
+1. **Filter:** Keep only even numbers: `x % 2 == 0`
+2. **Map:** Square each remaining number: `x ** 2`
+3. **Reduce:** Sum the squared results: `x + y`
+
+### Functional Code:
+```python
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5, 6]
+
+# 1. Filter even numbers -> [2, 4, 6]
+evens = filter(lambda x: x % 2 == 0, numbers)
+
+# 2. Square the numbers -> [4, 16, 36]
+squares = map(lambda x: x ** 2, evens)
+
+# 3. Sum the squares -> 4 + 16 + 36 = 56
+total_sum = reduce(lambda x, y: x + y, squares)
+
+print(total_sum)  # 56
+```
+
+### Writing it as a Single Pipeline:
+You can chain these functional calls directly into a single statement:
+```python
+total_sum = reduce(lambda x, y: x + y, map(lambda x: x**2, filter(lambda x: x % 2 == 0, numbers)))
+print(total_sum)  # 56
+```
+
+---
+
+## The Pythonic Equivalent
+
+While the nested higher-order function pipeline works, it can sometimes be difficult to read. In Python, you can achieve the exact same declarative result using a list comprehension combined with the built-in `sum()` function:
+
+```python
+numbers = [1, 2, 3, 4, 5, 6]
+
+# Extremely clean, declarative, and readable
+total_sum = sum(x**2 for x in numbers if x % 2 == 0)
+print(total_sum)  # 56
+```
 
 <Tip>
-  Use list comprehensions for simple transformations and filtering. Use `map()` and `filter()` when you already have an existing, pre-defined function (like `map(len, strings)`).
+  Prefer built-in functions like `sum()` and comprehensions for mathematical operations on collections, but use `map`/`filter`/`reduce` when working with functional pipelines or preexisting callback interfaces.
 </Tip>
 
 ---

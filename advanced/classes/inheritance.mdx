@@ -150,6 +150,58 @@ print(result)  # Loading gpt-3.5-turbo...
                # Processed: Hello world
 ```
 
+---
+
+## Types of Inheritance in Python
+
+Python is extremely versatile and supports five primary types of inheritance:
+
+1. **Single Inheritance**: A child class inherits from a single parent class. (e.g., `class Dog(Animal)`)
+2. **Multiple Inheritance**: A child class inherits from more than one parent class. (e.g., `class SmartDevice(Camera, Phone)`)
+3. **Multilevel Inheritance**: A child class inherits from a parent class, which in turn inherits from another class. (e.g., `class Puppy(Dog)` where `Dog` inherits from `Animal`)
+4. **Hierarchical Inheritance**: Multiple child classes inherit from a single parent class. (e.g., both `Dog` and `Cat` inherit from `Animal`)
+5. **Hybrid Inheritance**: A combination of two or more of the above inheritance types.
+
+---
+
+## Conflict Resolution & Method Resolution Order (MRO)
+
+In **Multiple Inheritance**, a conflict arises if two parent classes define the same method or attribute. How does Python decide which one to execute?
+
+### The MRO Resolution Rules:
+Python resolves conflicts using the **Method Resolution Order (MRO)**, which follows the **C3 Linearization** algorithm. The order is determined by:
+1. Looking at the class itself first.
+2. Looking at parent classes from left to right as specified in the class definition (e.g., `class Child(ParentA, ParentB)` looks at `ParentA` before `ParentB`).
+3. Moving up the hierarchy without visiting the same class twice (depth-first, left-to-right, but keeping shared base classes for last).
+
+### Visualizing MRO:
+You can print the MRO of any class using the `.mro()` method or the `__mro__` attribute.
+
+```python
+class ParentA:
+    def greet(self):
+        return "Hello from Parent A"
+
+class ParentB:
+    def greet(self):
+        return "Hello from Parent B"
+
+# Child inherits from both (ParentA is listed FIRST/LEFT)
+class Child(ParentA, ParentB):
+    pass
+
+c = Child()
+print(c.greet())  # Output: Hello from Parent A
+
+# Inspect the resolution order
+print(Child.mro())
+# Output: [<class 'Child'>, <class 'ParentA'>, <class 'ParentB'>, <class 'object'>]
+```
+
+If you swap the order: `class Child(ParentB, ParentA)`, then `c.greet()` will output `"Hello from Parent B"`.
+
+---
+
 ## When to use inheritance
 
 **Use inheritance when**:

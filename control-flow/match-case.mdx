@@ -1,0 +1,118 @@
+---
+title: Match case
+description: Clean pattern matching in Python
+icon: "code-branch"
+---
+
+## What is Match Case?
+
+Introduced in Python 3.10, the `match` statement (also called structural pattern matching) is a clean and readable alternative to writing long chains of `if-elif-else` statements.
+
+Think of it like checking a variable against a list of possible matches.
+
+## Basic Syntax
+
+Here is how you write a basic `match` statement to check response status codes:
+
+```python
+status_code = 404
+
+match status_code:
+    case 200:
+        print("Success - OK")
+    case 404:
+        print("Not Found")
+    case 500:
+        print("Internal Server Error")
+    case _:
+        print("Unknown Status Code")
+```
+
+### How it works:
+1. Python takes the value of `status_code` and checks it against each `case`.
+2. As soon as it finds a match, it runs the code under that case block.
+3. The **wildcard** `case _:` acts as a default fallback (similar to `else`). It matches *anything* if no previous cases matched.
+
+<Note>
+  Unlike some other programming languages (like Java or C++ switch statements), Python's `match` statement does **not** fall through. Once a match is found, only that block runs, and Python exits the `match` block. You don't need `break` statements!
+</Note>
+
+## Combining Patterns (`|` OR)
+
+You can check if a variable matches one of multiple values in a single `case` block by separating them with the `|` (OR) symbol:
+
+```python
+day = "Sunday"
+
+match day:
+    case "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday":
+        print("It's a weekday. Time to work!")
+    case "Saturday" | "Sunday":
+        print("It's the weekend! Time to relax.")
+    case _:
+        print("Not a valid day.")
+```
+
+## Conditional Guards (`if` in case)
+
+Sometimes you want to match a pattern *only* if a certain condition is also met. You can add an `if` condition (called a **guard**) to a case:
+
+```python
+number = 15
+
+match number:
+    case n if n < 0:
+        print(f"{n} is negative")
+    case 0:
+        print("Zero")
+    case n if n > 0:
+        print(f"{n} is positive")
+```
+
+In this example, `n` acts as a temporary variable name that captures the value of `number` so it can be evaluated in the `if` guard.
+
+## Common mistakes
+
+<AccordionGroup>
+  <Accordion title="Placing case _: at the beginning or middle">
+    The wildcard case `case _:` matches everything. If you place it before other cases, it will always match, and the cases below it will never run! Python will raise a `SyntaxError` if you place it anywhere except as the last case.
+  </Accordion>
+  <Accordion title="Using complex conditions without if guard syntax">
+    You cannot use comparison operators directly in case patterns like `case < 10:`. You must use a guard pattern: `case n if n < 10:`.
+  </Accordion>
+</AccordionGroup>
+
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Match Case pattern matching), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice match-case basic structures, combining patterns, and using conditional guards.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Match_Case_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Match_Case_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Match_Case_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on status code matching, day patterns, and number range guards.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Match_Case_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Match_Case_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Match_Case_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
+## What's next?
+
+Now let's learn about loops to repeat code efficiently!
+
+<Card
+  title="Loops"
+  icon="rotate"
+  href="/basics/loops"
+>
+  Repeat code without copying
+</Card>

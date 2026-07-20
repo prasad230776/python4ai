@@ -52,6 +52,68 @@ if "red" in colors:
     print("Red is available")
 ```
 
+## Mathematical Set Operations
+
+One of the most powerful features of sets is performing mathematical set algebra. Python provides both methods and operators for these:
+
+```python
+set_a = {1, 2, 3}
+set_b = {3, 4, 5}
+```
+
+### 1. Union (`|`)
+Combines all unique elements from both sets:
+```python
+# Using method
+print(set_a.union(set_b))          # {1, 2, 3, 4, 5}
+# Using operator
+print(set_a | set_b)               # {1, 2, 3, 4, 5}
+```
+
+### 2. Intersection (`&`)
+Finds elements that are present in both sets:
+```python
+# Using method
+print(set_a.intersection(set_b))   # {3}
+# Using operator
+print(set_a & set_b)               # {3}
+```
+
+### 3. Difference (`-`)
+Finds elements present in the first set but not in the second set:
+```python
+# Using method (A - B)
+print(set_a.difference(set_b))     # {1, 2}
+# Using operator
+print(set_a - set_b)               # {1, 2}
+```
+
+### 4. Symmetric Difference (`^`)
+Finds elements present in either of the sets, but not in both:
+```python
+# Using method
+print(set_a.symmetric_difference(set_b)) # {1, 2, 4, 5}
+# Using operator
+print(set_a ^ set_b)                     # {1, 2, 4, 5}
+```
+
+### 5. Subsets & Supersets
+Checks the relationships between sets:
+```python
+small_set = {1, 2}
+big_set = {1, 2, 3, 4}
+
+# Check if small_set is a subset of big_set (<=)
+print(small_set.issubset(big_set))     # True
+print(small_set <= big_set)            # True
+
+# Check if big_set is a superset of small_set (>=)
+print(big_set.issuperset(small_set))   # True
+print(big_set >= small_set)            # True
+```
+
+---
+
 ## Common uses
 
 ### Remove duplicates
@@ -94,14 +156,37 @@ if "alice" in allowed_users:  # Very fast!
   </Accordion>
 </AccordionGroup>
 
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Sets, unique collections, and set algebra operations), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice initializing sets, removing duplicates from lists, and applying union/intersection checks.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Sets_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Sets_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Sets_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on duplicate removal and shared skill intersections.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Sets_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Sets_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Sets_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
 ## What's next?
 
-Learn about packing and unpacking values in Python to write cleaner and more readable code.
+Learn about how to handle Queues (First-In, First-Out) efficiently in Python using double-ended queues.
 
 <Card
-  title="Packing and Unpacking"
-  icon="box-open"
-  href="/basics/packing-unpacking"
+  title="Queues"
+  icon="lines-leaning"
+  href="/data-structures/queues"
 >
-  Learn to pack and unpack collections
+  Learn to manage queues and FIFO structures
 </Card>

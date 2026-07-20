@@ -102,6 +102,34 @@ print(not True)         # False
 print(not False)        # True
 ```
 
+### Short-Circuit Evaluation & Non-Booleans
+
+In Python, logical operators (`and`, `or`) do not just return `True` or `False`. They return one of the actual evaluated values.
+
+Python evaluates values in a boolean context as either **truthy** or **falsy**:
+- **Falsy values**: `False`, `None` (Python's null value), `0`, `0.0`, empty strings `""`, and empty lists/dictionaries.
+- **Truthy values**: Almost everything else (non-zero numbers, non-empty strings/lists).
+
+#### How `and` behaves (Short-Circuit):
+The `and` operator evaluates expressions from left to right and returns the **first falsy value** it encounters. If all values are truthy, it returns the **last evaluated value**.
+
+```python
+print(2 and 3)       # 3 (both truthy, returns the last)
+print(False and 3)   # False (first is falsy, returns it immediately)
+print(0 and 3)       # 0 (0 is falsy, returns it)
+print(None and 3)    # None (None is falsy, returns it)
+print("" and 4)      # "" (empty string is falsy, returns it)
+```
+
+#### How `or` behaves (Short-Circuit):
+The `or` operator evaluates from left to right and returns the **first truthy value** it encounters. If all values are falsy, it returns the **last evaluated value**.
+
+```python
+print(2 or 3)        # 2 (first is truthy, returns it immediately)
+print(False or 3)    # 3 (first is falsy, evaluates and returns next)
+print(0 or None)     # None (both falsy, returns the last one)
+```
+
 ## Assignment shortcuts
 
 These shortcuts update variables in place:
@@ -154,9 +182,32 @@ x *= 2    # x is now 30
   </Accordion>
 </AccordionGroup>
 
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Arithmetic, Comparison, and Logical Operators), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice operators, PEMDAS rules, logical evaluations, and assignment shortcuts.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Operators_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Operators_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Operators_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on floor division vs modulo, order of operations, and logical conditions.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Operators_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Operators_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Operators_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
 ## What's next?
 
-You know operators! Let's dive deeper into working with text strings.
+Once you are comfortable with Operators, let's learn how to manipulate text strings!
 
 <Card
   title="String manipulation"

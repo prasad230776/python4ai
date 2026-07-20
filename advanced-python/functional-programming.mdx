@@ -113,6 +113,26 @@ squared = map(lambda x: x * x, numbers)
 print(list(squared))  # [1, 4, 9, 16]
 ```
 
+#### Example: Calling a separate multi-line function inside `map()`
+When your mapping logic is complex and spans multiple lines, you can define a separate named helper function and call it inside a lambda wrapper:
+```python
+def get_grade(marks):
+    # Multi-line logic defined separately
+    if marks >= 90:
+        return "A"
+    elif marks >= 75:
+        return "B"
+    elif marks >= 50:
+        return "C"
+    else:
+        return "F"
+
+student_marks = [88, 45, 92, 67]
+# Calling the multi-line helper function directly by passing its reference
+student_grades = list(map(get_grade, student_marks))
+print(student_grades)  # ['B', 'F', 'A', 'C']
+```
+
 ### The `filter()` Function
 Filters elements from an iterable based on whether a function returns `True` or `False` for each element.
 
@@ -190,14 +210,37 @@ print(total_sum)  # 56
 
 ---
 
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Declarative programming, higher-order functions, map/filter/reduce, and combined functional pipelines), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice implementing imperative vs declarative loops, processing functions as arguments, defining dynamic salary strategy policies, mapping values, filtering collections, and applying functional reduction.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Functional_Programming_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Functional_Programming_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Functional_Programming_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on declarative string capitalization, flat vs percentage discount strategy builders, compound map/filter calculations, and sequence reduction.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Functional_Programming_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Functional_Programming_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Functional_Programming_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
 ## What's next?
 
-Now let's learn how to validate your data using Type Hints and Dataclasses!
+Now let's dive into Advanced OOP concepts (metaclasses, class creation, and framework designs)!
 
 <Card
-  title="Data Validation"
+  title="Advanced OOP"
   icon="arrow-right"
-  href="/advanced-python/data-validation"
+  href="/advanced-python/advanced-oop"
 >
-  Learn type hints and dataclasses
+  Learn metaclasses, dunder methods, and dynamic creation
 </Card>

@@ -8,23 +8,39 @@ Python supports multi-paradigm programming, allowing functions to be treated wit
 
 ---
 
-## Functions as First-Class Objects
+In Python, functions are first-class objects. This means that just like integers, strings, or lists, a function is an object in memory with a type, identity, and value. You can:
+1. Assign them to new variables.
+2. Store them inside lists, tuples, or dictionaries.
+3. Pass them as arguments to other functions.
+4. Access their built-in attributes (like `__name__`).
 
-In Python, functions are first-class objects. This means you can:
-1. Assign them to variables.
-2. Pass them as arguments to other functions.
-3. Return them from other functions.
-4. Store them inside lists, tuples, or dictionaries.
+Here are examples demonstrating functions behaving as objects:
 
 ```python
-# 1. Pass a function as an argument (Higher-Order Function)
-def square(x):
-    return x * x
+def greet(name):
+    return f"Hello, {name}!"
 
-def process_number(number, func):
-    return func(number)
+# 1. Assign to another variable
+say_hello = greet
+print(say_hello("Aarav"))  # Hello, Aarav!
 
-print(process_number(5, square))  # 25
+# 2. Store in a list and loop through them
+def shout(name):
+    return f"HELLO, {name}!"
+
+actions = [greet, shout]
+for action in actions:
+    print(action("Amit"))  # Prints "Hello, Amit!" then "HELLO, Amit!"
+
+# 3. Pass as an argument (Higher-Order Function)
+def run_action(name, action_func):
+    return action_func(name)
+
+print(run_action("Dev", greet))  # Hello, Dev!
+
+# 4. Access attributes and memory identity
+print(greet.__name__)  # "greet"
+print(id(greet))       # Memory address integer
 ```
 
 ---
@@ -49,6 +65,52 @@ def add(x, y):
 add_lambda = lambda x, y: x + y
 
 print(add_lambda(3, 7))  # 10
+```
+
+### Real-World Inline Lambda Example
+For quick, single-line mapping operations like adding 18% GST to prices:
+```python
+prices = [100, 250, 500]
+prices_with_gst = list(map(lambda price: price * 1.18, prices))
+print(prices_with_gst)  # [118.0, 295.0, 590.0]
+```
+
+### Limitations with Multi-line Logic
+
+Python lambda functions are syntactically restricted to a **single expression**. They cannot contain statements, loops, or variable assignments. 
+
+However, you can write a **multi-line expression** (such as nested conditional ternaries) by wrapping the lambda body inside parentheses `()`.
+
+#### 1. Multi-line Lambda Expression (Nested Conditionals)
+For classifying numerical scores into categories using nested ternary expressions formatted across multiple lines:
+```python
+classify_score = lambda score: (
+    "Excellent" if score >= 90 else
+    "Good" if score >= 75 else
+    "Pass" if score >= 50 else
+    "Fail"
+)
+
+print(classify_score(82))  # "Good"
+print(classify_score(45))  # "Fail"
+```
+
+<Warning>
+  **Bad Practice Warning:** While you *can* format single expressions across multiple lines using parentheses, writing complex nested conditionals or multi-line expressions inside a lambda is considered **bad practice**. It significantly hurts code readability and makes debugging difficult. Always prefer standard `def` functions for any logic that spans multiple lines or requires complex conditions.
+</Warning>
+
+#### 2. Normal Function Alternative for Multiple Statements
+If your logic requires executing multiple separate statements (like logs, assignments, or loops), you must define a normal function using the `def` keyword:
+```python
+def process_user_data(user):
+    # Multiple statements cannot be done in a lambda!
+    name = user.get("name", "Guest")
+    cleaned_name = name.strip().title()
+    print(f"Processing database record for: {cleaned_name}")
+    return cleaned_name
+
+user_record = {"name": "  aarav sharma  "}
+print(process_user_data(user_record))
 ```
 
 <Tip>
@@ -159,6 +221,29 @@ print_everything(1, 2, 3, name="Alice", age=25)
 ```
 
 ---
+
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Higher-order functions, lambdas, closures, and custom decorators), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice passing functions as arguments, defining single-expression anonymous lambdas, sorting coordinates dynamically, building closure scopes, and applying custom decorators.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Advanced_Functions_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Advanced_Functions_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Advanced_Functions_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on higher-order operations, sorting product list prices using lambda keys, creating greeting closure builders, and writing bold-formatting decorators.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Advanced_Functions_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Advanced_Functions_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Advanced_Functions_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
 
 ## What's next?
 

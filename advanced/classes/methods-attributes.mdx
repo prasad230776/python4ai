@@ -1,78 +1,210 @@
 ---
 title: Methods and attributes
-description: Add functionality to classes
+description: Add functionality and manage data in Python classes
 icon: "wrench"
 ---
 
-## Attributes: storing data
+Classes contain two things: **attributes** (to store data) and **methods** (to add actions and behavior). 
 
-Attributes are variables that belong to an object. There are two types:
+Let's look at how to define and use the different types of attributes and methods in Python using a bank **`Account`** class.
 
-**Instance attributes** (unique to each object):
-```python
-class APIClient:
-    def __init__(self, api_key, base_url):
-        self.api_key = api_key      # Each client has its own key
-        self.base_url = base_url    # Each client has its own URL
-        self.request_count = 0      # Track requests per client
+---
 
-# Creating instances with named arguments
-client1 = APIClient(api_key="key1", base_url="https://api1.com")
-client2 = APIClient(api_key="key2", base_url="https://api2.com")
-```
+## 1. Attributes: Storing Data
 
-**Class attributes** (shared by all objects):
-```python
-class APIClient:
-    version = "1.0"              # Same for all clients
-    max_retries = 3              # Same for all clients
-    
-    def __init__(self, api_key):
-        self.api_key = api_key   # Unique to each client
-```
+Attributes are variables bound to a class or an instance of a class.
 
-## Methods: adding behavior
-
-Methods are functions that belong to a class. They always have `self` as the first parameter, but you don't pass it when calling:
+### Instance Attributes (Unique to each object)
+Instance attributes are defined inside the `__init__` method using the `self` prefix. Each object created has its own unique copy of these values.
 
 ```python
-class DataValidator:
-    def __init__(self):
-        self.errors = []
-    
-    def validate_email(self, email):
-        if "@" not in email:
-            self.errors.append(f"Invalid email: {email}")
-            return False
-        return True
-    
-    def validate_age(self, age):
-        if age < 0 or age > 150:
-            self.errors.append(f"Invalid age: {age}")
-            return False
-        return True
-    
-    def get_errors(self):
-        return self.errors
+class Account:
+    def __init__(self, owner, balance):
+        self.owner = owner     # Instance attribute: specific to this account
+        self.balance = balance # Instance attribute: specific to this account
 
-# Use the validator
-validator = DataValidator()
+# Each account has its own data
+acc1 = Account("Aarav", 5000.0)
+acc2 = Account("Amit", 12000.0)
 
-# Notice: we don't pass self, just the email
-validator.validate_email(email="bad-email")
-validator.validate_age(age=200)
-
-# Or using positional arguments
-validator.validate_email("another-bad-email")
-validator.validate_age(150)
-
-print(validator.get_errors())
-# ['Invalid email: bad-email', 'Invalid age: 200', 'Invalid email: another-bad-email']
+print(acc1.owner)  # Aarav
+print(acc2.owner)  # Amit
 ```
 
-<Note>
-  When you call a method like `validator.validate_email("test@example.com")`, Python automatically passes the validator object as `self`. You only provide the other arguments.
-</Note>
+### Class Attributes (Shared by all objects)
+Class attributes are defined directly inside the class body but outside any methods. They are shared across all instances of that class.
+
+```python
+class Account:
+    bank_name = "State Bank of India" # Class attribute: shared by all accounts
+    
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+acc1 = Account("Aarav", 5000.0)
+acc2 = Account("Amit", 12000.0)
+
+# Both share the same bank name
+print(acc1.bank_name)  # State Bank of India
+print(acc2.bank_name)  # State Bank of India
+```
+
+---
+
+## 2. Methods: Adding Behavior
+
+Methods are functions defined inside a class that execute operations. There are three types of methods in Python:
+
+### A. Instance Methods
+These are the most common type. They always take `self` as the first argument, representing the specific object calling the method. They can read or modify the object's instance attributes.
+
+```python
+class Account:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+    # Instance method
+    def deposit(self, amount):
+        self.balance += amount
+        print(f"Deposited Rs. {amount}. New Balance: Rs. {self.balance}")
+
+acc1 = Account("Aarav", 5000.0)
+acc1.deposit(1500.0)  # Output: Deposited Rs. 1500.0. New Balance: Rs. 6500.0
+```
+
+### B. Class Methods
+Class methods are bound to the class itself, not to the instances. They are marked with the `@classmethod` decorator and take `cls` as the first parameter (representing the class object). They are used to read or modify class-level attributes.
+
+```python
+class Account:
+    bank_name = "State Bank of India"
+
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+    # Class method
+    @classmethod
+    def change_bank(cls, new_bank):
+        cls.bank_name = new_bank # Modifies the class attribute
+
+acc1 = Account("Aarav", 5000.0)
+# Change the bank name for the class
+Account.change_bank("ICICI Bank")
+
+print(acc1.bank_name)  # Output: ICICI Bank
+```
+
+### C. Static Methods
+Static methods do not take `self` (instance) or `cls` (class) as parameters. They act like regular functions, but are nested inside the class namespace because they relate to the class conceptually. They are marked with the `@staticmethod` decorator.
+
+```python
+class Account:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+    # Static method (helper function)
+    @staticmethod
+    def is_valid_transaction(amount):
+        return amount > 0  # Independent of any instance data
+
+# Called directly using the class name:
+is_valid = Account.is_valid_transaction(500)
+print(is_valid)  # Output: True
+```
+
+---
+
+## Complete Unified Example
+
+Here is how all these elements work together inside the `Account` class:
+
+```python
+class Account:
+    bank_name = "State Bank of India"  # Class Attribute
+
+    def __init__(self, owner, balance):
+        self.owner = owner             # Instance Attribute
+        self.balance = balance         # Instance Attribute
+
+    # Instance Method
+    def get_details(self):
+        return f"Account owner {self.owner} has balance Rs. {self.balance} at {self.bank_name}"
+
+    # Class Method
+    @classmethod
+    def update_bank(cls, new_bank):
+        cls.bank_name = new_bank
+
+    # Static Method
+    @staticmethod
+    def is_valid_transaction(amount):
+        return amount > 0
+
+# Usage
+acc = Account("Aarav", 5000.0)
+print(acc.get_details())                # Account owner Aarav has balance Rs. 5000.0 at State Bank of India
+print(Account.is_valid_transaction(200)) # True
+```
+
+---
+
+## Data Encapsulation: Public, Protected, and Private Attributes
+
+Encapsulation restricts direct access to some of an object's components, which is useful for preventing accidental modifications. In Python, encapsulation is implemented via naming conventions:
+
+### 1. Public Attributes (Default)
+Any attribute without leading underscores is public and can be accessed or modified from outside the class:
+```python
+class Account:
+    def __init__(self, owner):
+        self.owner = owner  # Public attribute
+
+acc = Account("Aarav")
+print(acc.owner)  # Access is allowed -> Aarav
+```
+
+### 2. Protected Attributes (Single Underscore `_`)
+Attributes starting with a single underscore (e.g., `_balance`) indicate that they are intended for internal class use and subclasses. 
+* **Note**: Python does **not** enforce this. It is a convention (a warning to other developers). The variable can still be accessed and modified from outside the class.
+
+```python
+class Account:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self._balance = balance  # Protected attribute
+
+acc = Account("Aarav", 5000.0)
+print(acc._balance)  # Works, but discouraged! -> 5000.0
+```
+
+### 3. Private Attributes (Double Underscore `__`)
+Attributes starting with double underscores (e.g., `__pin`) trigger **Name Mangling**. Python renames these variables internally to `_ClassName__attributeName` to prevent easy access and namespace collisions in subclassing.
+
+```python
+class Account:
+    def __init__(self, owner, pin):
+        self.owner = owner
+        self.__pin = pin  # Private attribute
+
+acc = Account("Aarav", 1234)
+# print(acc.__pin)  # Raises AttributeError!
+```
+
+### Private Data Security in Python:
+Name mangling is **not a true security feature** or strong encryption. It is only a naming mechanism. You can still access and modify a private attribute outside the class by using its mangled name:
+
+```python
+# Accessing private attribute using its mangled name:
+print(acc._Account__pin)  # Output: 1234
+```
+
+Therefore, double underscores should be used to prevent name conflicts in subclass inheritance rather than to secure sensitive private data.
+
+---
 
 ## Common mistakes
 
@@ -87,21 +219,21 @@ print(validator.get_errors())
     list1.items.append("Buy milk")
     
     list2 = TodoList()
-    print(list2.items)  # ['Buy milk'] - Oops!
+    print(list2.items)  # ['Buy milk'] - Shared namespace!
     
     # Right - instance attribute
     class TodoList:
         def __init__(self):
-            self.items = []  # Each instance gets its own
+            self.items = []  # Each instance gets its own copy
     ```
   </Accordion>
 
-  <Accordion title="Not initializing attributes">
+  <Accordion title="Not initializing attributes in __init__">
     ```python
-    # Wrong - attribute might not exist
+    # Wrong - count might not exist yet
     class Counter:
         def increment(self):
-            self.count += 1  # Error if count doesn't exist!
+            self.count += 1  # Raises AttributeError!
     
     # Right - initialize in __init__
     class Counter:
@@ -113,6 +245,8 @@ print(validator.get_errors())
     ```
   </Accordion>
 </AccordionGroup>
+
+---
 
 ## What's next?
 

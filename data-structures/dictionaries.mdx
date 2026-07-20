@@ -13,25 +13,56 @@ Real-world examples:
 - Menu: dish > price
 - User profile: username > user info
 
-## Creating dictionaries
+## Creating Dictionaries
+
+Python provides several ways to create dictionaries depending on your data source and style:
+
+### 1. Using Literal Curly Braces `{}`
+The most common way to create a dictionary is using curly braces with key-value pairs separated by colons:
 
 ```python
 # Empty dictionary
 my_dict = {}
 
-# Dictionary with data
+# With initial data
 person = {
-    "name": "Alice",
+    "name": "Aarav",
     "age": 30,
-    "city": "New York"
+    "city": "Mumbai"
 }
+```
 
-# Different ways to create
-scores = dict(math=95, english=87, science=92)
+### 2. Using the `dict()` Constructor
+You can construct dictionaries using the built-in `dict()` constructor in two ways:
+
+* **Keyword arguments**: Keys are passed as keyword arguments (keys are automatically converted to strings):
+  ```python
+  scores = dict(math=95, english=87, science=92)
+  ```
+* **List of key-value tuples**: Useful when converting zipped or tabular sequences into a dictionary:
+  ```python
+  pairs = [("math", 95), ("english", 87), ("science", 92)]
+  scores = dict(pairs)
+  ```
+
+### 3. Using `dict.fromkeys()`
+Useful when you want to initialize a dictionary with a set of keys mapping to the same default value:
+
+```python
+keys = ["math", "english", "science"]
+scores = dict.fromkeys(keys, 0)  # {'math': 0, 'english': 0, 'science': 0}
+```
+
+### 4. Dictionary Comprehension
+A concise way to construct dictionaries dynamically using loops:
+
+```python
+# Create a dictionary of squares: {1: 1, 2: 4, 3: 9}
+squares = {x: x**2 for x in range(1, 4)}
 ```
 
 <Note>
-  Dictionaries use curly braces `{}` with key-value pairs separated by colons. Keys must be unique!
+  Keys must be unique and of an **immutable** type (like strings, numbers, or tuples). Values can be of any data type and can repeat.
 </Note>
 
 ## Accessing values
@@ -121,14 +152,37 @@ print(students["alice"]["grade"])  # "A"
   
 </AccordionGroup>
 
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Dictionaries, creation patterns, key accesses, and updates), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice initializing dictionaries in various ways, looking up values, and editing key-value pairs.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Dictionaries_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Dictionaries_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Dictionaries_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on school grades databases and safe lookups.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Dictionaries_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Dictionaries_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Dictionaries_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
 ## What's next?
 
-Let's explore tuples - like lists but unchangeable!
+Finally, let's explore Sets - collections of unique items!
 
 <Card
-  title="Tuples"
-  icon="lock"
-  href="/data-structures/tuples"
+  title="Sets"
+  icon="circle-nodes"
+  href="/data-structures/sets"
 >
-  Immutable sequences
+  Learn about unique values
 </Card>

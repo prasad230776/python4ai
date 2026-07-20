@@ -68,6 +68,57 @@ a, b, c = 1, 2, 3  # Same as (1, 2, 3)
 x, y = y, x  # Swaps values!
 ```
 
+## Tuple Operations
+
+Since tuples are sequences, you can perform several read-only operations on them:
+
+### 1. Indexing & Slicing
+Access individual items or ranges of items just like lists:
+```python
+colors = ("red", "green", "blue", "yellow")
+print(colors[1])     # "green"
+print(colors[1:3])   # ("green", "blue")
+```
+
+### 2. Membership Checking (`in`)
+Check if an item exists inside a tuple quickly:
+```python
+fruits = ("apple", "banana", "mango")
+print("apple" in fruits)  # True
+print("cherry" in fruits) # False
+```
+
+### 3. Sorting with `sorted()`
+Tuples do not have a `.sort()` method because they are immutable. However, you can pass a tuple to the built-in `sorted()` function, which returns a **new sorted list**:
+```python
+numbers = (5, 2, 8, 1)
+sorted_list = sorted(numbers)
+print(sorted_list)  # [1, 2, 5, 8] (A list)
+sorted_tuple = tuple(sorted_list)
+print(sorted_tuple) # (1, 2, 5, 8) (Converted back to a tuple)
+```
+
+---
+
+## Importance of Tuples
+
+1. **Data Integrity (Safety)**: By making a collection immutable, you guarantee that other parts of your program cannot accidentally modify, append, or delete its values.
+2. **Performance**: Tuples are stored in a single memory block, making them slightly faster to create and access than lists, and they consume less memory.
+3. **Dictionary Keys**: Because tuples are immutable, they are **hashable**. This means you can use a tuple as a key in a dictionary (e.g. mapping coordinates to locations), which is not possible with lists.
+
+---
+
+## When to use a Tuple vs a List
+
+* **Use a Tuple when**:
+  * The data is fixed and should never change throughout the execution of the program (e.g., GPS coordinates, RGB values, database config keys).
+  * You want to return multiple values from a function.
+  * You need to use the collection as a key in a dictionary.
+* **Use a List when**:
+  * You have a collection of homogeneous items that will grow, shrink, or change over time (e.g. a shopping cart, a list of users).
+
+---
+
 ## Common mistakes
 
 <AccordionGroup>
@@ -100,14 +151,37 @@ x, y = y, x  # Swaps values!
 
 </AccordionGroup>
 
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Tuples, immutability, and conversions), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice initializing tuples, accessing elements, and working with immutability.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Tuples_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Tuples_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Tuples_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on coordinate systems and tuple conversions.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Tuples_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Tuples_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Tuples_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
 ## What's next?
 
-Finally, let's explore sets - collections of unique items!
+Now let's learn about Dictionaries - perfect for storing key-value pairs!
 
 <Card
-  title="Sets"
-  icon="circle-nodes"
-  href="/data-structures/sets"
+  title="Dictionaries"
+  icon="book"
+  href="/data-structures/dictionaries"
 >
-  Unique collections
+  Learn about key-value pairs
 </Card>

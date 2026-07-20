@@ -8,32 +8,112 @@ icon: "font"
 
 Now that you know what strings are, let's learn how to manipulate them. Python gives you powerful tools to work with text.
 
-## String operations
+## String operations & Formatting
 
-### Concatenation (joining)
-
-```python
-first_name = "Jane"
-last_name = "Doe"
-
-# Using +
-full_name = first_name + " " + last_name  # "Jane Doe"
-
-# Using f-strings (modern Python way!)
-greeting = f"Hello, {first_name}!"  # "Hello, Jane!"
-
-# Multiple variables
-age = 25
-intro = f"I'm {first_name} and I'm {age} years old"
-```
-
-### Repetition
+### Concatenation & Repetition
+You can join strings together using `+` or repeat them using `*`:
 
 ```python
+first_name = "Aarav"
+last_name = "Sharma"
+
+# Concatenation
+full_name = first_name + " " + last_name  # "Aarav Sharma"
+
+# Repetition
 star = "*"
 stars = star * 10  # "**********"
-
 separator = "-" * 20  # "--------------------"
+```
+
+### String Formatting
+Python provides multiple ways to format strings. While **f-strings** are the modern standard, you will also see the older **`.format()`** method in older codebases.
+
+```python
+name = "Amit"
+age = 25
+role = "Developer"
+
+# 1. Using f-strings (modern Python way!)
+intro1 = f"I'm {name} and I'm {age} years old."
+
+# 2. Using .format() with positional arguments
+intro2 = "Hello, {} is a {}.".format(name, role)
+
+# 3. Using .format() with named arguments
+intro3 = "Hello, {user} is a {job}.".format(user=name, job=role)
+```
+
+## String Indexing & Slicing
+
+### Indexing
+Every character in a string has a number representing its position, called an index. Indexes start at `0` for the first character. You can also count backward from the end using negative indexes (starting at `-1`).
+
+```python
+text = "Python"
+
+# Positive indexing (left to right)
+print(text[0])   # 'P'
+print(text[2])   # 't'
+
+# Negative indexing (right to left)
+print(text[-1])  # 'n' (last character)
+print(text[-3])  # 'h'
+```
+
+<Warning>
+  Accessing an index that doesn't exist (e.g., `text[10]`) raises an `IndexError`.
+</Warning>
+
+### Slicing
+Slicing lets you extract a section of a string using the syntax `[start:stop:step]`. The character at `start` is included, but the character at `stop` is **excluded**.
+
+```python
+text = "Python Programming"
+
+# Basic slicing
+print(text[0:6])   # "Python" (indexes 0 to 5)
+print(text[7:14])  # "Program"
+
+# Omitting start or stop (defaults to start/end of string)
+print(text[:6])    # "Python"
+print(text[7:])    # "Programming"
+print(text[:])     # "Python Programming" (copies the string)
+
+# Step values (skips characters)
+print(text[0:6:2]) # "Pto" (every 2nd character from index 0 to 5)
+
+# Negative steps (reversing a string)
+print(text[::-1])  # "gnimmargorP nohtyP" (reverses the whole string)
+print(text[5:1:-1])# "noht" (steps backward from index 5 to 2)
+```
+
+### Advanced Slicing (Mixed Boundaries & Steps)
+You can mix positive/negative indexes and positive/negative steps together:
+
+```python
+text = "Python Programming"
+
+# 1. Mixed positive & negative index boundaries
+print(text[1:-2])    # "ython Programmin" (starts at index 1, stops before index -2)
+print(text[-11:15])  # "Program" (starts at index -11, stops before index 15)
+
+# 2. Mixed values in step direction
+print(text[1:-1:2])  # "yhnPoga mn" (every second character from index 1 to the end)
+print(text[-2:2:-3]) # "mrgPnt" (steps backward by 3 starting at index -2 down to index 3)
+```
+
+### Slicing Edge Cases
+Slicing is very forgiving compared to indexing:
+
+```python
+text = "Python"
+
+# 1. Out-of-bounds slicing does NOT raise an error
+print(text[0:100]) # "Python" (just returns the available string)
+
+# 2. Conflicting direction produces an empty string
+print(text[5:2])   # "" (starts at 5, goes forward, but 2 is behind it)
 ```
 
 ## String methods
@@ -56,8 +136,8 @@ print(text.title())      # "Python Programming"
 messy = "  hello world  "
 print(messy.strip())     # "hello world" (removes whitespace)
 
-price = "$19.99"
-print(price.strip("$"))  # "19.99"
+price = "₹19.99"
+print(price.strip("₹"))  # "19.99"
 ```
 
 ### Finding and replacing
@@ -77,6 +157,20 @@ print(message.count("Python"))    # 2 (number of times)
 # Replace
 new_message = message.replace("Python", "JavaScript")
 print(new_message)  # "I love JavaScript programming with JavaScript"
+```
+
+### Splitting and Joining
+You can split a string into a list of strings, and join a list of strings back together.
+
+```python
+# Splitting strings
+data = "apple,banana,cherry"
+fruits = data.split(",")
+print(fruits)  # ['apple', 'banana', 'cherry']
+
+# Joining strings
+joined_data = " | ".join(fruits)
+print(joined_data)  # "apple | banana | cherry"
 ```
 
 <Note>
@@ -109,6 +203,29 @@ print(new_message)  # "I love JavaScript programming with JavaScript"
   </Accordion>
 </AccordionGroup>
 
+
+## Practice & Exercises
+
+To reinforce what you've learned in this section (Concatenation, Repetition, and String Methods), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice f-strings, repetitions, case transformations, stripping whitespace, and replacing text.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/String_Manipulation_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/String_Manipulation_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/String_Manipulation_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on custom greetings, cleaning email addresses, and replacement logic.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/String_Manipulation_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/String_Manipulation_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/String_Manipulation_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
 
 ## What's next?
 

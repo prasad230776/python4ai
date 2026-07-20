@@ -117,6 +117,78 @@ while count < 5:
   Always make sure your while loop will eventually stop! If you forget to update the variable, it will run forever.
 </Warning>
 
+## Loop Control: break, continue, and else
+
+Python provides keywords to change the normal flow of a loop:
+
+### 1. break
+The `break` statement exits the loop immediately, skipping any remaining iterations.
+
+```python
+# Stop loop when we reach 5
+for num in range(1, 10):
+    if num == 5:
+        break
+    print(num)  # Prints: 1, 2, 3, 4
+```
+
+### 2. continue
+The `continue` statement skips the rest of the current iteration and jumps directly to the next iteration.
+
+```python
+# Skip the number 3
+for num in range(1, 6):
+    if num == 3:
+        continue
+    print(num)  # Prints: 1, 2, 4, 5
+```
+
+### 3. Loop else
+A `for` or `while` loop can have an `else` block. The `else` block runs **only if** the loop completed normally without encountering a `break`.
+
+```python
+# Finding a value in a list
+numbers = [1, 2, 3, 4, 5]
+search_for = 6
+
+for num in numbers:
+    if num == search_for:
+        print("Found it!")
+        break
+else:
+    print("Not found in the list.")  # This runs because the loop finished without breaking
+```
+
+## Nested Loops & Breaking Outer Loops
+
+A **nested loop** is a loop inside another loop.
+
+```python
+# Multiplication table preview
+for i in range(1, 4):       # Outer loop
+    for j in range(1, 4):   # Inner loop
+        print(f"{i}x{j}={i*j}", end="  ")
+    print()  # Newline after inner loop finishes
+```
+
+### Breaking from Outer Loops
+A `break` statement only exits the innermost loop containing it. To break out of the outer loop from inside the inner loop, you can use a **flag variable**:
+
+```python
+# Stop everything when we find a target sum
+target = 5
+found = False
+
+for i in range(1, 4):
+    for j in range(1, 4):
+        if i + j == target:
+            print(f"Target found: {i} + {j} = {target}")
+            found = True
+            break  # Breaks inner loop
+    if found:
+        break  # Breaks outer loop
+```
+
 ## Common mistakes
 
 <AccordionGroup>
@@ -156,6 +228,97 @@ while count < 5:
     ```
   </Accordion>
 </AccordionGroup>
+
+## Generating Star Patterns with Nested Loops
+
+A structured and general way to print shapes is using **nested loops** based on two simple building blocks: **Increasing Triangles** and **Decreasing Triangles**.
+- The **outer loop** represents the rows (`i`).
+- The **inner loop(s)** represent columns (`j`).
+- We use `print(..., end="")` to print characters side-by-side, and a final empty `print()` to start a new row.
+
+Let's look at the exact range logic for each shape:
+
+### 1. Increasing Triangle (Left-Aligned)
+To print an increasing triangle, the outer loop `i` goes from `1` to `n`, and the inner loop `j` goes from `1` to `i` (representing an increasing number of stars per row):
+
+```python
+n = 4
+for i in range(1, n + 1):         # i ranges from 1 to n
+    for j in range(1, i + 1):     # j ranges from 1 to i
+        print("*", end="")
+    print()  # New row
+
+# Output:
+# *
+# **
+# ***
+# ****
+```
+
+### 2. Decreasing Triangle (Inverted Left-Aligned)
+To print a decreasing triangle, the outer loop `i` goes from `1` to `n`, and the inner loop `j` counts down from `n` to `i` with a negative step of `-1` (using `range(n, i - 1, -1)`):
+
+```python
+n = 4
+for i in range(1, n + 1):         # i ranges from 1 to n
+    for j in range(n, i - 1, -1): # j counts from n down to i (step -1)
+        print("*", end="")
+    print()  # New row
+
+# Output:
+# ****
+# ***
+# **
+# *
+```
+
+### 3. Right-Aligned Triangle
+A right-aligned triangle is simply a combination of:
+1. A **decreasing triangle of spaces** (`j` from `i` to `n - 1`).
+2. An **increasing triangle of stars** (`k` from `1` to `i`).
+
+```python
+n = 4
+for i in range(1, n + 1):
+    # 1. Decreasing triangle of spaces
+    for j in range(i, n):         # j ranges from i to n-1
+        print(" ", end="")
+    # 2. Increasing triangle of stars
+    for k in range(1, i + 1):     # k ranges from 1 to i
+        print("*", end="")
+    print()  # New row
+
+# Output:
+#    *
+#   **
+#  ***
+# ****
+```
+
+## Practice & Exercises
+
+To reinforce what you've learned in this section (For Loops, While Loops, Range, and Conditions), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice range configurations, looping over characters, lists, and while loop iterations.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Loops_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Loops_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Loops_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your looping capabilities with challenges on summing series, while loop countdowns, and vowel filtering.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Loops_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Loops_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Loops_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
+## What's next?
 
 <Card
   title="Data structures"

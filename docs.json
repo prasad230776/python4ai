@@ -107,12 +107,14 @@
               "data-types/index",
               "data-types/numbers",
               "data-types/strings",
-              "data-types/booleans"
+              "data-types/booleans",
+              "data-types/practice-exercises"
             ]
           },
           {
             "group": "Working with data",
             "pages": [
+              "basics/working-with-data",
               "basics/operators",
               "basics/string-manipulation"
             ]
@@ -122,6 +124,7 @@
             "pages": [
               "control-flow/index",
               "control-flow/if-statements",
+              "control-flow/match-case",
               "basics/loops"
             ]
           },
@@ -130,9 +133,11 @@
             "pages": [
               "data-structures/index",
               "data-structures/lists",
-              "data-structures/dictionaries",
               "data-structures/tuples",
-              "data-structures/sets"
+              "data-structures/dictionaries",
+              "data-structures/sets",
+              "data-structures/queues",
+              "data-structures/summary"
             ]
           },
           {
@@ -155,7 +160,8 @@
               "functions/return-values",
               "functions/advanced-parameters",
               "functions/scopes-nested-functions",
-              "functions/recursion"
+              "functions/recursion",
+              "functions/practice-exercises"
             ]
           },
           {
@@ -171,7 +177,8 @@
               "advanced/classes/first-class",
               "advanced/classes/methods-attributes",
               "advanced/classes/inheritance",
-              "advanced/classes/when-to-use"
+              "advanced/classes/when-to-use",
+              "advanced/classes/practice-exercises"
             ]
           },
           {
@@ -180,7 +187,8 @@
               "advanced/error-handling/index",
               "advanced/error-handling/try-except",
               "advanced/error-handling/custom-exceptions",
-              "advanced/error-handling/common-errors"
+              "advanced/error-handling/common-errors",
+              "advanced/error-handling/practice-exercises"
             ]
           }
         ]
@@ -195,6 +203,7 @@
               "advanced-python/functions",
               "advanced-python/comprehensions",
               "advanced-python/functional-programming",
+              "advanced-python/advanced-oop",
               "advanced-python/data-validation",
               "advanced-python/pydantic",
               "advanced-python/project-handling"

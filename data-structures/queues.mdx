@@ -1,0 +1,105 @@
+---
+title: Queues
+description: Manage First-In, First-Out (FIFO) structures in Python
+icon: "lines-leaning"
+---
+
+## What is a Queue?
+
+A **Queue** is a linear data structure that follows the **FIFO (First-In, First-Out)** principle. The element that enters first is the one that gets removed first.
+
+Think of it like a line of people waiting to buy tickets: the person at the front of the line is served first, and new people join the line at the back.
+
+- **Enqueue**: Adding an element to the back of the queue.
+- **Dequeue**: Removing an element from the front of the queue.
+
+---
+
+## Why NOT to use standard Lists for Queues
+
+In Python, you can use a list as a queue by appending to the end and popping from the front (`list.pop(0)`). However, **this is very inefficient**:
+
+```python
+queue = ["Aarav", "Amit", "Dev"]
+queue.append("Priya")  # Enqueue is fast: O(1)
+queue.pop(0)           # Dequeue is slow: O(N)!
+```
+
+### The Performance Problem:
+When you pop the first item from a standard Python list, Python must shift all subsequent items one position to the left in memory. For a list with thousands of items, this operation becomes slow and degrades program performance.
+
+---
+
+## The Correct Way: `collections.deque`
+
+To handle queues efficiently, Python provides the `deque` (double-ended queue) class in the built-in `collections` module.
+
+A `deque` is optimized for fast appends and pops from both ends, achieving **$O(1)$ constant time complexity** for both enqueue and dequeue operations.
+
+```python
+from collections import deque
+
+# 1. Initialize an empty queue
+ticket_counter = deque()
+
+# 2. Enqueue: Add people to the back of the queue
+ticket_counter.append("Aarav")
+ticket_counter.append("Amit")
+ticket_counter.append("Dev")
+print("Initial Queue:", ticket_counter) # deque(['Aarav', 'Amit', 'Dev'])
+
+# 3. Dequeue: Serve the person at the front of the queue
+served = ticket_counter.popleft()
+print("Served:", served)                # Served: Aarav
+print("Remaining Queue:", ticket_counter) # deque(['Amit', 'Dev'])
+```
+
+## Common mistakes
+
+<AccordionGroup>
+  <Accordion title="Using pop(0) on collections.deque">
+    To dequeue from a `deque`, you must use `.popleft()`. If you use `.pop(0)` on a `deque`, Python will raise a `TypeError` because `deque` objects do not support indexing in their pop operations.
+  </Accordion>
+  <Accordion title="Confusing Dequeues with Lists">
+    Although `deque` shares many methods with standard lists (like `.append()`), it is a different object type. If your code needs extensive sorting or slicing (like `queue[1:3]`), convert the deque back to a list first using `list(queue)`.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Practice & Exercises
+
+To reinforce what you've learned in this section (FIFO structures and Deques), practice with these interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice initializing deques, performing enqueues and dequeues, and comparing performance speeds.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Queues_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Queues_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Queues_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on ticketing lines, customer support simulation, and error cases.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Queues_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Queues_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Queues_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
+---
+
+## What's next?
+
+Compare Arrays, Stacks, Queues, Maps, and Trees in our comprehensive Data Structures Summary.
+
+<Card
+  title="Data Structures Summary"
+  icon="table"
+  href="/data-structures/summary"
+>
+  Compare implementations and CRUD operations
+</Card>

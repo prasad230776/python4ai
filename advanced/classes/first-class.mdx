@@ -20,7 +20,7 @@ Let's go through each step to build your first class.
 Every class starts with the `class` keyword:
 
 ```python
-class Dog:  # Note: class names use PascalCase
+class Account:  # Note: class names use PascalCase
     pass  # Empty class
 ```
 
@@ -29,20 +29,20 @@ class Dog:  # Note: class names use PascalCase
 The `__init__` method runs when you create a new object:
 
 ```python
-class Dog:
-    def __init__(self, name, breed):
-        self.name = name
-        self.breed = breed
+class Account:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
 
-# Create dog objects - using positional arguments
-dog1 = Dog("Buddy", "Golden Retriever")
-dog2 = Dog("Max", "Beagle")
+# Create account objects - using positional arguments
+account1 = Account("Aarav", 5000.0)
+account2 = Account("Amit", 12000.0)
 
 # Or with named arguments (clearer)
-dog3 = Dog(name="Charlie", breed="Poodle")
+account3 = Account(owner="Dev", balance=7500.0)
 
-print(dog1.name)   # Buddy
-print(dog2.breed)  # Beagle
+print(account1.owner)     # Aarav
+print(account2.balance)   # 12000.0
 ```
 
 <Note>
@@ -58,44 +58,60 @@ print(dog2.breed)  # Beagle
 </Note>
 
 ```python
-class Dog:
-    def __init__(self, name):
-        self.name = name  # self.name belongs to this specific dog
+class Account:
+    def __init__(self, owner):
+        self.owner = owner  # self.owner belongs to this specific account
 
 # Using positional argument
-dog1 = Dog("Buddy")
+account1 = Account("Aarav")
 
 # Using named argument (same result)
-dog2 = Dog(name="Max")
+account2 = Account(owner="Amit")
 
-# Each dog has its own name
-print(dog1.name)  # Buddy
-print(dog2.name)  # Max
+# Each account has its own owner
+print(account1.owner)  # Aarav
+print(account2.owner)  # Amit
 ```
 
-## Real-world example: configuration
+## Another example: Dog class
 
-Here's a practical class for AI engineering:
+Here is another simple class showing attributes and object states:
 
 ```python
-class APIConfig:
-    def __init__(self, api_key, model="gpt-3.5-turbo", max_tokens=100):
+class Dog:
+    def __init__(self, name, breed):
+        self.name = name
+        self.breed = breed
+
+dog1 = Dog("Buddy", "Golden Retriever")
+print(dog1.name)   # Buddy
+print(dog1.breed)  # Golden Retriever
+```
+
+## Real-world example: OpenAI model integration
+
+Here's a practical class for AI engineering that defines an OpenAI model wrapper with relevant attributes and methods:
+
+```python
+class OpenAIModel:
+    def __init__(self, api_key, model_name, temperature=0.7):
         self.api_key = api_key
-        self.model = model
-        self.max_tokens = max_tokens
-        self.base_url = "https://api.openai.com/v1"
+        self.model_name = model_name
+        self.temperature = temperature
 
-# Create different configurations
-# Using positional for required arg, named for optional
-dev_config = APIConfig("sk-dev-key", max_tokens=50)
+    # Method to invoke text generation
+    def invoke(self, prompt):
+        print(f"Sending prompt '{prompt}' to {self.model_name} (Temp: {self.temperature})...")
+        return f"[Response from {self.model_name}] Hello! I parsed your prompt: '{prompt}'"
 
-# Using all named arguments (clearest)
-prod_config = APIConfig(api_key="sk-prod-key", model="gpt-4", max_tokens=1000)
+# Create different model instances - passing model_name explicitly
+gpt4_model = OpenAIModel(api_key="sk-secret-key", model_name="gpt-4o", temperature=0.2)
+gpt3_model = OpenAIModel(api_key="sk-another-key", model_name="gpt-3.5-turbo", temperature=0.7)
 
-# Access the configuration
-print(dev_config.model)        # gpt-3.5-turbo
-print(prod_config.model)       # gpt-4
-print(prod_config.max_tokens)  # 1000
+# Call methods and access attributes
+response = gpt4_model.invoke("Explain classes in Python")
+print(response)            # [Response from gpt-4o] Hello! I parsed your prompt: 'Explain classes in Python'
+print(gpt3_model.model_name) # gpt-3.5-turbo
 ```
 
 ## Class vs instance
@@ -104,19 +120,19 @@ print(prod_config.max_tokens)  # 1000
 - **Instance/Object**: What you create from the class (like a cake from the recipe)
 
 ```python
-# APIConfig is the class
-# config1 and config2 are instances
-config1 = APIConfig(api_key="key1", max_tokens=50)
-config2 = APIConfig(api_key="key2", max_tokens=200)
+# OpenAIModel is the class
+# model1 and model2 are instances
+model1 = OpenAIModel(api_key="key1", model_name="gpt-4o", temperature=0.7)
+model2 = OpenAIModel(api_key="key2", model_name="gpt-3.5-turbo", temperature=0.1)
 
 # Each instance has its own data
-print(config1.max_tokens)  # 50
-print(config2.max_tokens)  # 200
+print(model1.temperature)  # 0.7
+print(model2.temperature)  # 0.1
 
 # Changing one doesn't affect the other
-config1.max_tokens = 75
-print(config1.max_tokens)  # 75
-print(config2.max_tokens)  # 200 (unchanged)
+model1.temperature = 0.9
+print(model1.temperature)  # 0.9
+print(model2.temperature)  # 0.1 (unchanged)
 ```
 
 <Tip>

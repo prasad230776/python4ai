@@ -1,0 +1,220 @@
+---
+title: Implementation of basic Data Structures
+description: Implement Array, Stack, Queue, Map, and Tree in Python
+icon: "folder-tree"
+---
+
+This chapter details how to implement and perform common **Create, Read, Update, and Delete (CRUD)** operations on the five fundamental data structures using Python.
+
+---
+
+## 1. Array / List
+
+Python uses its built-in `list` class to represent arrays. Elements are stored in contiguous memory locations, allowing fast index-based access.
+
+### CRUD Operations
+| Operation | Code Syntax | Average Time Complexity | Description |
+| :--- | :--- | :--- | :--- |
+| **Create (Insert)** | `arr.append(val)` | $O(1)$ | Adds a value to the end of the array. |
+| | `arr.insert(idx, val)` | $O(N)$ | Inserts a value at a specific index, shifting subsequent elements. |
+| **Read (Access)** | `arr[idx]` | $O(1)$ | Accesses the element at a specific index. |
+| | `val in arr` | $O(N)$ | Checks if a value exists in the array (search). |
+| **Update** | `arr[idx] = new_val` | $O(1)$ | Replaces the value at a specific index. |
+| **Delete** | `arr.pop()` | $O(1)$ | Removes and returns the last element. |
+| | `arr.pop(idx)` | $O(N)$ | Removes the element at a specific index, shifting remaining elements. |
+
+### Code Example
+```python
+# Create an Array/List
+fruits = ["apple", "banana"]
+
+# Insert elements
+fruits.append("cherry")          # ["apple", "banana", "cherry"]
+fruits.insert(1, "mango")        # ["apple", "mango", "banana", "cherry"]
+
+# Read elements
+first_fruit = fruits[0]          # "apple"
+has_banana = "banana" in fruits  # True
+
+# Update elements
+fruits[2] = "orange"             # ["apple", "mango", "orange", "cherry"]
+
+# Delete elements
+last = fruits.pop()              # Removes "cherry"
+removed = fruits.pop(1)          # Removes "mango"
+```
+
+---
+
+## 2. Stack (LIFO)
+
+A Stack is a **Last-In, First-Out (LIFO)** data structure. In Python, you can implement a stack cleanly using a standard `list` where insertions and deletions happen only at the end.
+
+### CRUD Operations
+| Operation | Code Syntax | Average Time Complexity | Description |
+| :--- | :--- | :--- | :--- |
+| **Create (Push)** | `stack.append(val)` | $O(1)$ | Pushes an element onto the top of the stack. |
+| **Read (Peek)** | `stack[-1]` | $O(1)$ | Accesses the top element without removing it. |
+| **Update** | `stack[-1] = new_val` | $O(1)$ | Replaces the top element. |
+| **Delete (Pop)** | `stack.pop()` | $O(1)$ | Removes and returns the top element. |
+
+### Code Example
+```python
+# Create a Stack
+history = []
+
+# Push elements
+history.append("google.com")
+history.append("github.com")
+history.append("python.org")
+
+# Peek top element
+current_page = history[-1]  # "python.org"
+
+# Update top element
+history[-1] = "docs.python.org"
+
+# Pop elements
+previous_page = history.pop()  # Removes "docs.python.org"
+```
+
+---
+
+## 3. Queue (FIFO)
+
+A Queue is a **First-In, First-Out (FIFO)** data structure. In Python, queues should be implemented using `collections.deque` (double-ended queue) for fast operations at both ends.
+
+### CRUD Operations
+| Operation | Code Syntax | Average Time Complexity | Description |
+| :--- | :--- | :--- | :--- |
+| **Create (Enqueue)** | `queue.append(val)` | $O(1)$ | Adds an element to the back of the queue. |
+| **Read (Peek)** | `queue[0]` | $O(1)$ | Accesses the front element without removing it. |
+| **Update** | N/A | — | Updating middle elements is not allowed in a strict queue. |
+| **Delete (Dequeue)** | `queue.popleft()` | $O(1)$ | Removes and returns the front element. |
+
+### Code Example
+```python
+from collections import deque
+
+# Create a Queue
+queue = deque()
+
+# Enqueue elements
+queue.append("Customer 1")
+queue.append("Customer 2")
+queue.append("Customer 3")
+
+# Peek front element
+next_customer = queue[0]  # "Customer 1"
+
+# Dequeue elements
+served = queue.popleft()  # Removes "Customer 1"
+```
+
+---
+
+## 4. Map (Dictionary)
+
+A Map maps unique keys to values. In Python, maps are represented by the built-in `dict` class, which uses an underlying hash table to achieve extremely fast operations.
+
+### CRUD Operations
+| Operation | Code Syntax | Average Time Complexity | Description |
+| :--- | :--- | :--- | :--- |
+| **Create (Insert)** | `d[key] = val` | $O(1)$ | Associates a value with a new key. |
+| **Read (Access)** | `d[key]` or `d.get(key)` | $O(1)$ | Accesses the value associated with a key. |
+| **Update** | `d[key] = new_val` | $O(1)$ | Modifies the value of an existing key. |
+| **Delete** | `del d[key]` or `d.pop(key)` | $O(1)$ | Removes the key-value pair. |
+
+### Code Example
+```python
+# Create a Map
+employee = {}
+
+# Insert key-value pairs
+employee["id"] = 101
+employee["name"] = "Aarav"
+
+# Read values
+name = employee["name"]           # "Aarav"
+dept = employee.get("dept", "IT") # Returns default "IT" if key doesn't exist
+
+# Update values
+employee["name"] = "Amit"
+
+# Delete values
+del employee["id"]
+```
+
+---
+
+## 5. Tree (Binary Search Tree)
+
+A Binary Search Tree (BST) is a hierarchical node structure where each node has at most two children. The left child contains values less than the parent, and the right child contains values greater.
+
+### BST Node Class
+To implement a tree, we define a custom node class:
+
+```python
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+```
+
+### CRUD Operations (Average Cases)
+| Operation | Method Logic | Average Time Complexity | Description |
+| :--- | :--- | :--- | :--- |
+| **Create (Insert)** | Compare values and recursively attach to left or right child pointers. | $O(\log N)$ | Traverses tree down to an empty child pointer and inserts the new Node. |
+| **Read (Search)** | Compare search value with current node; recursively look left or right. | $O(\log N)$ | Traverses tree pointers to locate a Node. |
+| **Update** | Search for the Node, then modify its value field. | $O(\log N)$ | Modifies a specific node's data. |
+| **Delete** | Traverse to locate, then re-arrange left/right child pointers. | $O(\log N)$ | Removes a node and updates parent pointers. |
+
+### Code Example
+```python
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+# Create Tree
+root = Node(10)
+
+# Insert Nodes (Custom Helper Logic)
+def insert(node, val):
+    if node is None:
+        return Node(val)
+    if val < node.value:
+        node.left = insert(node.left, val)
+    else:
+        node.right = insert(node.right, val)
+    return node
+
+root = insert(root, 5)
+root = insert(root, 15)
+
+# Read (Search) Nodes
+def search(node, val):
+    if node is None or node.value == val:
+        return node
+    if val < node.value:
+        return search(node.left, val)
+    return search(node.right, val)
+
+found_node = search(root, 15)  # Returns Node object with value 15
+```
+
+---
+
+## What's next?
+
+Learn about packing and unpacking values in Python to write cleaner and more readable code.
+
+<Card
+  title="Packing and Unpacking"
+  icon="box-open"
+  href="/basics/packing-unpacking"
+>
+  Learn to pack and unpack collections
+</Card>

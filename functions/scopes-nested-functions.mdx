@@ -87,23 +87,21 @@ print(counter)  # 1
 Similar to `global`, if you want to **modify** a variable in the enclosing (outer) function's scope from inside an inner function, you must use the `nonlocal` keyword.
 
 ```python
-def count_tracker():
-    count = 0  # Enclosing variable
+def outer_function():
+    message = "Hello from Outer"  # Enclosing variable
     
-    def increment():
-        nonlocal count  # Tells Python to use 'count' from count_tracker
-        count += 1
-        return count
+    def inner_function():
+        nonlocal message  # Tells Python to use 'message' from outer_function
+        message = "Hello from Inner!"  # Modifies outer variable
         
-    return increment
+    inner_function()
+    print(message)  # Prints: Hello from Inner!
 
-my_tracker = count_tracker()
-print(my_tracker())  # 1
-print(my_tracker())  # 2
+outer_function()
 ```
 
 <Note>
-  If you omit `nonlocal count` inside `increment()`, trying to do `count += 1` will raise an `UnboundLocalError` because Python assumes `count` is a new local variable that hasn't been defined yet.
+  If you omit `nonlocal message` inside `inner_function()`, the change `message = "Hello from Inner!"` would only create a local variable named `message` inside the inner function, leaving the outer function's variable unchanged.
 </Note>
 
 ---

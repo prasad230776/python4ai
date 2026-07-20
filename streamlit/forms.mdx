@@ -1,0 +1,57 @@
+---
+title: Forms
+description: Group inputs together to prevent premature reruns in Streamlit
+icon: "wpforms"
+---
+
+By default, every single keystroke or widget selection in Streamlit triggers an immediate rerun of the entire script. While this is great for reactivity, it is problematic when you have a series of inputs and want to submit them all at once.
+
+**Forms** group widgets together and block reruns until a submit button is clicked.
+
+---
+
+## Creating Forms (`st.form`)
+
+Use `st.form` to define a submission scope, and place all widgets inside it. Every form *must* contain an `st.form_submit_button`.
+
+```python
+import streamlit as st
+
+st.title("User Profile Form")
+
+# 1. Open the form container
+with st.form("profile_form"):
+    st.write("Fill in your details below:")
+    
+    first_name = st.text_input("First Name:")
+    last_name = st.text_input("Last Name:")
+    role = st.selectbox("Job Role:", ["Developer", "Data Scientist", "Manager"])
+    
+    # 2. Add the submit button (required!)
+    submit_button = st.form_submit_button("Save Profile")
+
+# 3. Check for submission outside/inside the form context
+if submit_button:
+    st.success(f"Profile saved! Hello {first_name} {last_name} ({role})")
+```
+
+---
+
+## Why use Forms?
+
+* **Saves API Costs**: If your script calls an AI API (like OpenAI) based on user text input, you do not want to trigger API requests with every single keystroke. Forms ensure the request is sent only once when "Submit" is clicked.
+* **Cleaner User Experience**: Prevents layout flickering while users are filling out multiple fields.
+
+---
+
+## What's next?
+
+Let's look at reading CSV, Excel, and JSON data files in Module 8!
+
+<Card
+  title="Data Handling"
+  icon="arrow-right"
+  href="/streamlit/data-handling"
+>
+  Load and display CSV and JSON datasets
+</Card>

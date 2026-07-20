@@ -1,0 +1,77 @@
+---
+title: Caching
+description: Optimize app performance and prevent redundant calculations in Streamlit
+icon: "gauge-high"
+---
+
+Because Streamlit reruns your script from the top on every interaction, slow operations (like loading database records or calling external APIs) can make your app feel laggy. 
+
+**Caching** stores function return values in memory so they don't execute repeatedly.
+
+---
+
+## Why Caching?
+
+When you decorate a function with a cache decorator:
+1. Streamlit checks the input arguments of the function.
+2. If it is the first time calling the function with these arguments, it executes the code and stores the result.
+3. On subsequent runs, it skips the code execution and returns the stored value instantly.
+
+---
+
+## Caching Data vs. Caching Resources
+
+Streamlit splits caching into two decorators:
+
+### 1. `@st.cache_data` (Data Operations)
+Use this to cache functions that return data values (dataframes, dicts, lists, SQL query rows).
+
+```python
+import streamlit as st
+import pandas as pd
+import time
+
+@st.cache_data
+def load_large_dataset():
+    # Simulate a slow 3-second database read
+    time.sleep(3)
+    return pd.read_csv("public/data/student_dataset.csv")
+
+# Only takes 3 seconds on first run, next runs are instant
+df = load_large_dataset()
+st.dataframe(df)
+```
+
+### 2. `@st.cache_resource` (Global Resources)
+Use this to cache functions that return non-serializable objects (databases connections, ML models, API network sessions).
+
+```python
+import streamlit as st
+import sqlite3
+
+@st.cache_resource
+def get_database_connection():
+    return sqlite3.connect("database.db")
+
+conn = get_database_connection()
+```
+
+---
+
+## Cache Invalidation
+
+Streamlit caches persist in memory. If your underlying data source changes, you can force the cache to clear by calling `st.cache_data.clear()` or passing new parameters.
+
+---
+
+## What's next?
+
+Let's look at adding multipage layouts to your app in Module 10!
+
+<Card
+  title="Navigation & Multipage Apps"
+  icon="arrow-right"
+  href="/streamlit/navigation"
+>
+  Organize large apps into multiple page files
+</Card>

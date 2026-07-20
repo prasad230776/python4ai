@@ -1,0 +1,68 @@
+---
+title: Building Interactive Dashboards
+description: Assembling widgets, KPIs, search inputs, and dynamic tables into dashboards
+icon: "chart-line"
+---
+
+Interactive dashboards combine metrics, widgets, charts, and search filters to allow real-time data audits.
+
+---
+
+## 1. Key Performance Indicators (KPIs)
+Use `st.metric` to display critical values:
+
+```python
+import streamlit as st
+
+col1, col2, col3 = st.columns(3)
+col1.metric("Active Users", "1,240", "+12%")
+col2.metric("Server Latency", "85ms", "-5ms")
+col3.metric("API Success Rate", "99.8%", "+0.1%")
+```
+
+---
+
+## 2. Dynamic Filtering and Search
+
+Apply search criteria directly to filter Pandas DataFrames dynamically:
+
+```python
+import streamlit as st
+import pandas as pd
+
+# Load dataset
+df = pd.DataFrame({
+    "Product": ["Mobile", "Laptop", "Tablet", "Headphones"],
+    "Category": ["Electronics", "Electronics", "Computing", "Audio"]
+})
+
+st.title("Inventory Search Dashboard")
+
+# Search text input
+search_query = st.text_input("Search Product name:", "")
+
+# Category multi-select filter
+selected_categories = st.multiselect("Filter by Category:", df["Category"].unique(), default=df["Category"].unique())
+
+# Apply filters
+filtered_df = df[
+    (df["Product"].str.contains(search_query, case=False)) &
+    (df["Category"].isin(selected_categories))
+]
+
+st.dataframe(filtered_df)
+```
+
+---
+
+## What's next?
+
+Let's look at handling file uploads, downloads, and previews in Module 13!
+
+<Card
+  title="File Handling"
+  icon="arrow-right"
+  href="/streamlit/files"
+>
+  Process uploads, downloads, and media previews
+</Card>

@@ -1,0 +1,82 @@
+---
+title: User Input Widgets
+description: Learn how to capture clicks, selections, files, and slider inputs
+icon: "sliders"
+---
+
+Widgets allow users to input data and trigger actions inside your app.
+
+---
+
+## Standard Inputs
+
+### Buttons & Checkboxes
+```python
+import streamlit as st
+
+# Button click is True only on the rerun it was clicked
+if st.button("Click Me"):
+    st.write("Button was clicked!")
+
+# Checkbox preserves state (True or False)
+agree = st.checkbox("I agree to terms")
+if agree:
+    st.write("Terms accepted!")
+```
+
+### Text & Numeric Inputs
+```python
+user_name = st.text_input("Enter your name:", placeholder="Amit Patel")
+user_age = st.number_input("Enter your age:", min_value=0, max_value=120, value=25)
+```
+
+---
+
+## Selections & Sliders
+
+### Select Box & Multiselect
+```python
+# Dropdown selector
+city = st.selectbox("Choose City:", ["Mumbai", "Delhi", "Bengaluru"])
+
+# Multiple values selector
+skills = st.multiselect("Select Skills:", ["Python", "Machine Learning", "FastAPI"])
+```
+
+### Radio Buttons & Sliders
+```python
+# Radio selector
+gender = st.radio("Gender:", ["Male", "Female", "Other"])
+
+# Slider inputs
+rating = st.slider("Rate your experience:", min_value=1, max_value=10, value=5)
+```
+
+---
+
+## Special Inputs
+
+### Date Picker
+```python
+birthday = st.date_input("Select your birthday:")
+```
+
+### File Uploader
+Let users submit CSVs, images, or PDFs to your program:
+```python
+uploaded_file = st.file_uploader("Upload a file:", type=["csv", "png"])
+```
+
+---
+
+## What's next?
+
+Let's look at managing sidebars, layouts, and columns in Module 5!
+
+<Card
+  title="Layout Management"
+  icon="arrow-right"
+  href="/streamlit/layout"
+>
+  Organize widgets with columns, tabs, and sidebars
+</Card>

@@ -1,0 +1,55 @@
+---
+title: Working with APIs
+description: Call external REST APIs and handle response loads in Streamlit
+icon: "globe"
+---
+
+Streamlit apps can connect to any web API (like OpenAI or Weather APIs) to fetch live data and present it in your dashboard UI.
+
+---
+
+## Fetching REST APIs
+
+Use the `requests` library to fetch JSON payloads. Wrap the request inside a try-except block to handle offline network connections gracefully.
+
+```python
+import streamlit as st
+import requests
+
+st.title("Weather Query API")
+
+latitude = st.number_input("Enter Latitude:", value=28.61)
+longitude = st.number_input("Enter Longitude:", value=77.20)
+
+if st.button("Fetch Current Temperature"):
+    # Add a loading spinner during the fetch
+    with st.spinner("Connecting to Weather Server..."):
+        try:
+            url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m"
+            response = requests.get(url, timeout=5)
+            data = response.json()
+            temp = data["current"]["temperature_2m"]
+            st.success(f"Current Temperature: {temp} °C")
+        except requests.RequestException:
+            st.error("Failed to connect to API server. Please check your connection.")
+```
+
+---
+
+## Caching API Data
+
+Remember to decorate your API fetch functions with `@st.cache_data` if they are fetched frequently and do not change constantly, saving bandwidth and keeping the app fast.
+
+---
+
+## What's next?
+
+Let's look at assembling these layouts into KPI dashboards in Module 12!
+
+<Card
+  title="Building Interactive Dashboards"
+  icon="arrow-right"
+  href="/streamlit/dashboards"
+>
+  Build data dashboards with search and filters
+</Card>

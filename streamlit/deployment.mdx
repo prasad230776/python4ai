@@ -1,0 +1,47 @@
+---
+title: Deployment
+description: Deploy your Streamlit app to Streamlit Community Cloud, Docker, or Render
+icon: "cloud"
+---
+
+After building your Streamlit application locally, you'll want to host it online so others can access it.
+
+---
+
+## 1. Streamlit Community Cloud (Recommended & Free)
+Streamlit hosts a free deployment platform that integrates directly with GitHub:
+
+1. Push your application code and a `requirements.txt` file (listing packages like `streamlit`, `pandas`, `requests`) to a GitHub repository.
+2. Sign in to [share.streamlit.io](https://share.streamlit.io).
+3. Click **New App**, select your GitHub repository, branch, and entry point file (e.g. `app.py`).
+4. Click **Deploy**. Your app will be live on a custom sub-domain!
+
+---
+
+## 2. Docker Setup
+To deploy on server providers like DigitalOcean or AWS, you can containerize the app.
+
+### Example Dockerfile:
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8501
+
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
+
+---
+
+## 3. Render Deployment
+To deploy on Render:
+1. Connect your GitHub repository to Render.
+2. Create a new **Web Service**.
+3. Set **Start Command** to: `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`.
+4. Render will build and deploy your app.

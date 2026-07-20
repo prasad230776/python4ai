@@ -1,0 +1,106 @@
+---
+title: Layout Management
+description: Design clean dashboards using sidebars, columns, expanders, and tabs
+icon: "grip"
+---
+
+By default, Streamlit places all widgets in a single vertical column. However, you can organize your application horizontally and vertically using layout layouts.
+
+---
+
+## The Sidebar (`st.sidebar`)
+
+Use the sidebar to hold app configurations, navigation selections, or credential filters. It remains separate on the left side of the web page.
+
+```python
+import streamlit as st
+
+# Direct widgets to the sidebar using prefix dot notation
+st.sidebar.title("Navigation Panel")
+app_mode = st.sidebar.selectbox("Choose view:", ["Home", "Data Analysis", "Settings"])
+```
+
+---
+
+## Columns (`st.columns`)
+
+Renders widgets side-by-side.
+
+```python
+import streamlit as st
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("Left Column")
+    st.button("Button Left")
+
+with col2:
+    st.subheader("Right Column")
+    st.button("Button Right")
+```
+
+---
+
+## Expanders (`st.expander`)
+
+A collapsible widget that hides secondary configurations or detailed documentation until toggled open.
+
+```python
+import streamlit as st
+
+with st.expander("Click to view Advanced Settings"):
+    timeout = st.slider("Request Timeout (s):", 1, 30, 5)
+    st.write(f"Timeout configured to: {timeout}")
+```
+
+---
+
+## Tabs (`st.tabs`)
+
+Separate different dashboard views without reloading the page.
+
+```python
+import streamlit as st
+
+tab1, tab2 = st.tabs(["Overview", "Raw Data"])
+
+with tab1:
+    st.write("📈 Displaying metrics graph...")
+
+with tab2:
+    st.write("📄 Displaying raw spreadsheet records...")
+```
+
+---
+
+## Containers & Placeholders
+
+* **`st.container()`**: Groups widgets together.
+* **`st.empty()`**: A dynamic placeholder. It can hold a single element and overwrite its contents later (great for live execution status messages or progress counters).
+
+```python
+import streamlit as st
+
+placeholder = st.empty()
+
+# This text will be replaced later
+placeholder.text("Loading initial database connection...")
+
+# Overwrites the text above
+placeholder.success("Connection Successful!")
+```
+
+---
+
+## What's next?
+
+Let's learn how to preserve variables across reruns using Session State in Module 6!
+
+<Card
+  title="Session State"
+  icon="arrow-right"
+  href="/streamlit/session-state"
+>
+  Persist variables across top-to-bottom runs
+</Card>

@@ -1,0 +1,80 @@
+---
+title: Displaying Content
+description: Render text, markdown, tables, dataframes, and charts in Streamlit
+icon: "eye"
+---
+
+Streamlit makes it simple to output rich media, metrics, and structured datasets with simple commands.
+
+---
+
+## Displaying Text and Markdown
+
+* **`st.write()`**: The "Swiss Army Knife" of Streamlit. It can display text, dataframes, dictionaries, plots, and markdown automatically.
+* **`st.title()`**: Displays a large header tag (H1).
+* **`st.header()` / `st.subheader()`**: Render H2 and H3 tags.
+* **`st.markdown()`**: Renders standard GitHub Flavored Markdown (bullet points, links, bold, code blocks).
+
+```python
+import streamlit as st
+
+st.title("Main Title")
+st.header("Section Heading")
+st.subheader("Sub-section")
+
+st.markdown("Use *italic* or **bold** text, or add [links](https://streamlit.io).")
+st.write("st.write handles numbers:", 42, "and lists:", [1, 2, 3])
+```
+
+---
+
+## Displaying Data & Tables
+
+* **`st.dataframe()`**: Renders an interactive table (with columns you can click to sort, expand, and copy).
+* **`st.table()`**: Renders a static, non-interactive table.
+
+```python
+import streamlit as st
+import pandas as pd
+
+df = pd.DataFrame({
+    "Product": ["Mobile Phone", "Laptop", "Headphones"],
+    "Price (Rs.)": [45000, 75000, 4500]
+})
+
+# Interactive view
+st.dataframe(df)
+
+# Static view
+st.table(df)
+```
+
+---
+
+## Displaying Media & Charts
+
+* **`st.image()`**: Display local or web-hosted images.
+* **`st.line_chart()` / `st.bar_chart()`**: Simple wrappers to plot graphs quickly.
+
+```python
+import streamlit as st
+import numpy as np
+
+# Simple line chart
+chart_data = np.random.randn(20, 2)
+st.line_chart(chart_data)
+```
+
+---
+
+## What's next?
+
+Let's look at interactive user inputs and widget parameters in Module 4!
+
+<Card
+  title="User Input Widgets"
+  icon="arrow-right"
+  href="/streamlit/widgets"
+>
+  Learn to read buttons, select boxes, and sliders
+</Card>

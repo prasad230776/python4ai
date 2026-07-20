@@ -1,0 +1,51 @@
+---
+title: Navigation & Multipage Apps
+description: Build complex apps with multiple pages and shared sidebar navigations
+icon: "compass"
+---
+
+As your application grows, squeezing all features onto a single vertical layout page becomes unmanageable. Streamlit allows you to split your app into multiple pages easily.
+
+---
+
+## Multipage App Folder Structure
+
+To create a multipage application, place your main file in the project root, and create a subdirectory named **`pages`** containing the sub-page scripts:
+
+```text
+my_project/
+├── app.py          # Main entry page (Home)
+└── pages/
+    ├── 1_Analysis.py   # Second page
+    └── 2_Settings.py   # Third page
+```
+
+Streamlit automatically scans the `pages/` directory and renders a neat navigation panel in the left-sidebar.
+
+---
+
+## Shared Components & Layouts
+
+Since the sidebar is shared, you can place common links, branding logs, or user credentials inside it so they remain consistent across all sub-pages.
+
+```python
+# Place this at the beginning of each page script:
+import streamlit as st
+
+st.sidebar.title("App Navigation")
+st.sidebar.write("Logged in as: User")
+```
+
+---
+
+## What's next?
+
+Let's look at connecting your Streamlit UI to REST APIs in Module 11!
+
+<Card
+  title="Working with APIs"
+  icon="arrow-right"
+  href="/streamlit/apis"
+>
+  Fetch data from web services in your app
+</Card>

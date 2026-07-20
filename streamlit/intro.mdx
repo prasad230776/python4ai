@@ -1,0 +1,75 @@
+---
+title: Introduction to Streamlit
+description: What is Streamlit and how does it fit into the AI ecosystem?
+icon: "handwave"
+---
+
+When building AI models, chatbot assistants, or data tools, you need a way for non-technical users to interact with your Python scripts. Traditionally, this required learning HTML, CSS, JavaScript, and a backend framework like Flask or FastAPI.
+
+**Streamlit** solves this by letting you create beautiful, interactive web user interfaces (UIs) in pure Python.
+
+---
+
+## What is Streamlit?
+
+Streamlit is a popular open-source Python library designed to build custom web applications for machine learning, data science, and Generative AI. 
+
+With Streamlit, you can:
+* Build **AI Chatbots** that interface with OpenAI, Gemini, or Claude.
+* Build **Interactive Dashboards** with charts, sliders, and drop-downs.
+* Build **Data Annotation Tools** to clean and inspect datasets.
+
+---
+
+## Why use Streamlit?
+
+| Feature | Description |
+| :--- | :--- |
+| **Pure Python** | No HTML, CSS, or JavaScript is required. You write standard Python scripts. |
+| **Fast Prototypes** | Go from a command-line script to a working web page in less than 30 lines of code. |
+| **Reactive Execution** | Streamlit updates your page layout automatically when users input data. |
+| **Interactive Widgets** | Built-in buttons, text inputs, uploaders, and chart wrappers out of the box. |
+
+---
+
+## Streamlit vs Flask vs FastAPI
+
+Developers often ask how Streamlit compares to backend APIs or full-stack web servers:
+
+* **FastAPI / Flask**: Used to build **Backend REST APIs**. They send raw JSON data back and forth. They do *not* generate a frontend interface (you must build a separate React/Vue frontend).
+* **Streamlit**: A **Full-Stack prototyping tool**. It handles both the visual frontend UI and the Python execution engine in one place.
+
+---
+
+## Streamlit Architecture
+
+Streamlit uses a **Client-Server Architecture**:
+1. **Server**: Streamlit runs a local web server (using Tornado) that runs your Python script.
+2. **Client**: A web browser connects to this server.
+3. **Communication**: Whenever the user interacts with the UI in the browser, the browser sends a signal back to the server, which reruns your Python code.
+
+---
+
+## Running a Streamlit Application
+
+Create a file named `app.py` and run it from your terminal:
+
+```bash
+streamlit run app.py
+```
+
+This spins up a local server (typically at `http://localhost:8501`) and opens the web application in your default browser.
+
+---
+
+## What's next?
+
+Let's look at the execution flow and the script rerun mechanism in Module 2!
+
+<Card
+  title="Streamlit Application Structure"
+  icon="arrow-right"
+  href="/streamlit/structure"
+>
+  Understand execution flow and reruns
+</Card>

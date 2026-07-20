@@ -1,0 +1,62 @@
+---
+title: Data Handling
+description: Load and inspect files, dataframes, and spreadsheet datasets in Streamlit
+icon: "table"
+---
+
+Streamlit is built for displaying datasets, making data inspection extremely simple using Pandas.
+
+---
+
+## Loading Data Files
+
+You can read CSV, JSON, or Excel files using standard Pandas parsing methods:
+
+```python
+import streamlit as st
+import pandas as pd
+
+# Load a local CSV file
+df = pd.read_csv("public/data/student_dataset.csv")
+
+# Display first few rows in an interactive dataframe
+st.subheader("Student Database Overview")
+st.dataframe(df.head())
+```
+
+---
+
+## Uploading Datasets dynamically
+
+Let users upload their own spreadsheets directly to your application:
+
+```python
+import streamlit as st
+import pandas as pd
+
+st.title("Dynamic File Inspector")
+
+uploaded_file = st.file_uploader("Choose a CSV dataset file:", type=["csv"])
+
+if uploaded_file is not None:
+    # Read the file object directly
+    user_df = pd.read_csv(uploaded_file)
+    st.success("File uploaded successfully!")
+    st.dataframe(user_df)
+else:
+    st.info("Please upload a CSV file to inspect.")
+```
+
+---
+
+## What's next?
+
+Let's look at performance optimization and caching calculations in Module 9!
+
+<Card
+  title="Caching"
+  icon="arrow-right"
+  href="/streamlit/caching"
+>
+  Speed up your application using @st.cache decorators
+</Card>

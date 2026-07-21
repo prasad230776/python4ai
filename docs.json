@@ -203,14 +203,7 @@
               "advanced-python/functions",
               "advanced-python/comprehensions",
               "advanced-python/functional-programming",
-              "advanced-python/advanced-oop",
-              "advanced-python/pydantic/introduction",
-              "advanced-python/pydantic/type-hints",
-              "advanced-python/pydantic/your-first-model",
-              "advanced-python/pydantic/validation-and-fields",
-              "advanced-python/pydantic/nested-models",
-              "advanced-python/pydantic/pydantic-settings",
-              "advanced-python/project-handling"
+              "advanced-python/advanced-oop"
             ]
           },
           {
@@ -223,56 +216,27 @@
               "libraries-apis/working-with-apis",
               "libraries-apis/working-with-env"
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Developing Projects",
-        "groups": [
-          {
-            "group": "Practical Python",
-            "pages": [
-              "practical-python/index",
-              "practical-python/project-structure",
-              "practical-python/python-paths",
-              "practical-python/working-with-files",
-              "practical-python/project-with-data",
-              "practical-python/organizing-code"
-            ]
           },
           {
-            "group": "Streamlit Fundamentals",
+            "group": "Pydantic",
             "pages": [
-              "streamlit/intro",
-              "streamlit/structure",
-              "streamlit/displaying-content",
-              "streamlit/widgets",
-              "streamlit/layout",
-              "streamlit/session-state",
-              "streamlit/forms",
-              "streamlit/data-handling",
-              "streamlit/caching",
-              "streamlit/navigation",
-              "streamlit/apis",
-              "streamlit/dashboards",
-              "streamlit/files",
-              "streamlit/deployment"
+              "pydantic/introduction",
+              "pydantic/type-hints",
+              "pydantic/your-first-model",
+              "pydantic/validation-and-fields",
+              "pydantic/nested-models",
+              "pydantic/pydantic-settings"
             ]
           }
         ]
       },
-      {
+        {
         "tab": "Tools",
         "groups": [
           {
-            "group": "Introduction",
+            "group": "Essential Tools",
             "pages": [
-              "tools/index"
-            ]
-          },
-          {
-            "group": "Git & GitHub",
-            "pages": [
+              "tools/index",
               "tools/git/index",
               "tools/git/version-control",
               "tools/git/github-setup",
@@ -293,14 +257,49 @@
             "pages": [
               "tools/code-quality/index"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "Developing Projects",
+        "groups": [
+          {
+            "group": "Practical Python",
+            "pages": [
+              "practical-python/index",
+              "practical-python/project-structure",
+              "practical-python/python-paths",
+              "practical-python/organizing-code",
+              "practical-python/project-handling"
+            ]
+          },
+           {
+            "group": "Project Development",
+            "pages": [
+              "weather-project/index",
+              "weather-project/uv-intro",
+              "weather-project/virtual-env",
+              "weather-project/complete-setup",
+              "weather-project/weather-data-analysis-project"
+            ]
           },
           {
-            "group": "Modern Python",
+            "group": "Streamlit Fundamentals",
             "pages": [
-              "tools/dependencies/index",
-              "tools/dependencies/uv-intro",
-              "tools/dependencies/virtual-env",
-              "tools/dependencies/complete-setup"
+              "streamlit/intro",
+              "streamlit/structure",
+              "streamlit/displaying-content",
+              "streamlit/widgets",
+              "streamlit/layout",
+              "streamlit/session-state",
+              "streamlit/forms",
+              "streamlit/data-handling",
+              "streamlit/caching",
+              "streamlit/navigation",
+              "streamlit/apis",
+              "streamlit/dashboards",
+              "streamlit/files",
+              "streamlit/deployment"
             ]
           }
         ]

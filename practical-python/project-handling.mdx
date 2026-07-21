@@ -1,0 +1,72 @@
+---
+title: Project Handling
+description: Professional guidelines on structure, packages, imports, and environment isolation
+icon: "folder-tree"
+---
+
+Writing large-scale Python code requires clean structures, reusable packages, and isolated runtime environments. Let's cover how to handle and configure professional Python projects.
+
+---
+
+## 1. Modules and Packages
+
+* **Module:** A single Python file (`.py`) containing code.
+* **Package:** A directory containing multiple modules and a special file named `__init__.py`.
+
+### Best Practices for Imports
+* **Always use Absolute Imports:** Avoid relative imports (like `from ..utils import db`). These are prone to breaking when files are run as standalone scripts. Instead, use the project root path:
+  ```python
+  from myproject.utils import db
+  ```
+* **Avoid `from module import *`:** Clutters your namespace and can overwrite existing functions or variables silently. Import explicitly:
+  ```python
+  from math import sqrt, pi
+  ```
+
+---
+
+## 2. Virtual Environments
+
+A virtual environment is a local directory containing its own Python executable and installed dependencies.
+
+### Why isolate environments?
+By default, standard python installations share global libraries. If Project A needs `django 3.2` and Project B needs `django 4.2`, a global environment will crash. Virtual environments solve this by isolating packages per folder.
+
+### Creating and Activating (Standard)
+
+```bash
+# 1. Create environment
+python -m venv .venv
+
+# 2. Activate environment
+# macOS / Linux:
+source .venv/bin/activate
+
+# Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+```
+
+### Modern Alternative: `uv`
+**`uv`** is an ultra-fast Python package installer and resolver written in Rust by Astral, serving as a drop-in replacement for standard pip tools:
+
+```bash
+# Create venv with uv (instant!)
+uv venv
+
+# Install packages
+uv pip install requests
+```
+
+---
+
+## What's next?
+
+Now that you have completed Advanced Python, let's learn how to extend Python using standard libraries and external packages!
+
+<Card
+  title="Extending Python"
+  icon="arrow-right"
+  href="/libraries-apis/index"
+>
+  Learn standard library and external package management
+</Card>

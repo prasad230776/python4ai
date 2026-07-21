@@ -204,8 +204,12 @@
               "advanced-python/comprehensions",
               "advanced-python/functional-programming",
               "advanced-python/advanced-oop",
-              "advanced-python/data-validation",
-              "advanced-python/pydantic",
+              "advanced-python/pydantic/introduction",
+              "advanced-python/pydantic/type-hints",
+              "advanced-python/pydantic/your-first-model",
+              "advanced-python/pydantic/validation-and-fields",
+              "advanced-python/pydantic/nested-models",
+              "advanced-python/pydantic/pydantic-settings",
               "advanced-python/project-handling"
             ]
           },

@@ -1,0 +1,227 @@
+---
+title: "Pydantic Settings"
+description: "Type-safe configuration from environment variables."
+icon: "gear"
+---
+
+## The problem with environment variables
+
+Environment variables are strings. Always:
+
+```python
+import os
+
+# If you set PORT=8000 in your environment:
+port = os.getenv("PORT")
+print(type(port))  # <class 'str'> - not an integer!
+
+# If you set DEBUG=False in your environment:
+debug = os.getenv("DEBUG")
+print(type(debug))  # <class 'str'>
+if debug:
+    # This runs! Because "False" is a non-empty string, which evaluates to True.
+    print("Debug mode active")
+```
+
+Working with raw environment variables is error-prone. You have to manually parse strings into integers, booleans, and lists.
+
+Pydantic Settings solves this by validating and parsing environment variables into Python types.
+
+## Installation
+
+Install `pydantic-settings` (it's a separate package in Pydantic v2):
+
+```bash
+pip install pydantic-settings
+```
+
+```bash
+uv add pydantic-settings
+```
+
+## Basic usage
+
+Create a configuration class that inherits from `BaseSettings`:
+
+```python
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    api_key: str
+    port: int = 8000
+    debug: bool = False
+
+# Instantiation
+settings = Settings()
+```
+
+When you instantiate `Settings`, Pydantic automatically looks at your environment variables (case-insensitive):
+
+1. It looks for `API_KEY`. If not found, it raises a validation error (since there's no default).
+2. It looks for `PORT`. If found, it converts it to an integer. If not found, it uses `8000`.
+3. It looks for `DEBUG`. If found, it converts it to a boolean (accepts "True", "False", "1", "0", "yes", "no"). If not found, it uses `False`.
+
+## The `.env` file
+
+In development, you usually store configuration in a `.env` file:
+
+```
+API_KEY=sk_test_123
+PORT=5000
+DEBUG=True
+```
+
+Configure your model to read from this file:
+
+```python
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env")
+    
+    api_key: str
+    port: int = 8000
+    debug: bool = False
+
+settings = Settings()
+print(settings.api_key)  # sk_test_123
+print(settings.port)     # 5000 (parsed as integer)
+```
+
+`model_config` tells Pydantic to read from the `.env` file first. Environment variables set on your system will still override values in the `.env` file.
+
+## Environment prefix
+
+If your system has many environment variables, you can prefix your app's variables to avoid collisions:
+
+```
+MYAPP_API_KEY=sk_test_123
+MYAPP_PORT=5000
+```
+
+Use `env_prefix`:
+
+```python
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_prefix="myapp_"
+    )
+    
+    api_key: str
+    port: int = 8000
+
+settings = Settings()
+# Now reads from MYAPP_API_KEY and MYAPP_PORT
+print(settings.api_key)  # sk_test_123
+```
+
+## Hiding secrets
+
+Use `SecretStr` for sensitive data like API keys and passwords. This prevents them from being leaked in logs:
+
+```python
+from pydantic import SecretStr
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    database_password: SecretStr
+
+settings = Settings(database_password="super-secret-password")
+
+# Secrets are hidden when printed
+print(settings.database_password)
+# database_password=SecretStr('**********')
+
+# Access the actual value when needed
+print(settings.database_password.get_secret_value())
+# super-secret-password
+```
+
+Always use `SecretStr` for API keys, passwords, and tokens.
+
+## Caching settings
+
+Reading settings can be slow if you do it repeatedly. Use `lru_cache` to load them once and reuse them:
+
+```python
+from functools import lru_cache
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    api_key: str
+
+@lru_cache
+def get_settings():
+    return Settings()
+
+# Use throughout your app
+settings = get_settings()
+```
+
+## Environment-specific settings
+
+```python
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env")
+    
+    environment: str = "development"
+    debug: bool = False
+    
+    @property
+    def is_production(self) -> bool:
+        return self.environment == "production"
+
+settings = Settings()
+if settings.is_production:
+    # Production-specific behavior
+    pass
+```
+
+## Learn more
+
+- [Pydantic Settings documentation](https://docs.pydantic.dev/latest/concepts/pydantic_settings/)
+- [pydantic-settings on GitHub](https://github.com/pydantic/pydantic-settings)
+
+---
+
+## Practice & Exercises
+
+To reinforce what you've learned in this chapter (Type Hints, Dataclasses, BaseModel schemas, field constraints, custom validators, nested models, and environment settings), practice with these consolidated interactive notebooks:
+
+<CardGroup cols={2}>
+  <Card
+    title="Follow-Along Practice"
+    icon="laptop-code"
+  >
+    Practice writing type hints, defining dataclasses, building BaseModel schemas, assigning Field constraints, writing custom field validators, nesting models, mapping union/optional fields, and exporting configurations.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Pydantic_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Pydantic_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Pydantic_Practice.ipynb" download>📥 Download</a>
+  </Card>
+  <Card
+    title="Practice Exercises"
+    icon="pen-to-square"
+  >
+    Test your knowledge with hands-on exercises on function annotations, custom book dataclasses, employee validation, custom validation rules, nested model structures, and configuration setting setups.
+
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Pydantic_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Pydantic_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Pydantic_Exercises.ipynb" download>📥 Download</a>
+  </Card>
+</CardGroup>
+
+---
+
+## What's next?
+
+You now know how to manage configuration safely. In the next chapter, we will learn about project handling and structure in Python.
+
+<Card
+  title="Project Handling"
+  icon="arrow-right"
+  href="/advanced-python/project-handling"
+>
+  Learn how to structure projects, manage dependencies, and package Python applications.
+</Card>

@@ -285,6 +285,17 @@
             ]
           },
           {
+            "group": "FastAPI Fundamentals",
+            "pages": [
+              "fastapi/index",
+              "fastapi/fundamentals",
+              "fastapi/student-api-1",
+              "fastapi/data-handling",
+              "fastapi/streamlit-app1",
+              "fastapi/streamlit-app2"
+            ]
+          },
+          {
             "group": "Streamlit Fundamentals",
             "pages": [
               "streamlit/intro",

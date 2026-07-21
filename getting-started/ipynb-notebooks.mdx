@@ -1,351 +1,165 @@
 ---
 title: Jupyter Notebooks
-description: An interactive environment for writing and executing Python code
-icon: "notebook"
+description: Interactive environments for writing and executing Python code.
+icon: notebook
 ---
 
 ## Developing Python with Notebooks
 
-Python notebooks provide an interactive environment where you can write code, execute it cell-by-cell, and document your work using Markdown.
+Jupyter notebooks provide an interactive environment where you can write Python code, execute it cell by cell, visualize outputs, and document your work using Markdown.
 
-There are four common ways to work with notebooks.
----
+The most common notebook environments are:
+
+- Jupyter Notebook
+- JupyterLab (Recommended)
+- Google Colab
+- VS Code Notebooks
 
 ## Jupyter Notebook
 
-The classic notebook interface.
+The classic notebook interface, ideal for learning and experimentation.
 
-**Best for**
-- Learning Python
-- Practicing programs
-- Small experiments
-- Data analysis
-
-**Installation**
+### Install
 
 ```bash
 pip install notebook
 ```
 
-**Start**
+### Start
 
 ```bash
 jupyter notebook
 ```
 
-This opens your default browser.
+This opens a browser where you can create and run `.ipynb` notebook files.
 
-Navigate to your project folder and click **New → Python 3** to create a notebook.
+**Best for**
 
-Notebook files are saved with the `.ipynb` extension.
+- Learning Python
+- Practice programs
+- Small experiments
 
-**When to use**
-
-- You are learning Python.
-- You want a lightweight notebook interface.
-- You don't need advanced IDE features.
-
----
-
-## JupyterLab ⭐ Recommended
+## JupyterLab ⭐
 
 JupyterLab is the modern version of Jupyter Notebook with a richer interface.
 
-**Best for**
-- Python development
-- Data Science
-- AI and Machine Learning
-- Working with multiple notebooks
-
-**Installation**
+### Install
 
 ```bash
 pip install jupyterlab
 ```
 
-**Start**
+### Start
 
 ```bash
 jupyter lab
 ```
 
-A browser opens with:
+JupyterLab includes:
+
 - File Explorer
 - Multiple notebooks
 - Terminal
 - Text editor
 - Output console
 
-Create a notebook using:
+**Best for**
 
-```
-File → New → Notebook
-```
-
-or
-
-```
-Launcher → Notebook
-```
-
-**When to use**
-
-- Daily notebook development
-- Working with datasets
-- Multiple notebooks
-- AI and ML projects
-
----
+- Daily Python development
+- Data Science
+- AI and Machine Learning
 
 ## Google Colab
 
-Google Colab is a cloud-based Jupyter Notebook.
-
-No installation is required.
+Google Colab is a cloud-based Jupyter Notebook that runs entirely in your browser.
 
 **Website**
 
-```
+```text
 https://colab.research.google.com
 ```
 
-Sign in with your Google account.
+Create a notebook from **File → New Notebook**.
 
-Create a notebook:
+You can also open a new notebook instantly by visiting:
 
-```
-File → New Notebook
-```
-## Google Colab Shortcuts
-
-Open a new Google Colab notebook directly from your browser:
-
-```
+```text
 https://colab.new
 ```
 
-Simply type **colab.new** in the browser's address bar and press **Enter**.
-
-
-> **Tip:** `colab.new` is the fastest way to create a new Google Colab notebook without first visiting the Colab website.
-
-Install packages (only for the current session):
+Install packages for the current session:
 
 ```python
-!pip install pandas
+%pip install pandas
 ```
-
-Upload files from the left sidebar or connect Google Drive.
 
 **Advantages**
 
-- No setup required
-- Works from any computer
-- Free GPU and TPU (limited)
+- No installation required
+- Accessible from anywhere
 - Easy notebook sharing
-
-**Limitations**
-
-- Internet connection required
-- Sessions expire after inactivity
-- Packages must be reinstalled each new session (unless using Drive or custom setup)
-
-**When to use**
-
-- Deep Learning
-- Machine Learning
-- AI experiments
-- Learning without installing software
-
----
+- Free GPU/TPU (limited)
 
 ## VS Code Notebooks
 
-Visual Studio Code can open and create Jupyter notebooks directly.
+Visual Studio Code can create and run Jupyter notebooks alongside Python projects.
 
-**Best for**
-- Python projects
-- AI applications
-- Data Science
-- Working with both `.py` and `.ipynb` files
+### Install
 
-### Install VS Code
-
-Download and install VS Code.
-
-### Install Extensions
-
-Open Extensions (`Ctrl + Shift + X`) and install:
+Install the following VS Code extensions:
 
 - Python
 - Jupyter
 
-### Create a Virtual Environment
-
-```bash
-python -m venv .venv
-```
-
-Activate it.
-
-Windows
-
-```bash
-.venv\Scripts\activate
-```
-
-macOS/Linux
-
-```bash
-source .venv/bin/activate
-```
-
-Install Jupyter:
+Install notebook support:
 
 ```bash
 pip install notebook ipykernel
 ```
 
-Open your project folder in VS Code.
+Create a notebook by selecting:
 
-Create a notebook:
-
-```
+```text
 File → New File → notebook.ipynb
 ```
 
-or
+or open the Command Palette (**Ctrl/Cmd + Shift + P**) and search for:
 
-```
-Ctrl + Shift + P
-```
-
-Search:
-
-```
+```text
 Jupyter: Create New Jupyter Notebook
 ```
 
-Select the Python interpreter (or virtual environment) from the top-right corner.
+## Running Commands in Notebooks
 
-Run cells using **Shift + Enter**.
+### Python
 
-**When to use**
+```python
+print("Hello, World!")
+```
 
-- Developing Python applications
-- Working with notebooks and Python scripts together
-- Git-based projects
-- Professional development
-
----
-## Running Commands in Jupyter Notebooks
-
-Jupyter notebooks allow you to execute not only Python code but also **IPython magic commands** and **operating system (shell) commands**.
-
----
-
-### `%` - IPython Magic Commands
-
-Commands beginning with `%` are called **magic commands**. They are built into IPython and provide additional notebook-specific functionality.
-
-The most commonly used magic command is `%pip`, which installs packages into the **currently active notebook environment (kernel)**.
-
-Example:
+### Install Packages
 
 ```python
 %pip install pandas
 ```
 
-Other examples:
+Using `%pip` is recommended because it installs packages into the active notebook environment.
 
-```python
-%pwd          # Show current working directory
-```
-
-```python
-%cd notebooks # Change current directory
-```
-
-```python
-%time sum(range(1000000))
-```
-
-**Use `%` for notebook-specific commands.**
-
----
-
-### `!` - Shell Commands
-
-Commands beginning with `!` are executed by the operating system shell (Terminal/Command Prompt).
-
-Examples:
+### Shell Commands
 
 ```python
 !python --version
-```
-
-```python
 !git status
 ```
 
-```python
-!mkdir data
-```
+The `!` prefix runs operating system commands directly from the notebook.
 
-macOS / Linux
+## Package Management
 
-```python
-!ls
-```
-
-Windows
-
-```python
-!dir
-```
-
-**Use `!` to execute terminal commands from inside a notebook.**
-
----
-
-### `%pip` vs `!pip`
-
-Both commands install Python packages.
-
-```python
-%pip install pandas
-```
-
-```python
-!pip install pandas
-```
-
-**Recommended:** Use `%pip`
-
-Reason:
-- Installs packages into the notebook's active Python environment.
-- Avoids issues when multiple Python installations or virtual environments exist.
-
----
-
-## Installing Packages
-
-### From Terminal
+Install multiple packages:
 
 ```bash
 pip install numpy pandas matplotlib
-```
-
-### Inside a Notebook
-
-```python
-%pip install numpy pandas matplotlib
-```
-
-Install a specific version:
-
-```bash
-pip install pandas==2.3.0
 ```
 
 Upgrade a package:
@@ -366,38 +180,33 @@ Save dependencies:
 pip freeze > requirements.txt
 ```
 
-Install from requirements:
+Install from a requirements file:
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
 ## Useful Notebook Shortcuts
 
 | Shortcut | Action |
-|-----------|--------|
+|----------|--------|
 | Shift + Enter | Run current cell |
-| Ctrl + Enter | Run and stay |
-| Alt + Enter | Run and create next cell |
-| Esc | Command Mode |
-| Enter | Edit Mode |
+| Ctrl + Enter | Run and stay in current cell |
+| Alt + Enter | Run and create a new cell |
+| Esc | Command mode |
+| Enter | Edit mode |
 | A | Insert cell above |
 | B | Insert cell below |
 | D D | Delete current cell |
 | M | Convert to Markdown |
 | Y | Convert to Code |
 | Ctrl + S | Save notebook |
-| H | Show all shortcuts |
-
----
 
 ## Which One Should You Use?
 
-| Tool | Installation | Best For |
-|------|--------------|-----------|
-| Jupyter Notebook | `pip install notebook` | Learning and practice |
-| JupyterLab | `pip install jupyterlab` | Daily notebook development ⭐ |
-| Google Colab | No installation | Cloud-based AI and ML |
-| VS Code Notebook | VS Code + Python + Jupyter Extension | Professional Python development |
+| Tool | Best For |
+|------|----------|
+| Jupyter Notebook | Learning and practice |
+| JupyterLab | Daily notebook development ⭐ |
+| Google Colab | Cloud-based AI and ML |
+| VS Code Notebook | Professional Python development |

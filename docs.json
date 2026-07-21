@@ -288,19 +288,10 @@
             "group": "Streamlit Fundamentals",
             "pages": [
               "streamlit/intro",
-              "streamlit/structure",
               "streamlit/displaying-content",
               "streamlit/widgets",
-              "streamlit/layout",
-              "streamlit/session-state",
-              "streamlit/forms",
               "streamlit/data-handling",
-              "streamlit/caching",
-              "streamlit/navigation",
-              "streamlit/apis",
-              "streamlit/dashboards",
-              "streamlit/files",
-              "streamlit/deployment"
+              "streamlit/streamlit-app"
             ]
           }
         ]

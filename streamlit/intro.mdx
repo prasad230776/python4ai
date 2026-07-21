@@ -1,75 +1,76 @@
 ---
 title: Introduction to Streamlit
-description: What is Streamlit and how does it fit into the AI ecosystem?
+description: Learn what Streamlit is, how it works, and how to build your first app
 icon: "handwave"
 ---
 
-When building AI models, chatbot assistants, or data tools, you need a way for non-technical users to interact with your Python scripts. Traditionally, this required learning HTML, CSS, JavaScript, and a backend framework like Flask or FastAPI.
-
-**Streamlit** solves this by letting you create beautiful, interactive web user interfaces (UIs) in pure Python.
-
----
+Streamlit helps you turn Python scripts into interactive web apps without writing HTML, CSS, or JavaScript.
 
 ## What is Streamlit?
 
-Streamlit is a popular open-source Python library designed to build custom web applications for machine learning, data science, and Generative AI. 
+Streamlit is an open-source Python library for building dashboards, data tools, and AI demos. It is especially useful when you want to share a notebook-like workflow with non-technical users.
 
-With Streamlit, you can:
-* Build **AI Chatbots** that interface with OpenAI, Gemini, or Claude.
-* Build **Interactive Dashboards** with charts, sliders, and drop-downs.
-* Build **Data Annotation Tools** to clean and inspect datasets.
+You can use it to create:
+- AI chat interfaces
+- Data dashboards
+- Simple internal business tools
+- Prototype applications for machine learning projects
 
----
+## Streamlit architecture
 
-## Why use Streamlit?
+Streamlit follows a simple client-server model:
+1. Your Python script runs on the server.
+2. The browser shows the interface.
+3. When a user interacts with a widget, the browser sends a new event to the server.
+4. Streamlit reruns the script to refresh the page with the latest values.
 
-| Feature | Description |
-| :--- | :--- |
-| **Pure Python** | No HTML, CSS, or JavaScript is required. You write standard Python scripts. |
-| **Fast Prototypes** | Go from a command-line script to a working web page in less than 30 lines of code. |
-| **Reactive Execution** | Streamlit updates your page layout automatically when users input data. |
-| **Interactive Widgets** | Built-in buttons, text inputs, uploaders, and chart wrappers out of the box. |
+## Execution flow
 
----
+Streamlit uses a rerun model. Every time a user clicks a button, types in a field, or changes a slider, the script runs again from top to bottom. This makes the app feel reactive and keeps the UI in sync.
 
-## Streamlit vs Flask vs FastAPI
+```python
+import streamlit as st
 
-Developers often ask how Streamlit compares to backend APIs or full-stack web servers:
+st.title("Hello Streamlit")
+name = st.text_input("Your name")
 
-* **FastAPI / Flask**: Used to build **Backend REST APIs**. They send raw JSON data back and forth. They do *not* generate a frontend interface (you must build a separate React/Vue frontend).
-* **Streamlit**: A **Full-Stack prototyping tool**. It handles both the visual frontend UI and the Python execution engine in one place.
+if name:
+    st.write(f"Hello, {name}!")
+```
 
----
+## Creating and running an application
 
-## Streamlit Architecture
-
-Streamlit uses a **Client-Server Architecture**:
-1. **Server**: Streamlit runs a local web server (using Tornado) that runs your Python script.
-2. **Client**: A web browser connects to this server.
-3. **Communication**: Whenever the user interacts with the UI in the browser, the browser sends a signal back to the server, which reruns your Python code.
-
----
-
-## Running a Streamlit Application
-
-Create a file named `app.py` and run it from your terminal:
+Create a file such as `app.py` and run it from your terminal:
 
 ```bash
 streamlit run app.py
 ```
 
-This spins up a local server (typically at `http://localhost:8501`) and opens the web application in your default browser.
+This starts a local server, usually at `http://localhost:8501`, and opens your app in the browser.
 
----
+## Project structure
 
-## What's next?
+A simple Streamlit project often contains:
+- `app.py` for the main app logic
+- `data/` for CSV or JSON files
+- `images/` for local media files
+- `pages/` for multipage apps
 
-Let's look at the execution flow and the script rerun mechanism in Module 2!
+## A practical learning path
 
-<Card
-  title="Streamlit Application Structure"
-  icon="arrow-right"
-  href="/streamlit/structure"
->
-  Understand execution flow and reruns
-</Card>
+The Streamlit module is organized into five beginner-friendly sections:
+
+<CardGroup cols={2}>
+  <Card title="Displaying content" icon="eye" href="/streamlit/displaying-content">
+    Render text, tables, images, and status messages
+  </Card>
+  <Card title="User input widgets" icon="sliders" href="/streamlit/widgets">
+    Collect text, selections, files, and dates
+  </Card>
+  <Card title="Layouts and interactivity" icon="grip" href="/streamlit/layout">
+    Organize your app with sidebars, tabs, and forms
+  </Card>
+  <Card title="Working with data" icon="table" href="/streamlit/data-handling">
+    Load CSV files, filter rows, and visualize data
+  </Card>
+</CardGroup>

@@ -1,30 +1,25 @@
 ---
-title: Layout Management
-description: Design clean dashboards using sidebars, columns, expanders, and tabs
+title: Layouts and Interactivity
+description: Organize your app with sidebars, columns, tabs, forms, and stateful widgets
 icon: "grip"
 ---
 
-By default, Streamlit places all widgets in a single vertical column. However, you can organize your application horizontally and vertically using layout layouts.
+Streamlit gives you several layout tools to make your app easier to read and more interactive.
 
----
+## Sidebar
 
-## The Sidebar (`st.sidebar`)
-
-Use the sidebar to hold app configurations, navigation selections, or credential filters. It remains separate on the left side of the web page.
+Use the sidebar for filters, navigation, or configuration controls.
 
 ```python
 import streamlit as st
 
-# Direct widgets to the sidebar using prefix dot notation
-st.sidebar.title("Navigation Panel")
-app_mode = st.sidebar.selectbox("Choose view:", ["Home", "Data Analysis", "Settings"])
+st.sidebar.title("Settings")
+mode = st.sidebar.selectbox("View", ["Overview", "Details"])
 ```
 
----
+## Columns
 
-## Columns (`st.columns`)
-
-Renders widgets side-by-side.
+Split content across multiple columns.
 
 ```python
 import streamlit as st
@@ -32,33 +27,31 @@ import streamlit as st
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Left Column")
-    st.button("Button Left")
+    st.header("Left")
+    st.button("Button A")
 
 with col2:
-    st.subheader("Right Column")
-    st.button("Button Right")
+    st.header("Right")
+    st.button("Button B")
 ```
 
----
+## Containers and expanders
 
-## Expanders (`st.expander`)
-
-A collapsible widget that hides secondary configurations or detailed documentation until toggled open.
+Use containers and expanders to group related content and keep the page tidy.
 
 ```python
 import streamlit as st
 
-with st.expander("Click to view Advanced Settings"):
-    timeout = st.slider("Request Timeout (s):", 1, 30, 5)
-    st.write(f"Timeout configured to: {timeout}")
+with st.container():
+    st.write("This content is grouped together")
+
+with st.expander("Advanced settings"):
+    st.slider("Timeout", 1, 30, 10)
 ```
 
----
+## Tabs
 
-## Tabs (`st.tabs`)
-
-Separate different dashboard views without reloading the page.
+Tabs help you show multiple views without clutter.
 
 ```python
 import streamlit as st
@@ -66,41 +59,77 @@ import streamlit as st
 tab1, tab2 = st.tabs(["Overview", "Raw Data"])
 
 with tab1:
-    st.write("📈 Displaying metrics graph...")
+    st.write("Summary metrics")
 
 with tab2:
-    st.write("📄 Displaying raw spreadsheet records...")
+    st.write("Detailed records")
 ```
 
----
+## Forms
 
-## Containers & Placeholders
-
-* **`st.container()`**: Groups widgets together.
-* **`st.empty()`**: A dynamic placeholder. It can hold a single element and overwrite its contents later (great for live execution status messages or progress counters).
+Forms group several inputs together and submit them at once.
 
 ```python
 import streamlit as st
 
-placeholder = st.empty()
-
-# This text will be replaced later
-placeholder.text("Loading initial database connection...")
-
-# Overwrites the text above
-placeholder.success("Connection Successful!")
+with st.form("profile_form"):
+    name = st.text_input("Name")
+    role = st.selectbox("Role", ["Developer", "Analyst", "Manager"])
+    submitted = st.form_submit_button("Save")
 ```
 
----
+## Session State
+
+Use `st.session_state` to keep values between reruns.
+
+```python
+import streamlit as st
+
+if "count" not in st.session_state:
+    st.session_state.count = 0
+
+if st.button("Increment"):
+    st.session_state.count += 1
+
+st.write(st.session_state.count)
+```
+
+## Callbacks
+
+Callbacks run when a widget changes value.
+
+```python
+import streamlit as st
+
+
+def update_name():
+    st.session_state.display_name = st.session_state.input_name
+
+st.text_input("Name", key="input_name", on_change=update_name)
+st.write(st.session_state.get("display_name", ""))
+```
+
+## Progress bars and spinners
+
+Show loading state while work is happening.
+
+```python
+import streamlit as st
+import time
+
+with st.spinner("Loading data..."):
+    time.sleep(1)
+
+progress_bar = st.progress(0)
+for percent in range(100):
+    progress_bar.progress(percent + 1)
+    time.sleep(0.01)
+```
 
 ## What's next?
 
-Let's learn how to preserve variables across reruns using Session State in Module 6!
+The next step is to work with real datasets in your app.
 
-<Card
-  title="Session State"
-  icon="arrow-right"
-  href="/streamlit/session-state"
->
-  Persist variables across top-to-bottom runs
+<Card title="Working with Data" icon="arrow-right" href="/streamlit/data-handling">
+  Learn to read CSV files, filter rows, and create charts
 </Card>

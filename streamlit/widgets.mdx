@@ -1,82 +1,91 @@
 ---
 title: User Input Widgets
-description: Learn how to capture clicks, selections, files, and slider inputs
+description: Capture clicks, selections, text, files, and slider values in Streamlit
 icon: "sliders"
 ---
 
-Widgets allow users to input data and trigger actions inside your app.
+Widgets let users interact with your app and provide data to your Python code.
 
----
+## Buttons
 
-## Standard Inputs
+Use a button when you want an action to happen after a click.
 
-### Buttons & Checkboxes
 ```python
 import streamlit as st
 
-# Button click is True only on the rerun it was clicked
-if st.button("Click Me"):
-    st.write("Button was clicked!")
-
-# Checkbox preserves state (True or False)
-agree = st.checkbox("I agree to terms")
-if agree:
-    st.write("Terms accepted!")
+if st.button("Click me"):
+    st.write("Button clicked")
 ```
 
-### Text & Numeric Inputs
+## Text input and text area
+
+Use text fields for short and longer free-form input.
+
 ```python
-user_name = st.text_input("Enter your name:", placeholder="Amit Patel")
-user_age = st.number_input("Enter your age:", min_value=0, max_value=120, value=25)
+import streamlit as st
+
+name = st.text_input("Your name", placeholder="Amit Patel")
+notes = st.text_area("Notes", height=120)
 ```
 
----
+## Selectbox, radio, and checkbox
 
-## Selections & Sliders
+These widgets are useful for choosing one option or toggling a simple setting.
 
-### Select Box & Multiselect
 ```python
-# Dropdown selector
-city = st.selectbox("Choose City:", ["Mumbai", "Delhi", "Bengaluru"])
+import streamlit as st
 
-# Multiple values selector
-skills = st.multiselect("Select Skills:", ["Python", "Machine Learning", "FastAPI"])
+city = st.selectbox("Choose city", ["Mumbai", "Delhi", "Bengaluru"])
+gender = st.radio("Gender", ["Male", "Female", "Other"])
+agree = st.checkbox("I agree")
 ```
 
-### Radio Buttons & Sliders
+## Multiselect
+
+Use multiselect when users should be able to choose more than one value.
+
 ```python
-# Radio selector
-gender = st.radio("Gender:", ["Male", "Female", "Other"])
+import streamlit as st
 
-# Slider inputs
-rating = st.slider("Rate your experience:", min_value=1, max_value=10, value=5)
+skills = st.multiselect("Select skills", ["Python", "SQL", "Machine Learning"])
 ```
 
----
+## Number input and slider
 
-## Special Inputs
+These widgets are ideal for numeric inputs.
 
-### Date Picker
 ```python
-birthday = st.date_input("Select your birthday:")
+import streamlit as st
+
+age = st.number_input("Age", min_value=0, max_value=120, value=25)
+rating = st.slider("Rating", min_value=1, max_value=10, value=5)
 ```
 
-### File Uploader
-Let users submit CSVs, images, or PDFs to your program:
+## File uploader
+
+Allow users to upload CSVs, images, or other files.
+
 ```python
-uploaded_file = st.file_uploader("Upload a file:", type=["csv", "png"])
+import streamlit as st
+
+uploaded_file = st.file_uploader("Upload a file", type=["csv", "png", "jpg"])
 ```
 
----
+## Date and time inputs
+
+Use date and time widgets for scheduling and filtering.
+
+```python
+import streamlit as st
+
+birthday = st.date_input("Select birthday")
+meeting_time = st.time_input("Select time")
+```
 
 ## What's next?
 
-Let's look at managing sidebars, layouts, and columns in Module 5!
+The next step is to organize your app with sidebars, columns, tabs, and forms.
 
-<Card
-  title="Layout Management"
-  icon="arrow-right"
-  href="/streamlit/layout"
->
-  Organize widgets with columns, tabs, and sidebars
+<Card title="Layouts and Interactivity" icon="arrow-right" href="/streamlit/layout">
+  Learn to structure your app visually and manage state
 </Card>

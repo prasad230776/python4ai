@@ -66,7 +66,8 @@
               "getting-started/vscode-introduction",
               "getting-started/vscode-setup",
               "getting-started/vscode-workspace",
-              "getting-started/first-python-file"
+              "getting-started/first-python-file",
+              "getting-started/ipynb-notebooks"
             ]
           },
           {

@@ -201,8 +201,8 @@
             "group": "Advanced Concepts",
             "pages": [
               "advanced-python/internals",
-              "advanced-python/functions",
               "advanced-python/comprehensions",
+              "advanced-python/functions",
               "advanced-python/functional-programming",
               "advanced-python/advanced-oop"
             ]

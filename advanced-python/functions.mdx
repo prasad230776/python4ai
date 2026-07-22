@@ -125,7 +125,24 @@ print(process_user_data(user_record))
 </Tip>
 
 ---
+## Variable-Length Arguments (`*args` and `**kwargs`)
 
+When defining functions, you can accept an arbitrary number of arguments:
+
+* **`*args` (Positional):** Collects additional positional arguments into a **tuple**.
+* **`**kwargs` (Keyword):** Collects additional keyword arguments into a **dictionary**.
+
+```python
+def print_everything(*args, **kwargs):
+    print("Positional args:", args)
+    print("Keyword args:", kwargs)
+
+print_everything(1, 2, 3, name="Alice", age=25)
+# Output:
+# Positional args: (1, 2, 3)
+# Keyword args: {'name': 'Alice', 'age': 25}
+```
+---
 ## Closures
 
 A **closure** is a nested function that retains access to variables from its enclosing (outer) function's scope, even after the outer function has finished executing.
@@ -199,27 +216,6 @@ def add_numbers(a, b):
 
 add_numbers(10, 20)
 ```
-
----
-
-## Variable-Length Arguments (`*args` and `**kwargs`)
-
-When defining functions, you can accept an arbitrary number of arguments:
-
-* **`*args` (Positional):** Collects additional positional arguments into a **tuple**.
-* **`**kwargs` (Keyword):** Collects additional keyword arguments into a **dictionary**.
-
-```python
-def print_everything(*args, **kwargs):
-    print("Positional args:", args)
-    print("Keyword args:", kwargs)
-
-print_everything(1, 2, 3, name="Alice", age=25)
-# Output:
-# Positional args: (1, 2, 3)
-# Keyword args: {'name': 'Alice', 'age': 25}
-```
-
 ---
 
 ## Practice & Exercises

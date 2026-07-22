@@ -43,9 +43,32 @@ with open("output.txt", "w") as file:
 
 **JSON** (JavaScript Object Notation) is the standard data format for web APIs and configuration files. Python has a built-in `json` module to parse and generate JSON.
 
-* **Parsing JSON (String to Python Dict):** Use `json.loads()`
-* **Generating JSON (Python Dict to String):** Use `json.dumps()`
-* **Reading/Writing JSON Files:** Use `json.load()` and `json.dump()`
+**JSON (JavaScript Object Notation)** is a lightweight, text-based format used to exchange data between applications. It is widely used in **REST APIs**, configuration files, and data storage because it is easy for both humans and machines to read.
+
+Python provides the built-in `json` module to work with JSON data.
+
+### JSON Data Types
+
+JSON supports the following data types:
+
+| JSON | Python |
+|------|--------|
+| Object | `dict` |
+| Array | `list` |
+| String | `str` |
+| Number | `int`, `float` |
+| Boolean | `True`, `False` |
+| Null | `None` |
+
+### Common JSON Functions
+
+| Function | Purpose |
+|----------|---------|
+| `json.loads()` | Convert a JSON string to a Python object |
+| `json.dumps()` | Convert a Python object to a JSON string |
+| `json.load()` | Read JSON data from a file |
+| `json.dump()` | Write JSON data to a file |
+
 
 ### JSON Example
 

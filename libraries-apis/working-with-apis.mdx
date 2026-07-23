@@ -16,9 +16,78 @@ But APIs do more than just fetch information. They're the bridges that connect y
 
 In the context of AI, APIs are essential. They let you connect AI capabilities to real business data and systems.
 
-## Your first API call
+## `requests` Module
 
-Let's get real weather data using a free weather API:
+The **`requests`** module is a popular third-party Python library used to send **HTTP requests**. It simplifies communication with web servers and REST APIs.
+
+> Install the library using:
+>
+> ```bash
+> pip install requests
+> ```
+
+### Common HTTP Methods
+
+| Method | Purpose |
+|--------|---------|
+| `GET` | Retrieve data from a server |
+| `POST` | Send new data to a server |
+| `PUT` | Update existing data |
+| `DELETE` | Remove data from a server |
+
+### Example: GET Request
+
+```python
+import requests
+
+response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+
+print(response.status_code)
+print(response.json())
+```
+
+### Example: POST Request
+
+```python
+import requests
+
+data = {
+    "title": "Python",
+    "body": "Learning Requests",
+    "userId": 1
+}
+
+response = requests.post(
+    "https://jsonplaceholder.typicode.com/posts",
+    json=data
+)
+
+print(response.status_code)
+print(response.json())
+```
+
+### Useful Response Attributes
+
+| Attribute | Description |
+|-----------|-------------|
+| `response.status_code` | HTTP status code |
+| `response.text` | Response as plain text |
+| `response.json()` | Response as JSON |
+| `response.headers` | Response headers |
+| `response.content` | Response as bytes |
+
+### Common Status Codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | OK |
+| `201` | Created |
+| `400` | Bad Request |
+| `401` | Unauthorized |
+| `404` | Not Found |
+| `500` | Internal Server Error |
+
+## Let's get real weather data using a free weather API:
 
 ```python
 import requests

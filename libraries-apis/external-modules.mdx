@@ -6,82 +6,82 @@ icon: "download"
 
 While Python's built-in standard library is incredibly powerful, the real superpower of Python is its massive ecosystem of third-party libraries. These are packages written by the open-source community to solve almost any programming task imaginable.
 
----
-
 ## What is PyPI?
 
-**PyPI** (pronounced *pie-pee-eye*), or the **Python Package Index**, is the official online repository for third-party Python software. 
+**PyPI** (pronounced *pie-pee-eye*), or the **Python Package Index**, is the official online repository for third-party Python software.
 
-* Anyone can write a Python package and publish it to PyPI.
-* When you need a package (like `pandas` for data analysis or `requests` for fetching web data), you download it directly from PyPI.
-* You can browse available packages at [pypi.org](https://pypi.org).
-
----
+- Anyone can write a Python package and publish it to PyPI.
+- When you need a package (like `pandas` or `requests`), you download it directly from PyPI.
+- Browse packages at https://pypi.org.
 
 ## What is pip?
 
 **pip** is the standard package manager for Python. It comes pre-installed with modern Python installations and allows you to install and manage packages directly from PyPI.
 
-### Common `pip` Commands
+## `requests` Module
 
-Run these commands in your shell/terminal (not inside the Python interpreter):
+The **`requests`** module is a popular third-party Python library used to send HTTP requests and communicate with REST APIs.
+
+Install it using:
 
 ```bash
-# 1. Install the latest version of a package
+pip install requests
+```
+
+### Common `pip` Commands
+
+```bash
+# Install the latest version
 pip install requests
 
-# 2. Install a specific version of a package
+# Install a specific version
 pip install requests==2.28.0
 
-# 3. Upgrade an existing package
+# Upgrade a package
 pip install --upgrade requests
 
-# 4. Uninstall a package
+# Uninstall a package
 pip uninstall requests
 
-# 5. List all installed packages in the current environment
+# List installed packages
 pip list
 ```
 
 <Tip>
-  **Important:** Always ensure your virtual environment is activated before installing packages! Otherwise, you will install packages globally, which can lead to version conflicts between different projects. [Learn about virtual environments](/getting-started/virtual-environments).
+**Important:** Activate your virtual environment before installing packages to avoid installing them globally.
+
+Learn more about <a href="/getting-started/virtual-environments">Virtual Environments</a>.
 </Tip>
 
----
+## What is `uv`?
 
-## What is uv?
-
-**uv** is an extremely fast, modern Python package installer and resolver written in Rust by Astral. It is designed to be a drop-in, ultra-fast replacement for `pip`, `pip-tools`, and `virtualenv`.
+**uv** is a modern, ultra-fast Python package manager written in Rust. It is designed as a replacement for `pip`, `pip-tools`, and `virtualenv`.
 
 ### Why use `uv`?
-* **Blazing Fast:** Often 10x to 100x faster than standard `pip` because of its Rust engine and aggressive caching.
-* **Modern Features:** It can manage virtual environments, install Python interpreters, and run scripts with self-contained dependencies automatically.
+
+- 🚀 10–100× faster than `pip`
+- 📦 Manages virtual environments
+- 🐍 Can install Python interpreters
+- ⚡ Uses aggressive dependency caching
 
 ### Common `uv` Commands
 
-If you have `uv` installed, you can replace standard `pip` commands with:
-
 ```bash
-# 1. Install a package via uv (blazing fast!)
+# Install a package
 uv pip install requests
 
-# 2. Create a new virtual environment
+# Create a virtual environment
 uv venv
 
-# 3. Install packages from requirements.txt
+# Install dependencies
 uv pip install -r requirements.txt
 ```
 
----
+## Sharing Dependencies (`requirements.txt`)
 
-## Sharing Dependencies: `requirements.txt`
+Instead of sharing your `.venv` folder, share a **requirements.txt** file containing your project's dependencies.
 
-When sharing a project with other developers, you should never share your virtual environment folder (like `.venv/`). Instead, you share a list of the packages your project needs.
-
-The standard way to do this in Python is using a `requirements.txt` file.
-
-### 1. Generating `requirements.txt`
-To export a list of all packages installed in your current active virtual environment:
+### Generate the file
 
 ```bash
 # Using pip
@@ -91,7 +91,8 @@ pip freeze > requirements.txt
 uv pip freeze > requirements.txt
 ```
 
-This generates a text file that looks like this:
+Example:
+
 ```text
 certifi==2024.2.2
 charset-normalizer==3.3.2
@@ -99,88 +100,81 @@ requests==2.31.0
 urllib3==2.2.0
 ```
 
-### 2. Installing from `requirements.txt`
-When another developer downloads your project, they can install all the required packages at once:
+### Install dependencies
 
 ```bash
 # Using pip
 pip install -r requirements.txt
 
-# Using uv (fastest!)
+# Using uv
 uv pip install -r requirements.txt
 ```
 
----
-
-## Using External Packages in Code
-
-Once installed, you import and use external packages exactly like built-in modules:
+## Using External Packages
 
 ```python
-# 1. Import the installed package
 import requests
 
-# 2. Use it to fetch data from an online API
 response = requests.get("https://api.github.com/events")
-data = response.json()
 
-print(f"Status Code: {response.status_code}")
+print(response.status_code)
+print(response.json())
 ```
-
----
 
 ## Common Mistakes
 
 <AccordionGroup>
-  <Accordion title="ModuleNotFoundError: No module named 'X'">
-    This is the most common error. It means Python cannot find the package you are trying to import.
-    
-    **Typical Causes & Fixes:**
-    1. **Not installed:** You forgot to install it. Run `pip install X`.
-    2. **Virtual environment not activated:** You installed it in a virtual environment but forgot to activate it in your terminal, so Python is looking in the global space.
-    3. **Wrong environment in VS Code:** VS Code is running a different Python interpreter than your terminal. Click the Python version in the bottom-right of VS Code and select your virtual environment (`.venv`).
+  <Accordion title="ModuleNotFoundError">
+    Python cannot find the package.
+
+    **Common causes**
+
+    1. The package is not installed.
+    2. The virtual environment is not activated.
+    3. VS Code is using a different Python interpreter.
   </Accordion>
 
-  <Accordion title="Name Conflicts (Shadowing)">
-    Never name your own script files the same name as a built-in module or external package.
-    
-    *Example:* If you name your file `requests.py` and write `import requests` inside it, Python will try to import *your file* instead of the official library, resulting in `AttributeError` or circular import issues.
+  <Accordion title="Name Conflicts">
+    Don't name your script the same as a package.
+
+    **Example:** `requests.py`
+
+    Python will import your file instead of the real `requests` package.
   </Accordion>
 </AccordionGroup>
 
----
-
 ## Practice & Exercises
-
-To reinforce what you've learned in this section (importing third-party packages, preventing package name shadowing, and managing installation requirements), practice with these interactive notebooks:
 
 <CardGroup cols={2}>
   <Card
     title="Follow-Along Practice"
     icon="laptop-code"
   >
-    Practice fetching external endpoint data using the requests package, designing Exception guards using try-except for missing packages, and executing file audits to inspect imported module filepaths.
+    Practice installing packages, importing modules, and working with the `requests` library.
 
-    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/External_Modules_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/External_Modules_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/External_Modules_Practice.ipynb" download>📥 Download</a>
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/External_Modules_Practice.ipynb) |
+    [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/External_Modules_Practice.ipynb) |
+    <a href="/public/notebooks/basics_exercises/External_Modules_Practice.ipynb" download>📥 Download</a>
   </Card>
+
   <Card
     title="Practice Exercises"
     icon="pen-to-square"
   >
-    Test your knowledge with hands-on exercises on querying the httpbin API, constructing exception logic to catch missing imports, and inspecting requests module directories.
+    Solve exercises on package installation, imports, and API requests.
 
-    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/External_Modules_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/External_Modules_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/External_Modules_Exercises.ipynb" download>📥 Download</a>
+    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/External_Modules_Exercises.ipynb) |
+    [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/External_Modules_Exercises.ipynb) |
+    <a href="/public/notebooks/basics_exercises/External_Modules_Exercises.ipynb" download>📥 Download</a>
   </Card>
 </CardGroup>
 
-## What's next?
-
-Now let's learn how to connect to web services and fetch data from APIs using the `requests` library!
+## What's Next?
 
 <Card
   title="Working with APIs"
   icon="arrow-right"
   href="/libraries-apis/working-with-apis"
 >
-  Connect to online services
+  Connect to online services using the `requests` library.
 </Card>

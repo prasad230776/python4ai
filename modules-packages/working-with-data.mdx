@@ -3,11 +3,9 @@ title: Working with Data
 description: Learn to read, write, and process text, JSON, and CSV data using Python's built-in tools
 icon: "database"
 ---
-
 Programs exist to process data. In Python, you can easily read, manipulate, and save different data formats. We will look at how to handle three of the most common data formats: raw Text, JSON, and CSV, using only Python's built-in capabilities.
 
 ---
-
 ## 1. Handling Text Data
 
 The simplest format is plain text (`.txt`). Python provides a built-in `open()` function to read and write files.
@@ -26,7 +24,6 @@ with open("sample.txt", "r") as file:
     for line in file:
         print(line.strip())  # .strip() removes trailing newlines
 ```
-
 ### Writing Text Files
 Use `"w"` to write (overwrites the file) or `"a"` to append (adds to the end).
 
@@ -36,7 +33,6 @@ with open("output.txt", "w") as file:
     file.write("Hello, World!\n")
     file.write("Writing data is easy in Python.")
 ```
-
 ---
 
 ## 2. Handling JSON Data
@@ -69,7 +65,6 @@ JSON supports the following data types:
 | `json.load()` | Read JSON data from a file |
 | `json.dump()` | Write JSON data to a file |
 
-
 ### JSON Example
 
 ```python
@@ -100,9 +95,7 @@ with open("profile.json", "r") as file:
     loaded_data = json.load(file)
     print(loaded_data["skills"])  # ['Python', 'Machine Learning']
 ```
-
 ---
-
 ## 3. Handling CSV Data
 
 **CSV** (Comma-Separated Values) is the standard format for spreadsheets and tabular data. Python's built-in `csv` module makes it easy to read and write CSV files.
@@ -147,9 +140,7 @@ with open("inventory.csv", "w", newline="") as file:
     # Write the data rows
     writer.writerows(products)
 ```
-
 ---
-
 ## Practice & Exercises
 
 To reinforce what you've learned in this section (reading and writing text files, JSON serialization/deserialization, and CSV list/dictionary readers and writers), practice with these interactive notebooks:
@@ -180,7 +171,7 @@ Now that you know how to work with built-in modules and data formats, let's lear
 <Card
   title="Working with External Modules"
   icon="arrow-right"
-  href="/libraries-apis/external-modules"
+  href="/libraries-apis/index"
 >
   Learn to use pip, PyPI, and uv
 </Card>

@@ -77,7 +77,7 @@
             ]
           },
           {
-            "group": "Python environment",
+            "group": "Dependency management",
             "pages": [
               "getting-started/virtual-environments",
               "getting-started/packages-and-pip",
@@ -166,12 +166,6 @@
             ]
           },
           {
-            "group": "Modules & Packages",
-            "pages": [
-              "functions/modules-packages"
-            ]
-          },
-          {
             "group": "Classes",
             "pages": [
               "advanced/classes/index",
@@ -191,6 +185,23 @@
               "advanced/error-handling/common-errors",
               "advanced/error-handling/practice-exercises"
             ]
+          },
+           {
+            "group": "Modules & Packages",
+            "pages": [
+              "modules-packages/modules-packages",
+              "modules-packages/importing-modules",
+              "modules-packages/working-with-data"
+            ]
+          },
+           {
+            "group": "Extending Python",
+            "pages": [
+              "libraries-apis/index",
+              "libraries-apis/external-modules",
+              "libraries-apis/working-with-apis",
+              "libraries-apis/working-with-env"
+            ]
           }
         ]
       },
@@ -205,17 +216,6 @@
               "advanced-python/functions",
               "advanced-python/functional-programming",
               "advanced-python/advanced-oop"
-            ]
-          },
-          {
-            "group": "Extending Python",
-            "pages": [
-              "libraries-apis/index",
-              "libraries-apis/importing-modules",
-              "libraries-apis/working-with-data",
-              "libraries-apis/external-modules",
-              "libraries-apis/working-with-apis",
-              "libraries-apis/working-with-env"
             ]
           },
           {

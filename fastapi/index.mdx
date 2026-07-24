@@ -100,38 +100,68 @@ Every interaction with a web application follows this cycle.
 
 ## Anatomy of an HTTP Request
 
-An HTTP request typically contains the following components:
+An HTTP request typically consists of the following components:
 
-- **URL** – The address of the requested resource.
-- **HTTP Method** – The action to perform (GET, POST, PUT, DELETE, etc.).
-- **Headers** – Additional information about the request.
-- **Path Parameters** – Values embedded in the URL.
-- **Query Parameters** – Optional values appended to the URL.
-- **Cookies** – Client-specific information.
-- **Request Body** – Data sent to the server (usually JSON).
+1. **HTTP Method** – Specifies the action to perform on the resource (GET, POST, PUT, DELETE, PATCH, etc.).
 
-### General Structure
+2. **Host** – The domain name or IP address of the target server that should handle the request.
 
-```
-HTTP_METHOD /resource HTTP/1.1
-Host: example.com
-Headers
+3. **Endpoint (Path)** – The specific resource or API route being requested on the server (e.g., `/employees` or `/users/101`).
 
-Request Body
-```
+4. **Path Parameters** – Dynamic values embedded within the endpoint path (e.g., `/employees/101`, where `101` is the path parameter).
 
-### Example
+5. **Query Parameters** – Optional key-value pairs appended to the URL after `?` to filter, search, sort, or paginate data (e.g., `?department=HR&limit=10`).
 
-```
-POST /students HTTP/1.1
-Host: api.school.com
+6. **Headers** – Metadata about the request, such as content type, authorization token, accepted response format, and user agent.
+
+7. **Cookies** – Client-specific data automatically sent by the browser, often used for sessions and user preferences.
+
+8. **Request Body** – The data sent to the server, typically in JSON format, used with methods like POST, PUT, and PATCH.
+
+### Example HTTP Request
+
+```http
+POST /employees/101?active=true HTTP/1.1
+Host: api.company.com
 Content-Type: application/json
+Authorization: Bearer <token>
+User-Agent: Mozilla/5.0
 
 {
-    "name": "John",
-    "age": 20
+    "name": "Siva",
+    "department": "IT"
 }
 ```
+
+### Request Components
+
+| Component | Example |
+|-----------|---------|
+| **HTTP Method** | `POST` |
+| **Host** | `api.company.com` |
+| **Endpoint (Path)** | `/employees/101` |
+| **Path Parameter** | `101` |
+| **Query Parameter** | `active=true` |
+| **Headers** | `Content-Type`, `Authorization`, `User-Agent` |
+| **Request Body** | JSON employee data |
+
+### URL Breakdown
+
+For the following URL:
+
+```text
+https://api.company.com/employees/101?active=true
+```
+
+| Part | Value |
+|------|-------|
+| **Protocol** | `https` |
+| **Host** | `api.company.com` |
+| **Endpoint (Path)** | `/employees/101` |
+| **Path Parameter** | `101` |
+| **Query Parameter** | `active=true` |
+
+> **Note:** The **URL** contains the protocol, host, endpoint (path), path parameters, and query parameters. The complete **HTTP request** additionally includes the HTTP method, headers, cookies, and an optional request body.
 
 ---
 

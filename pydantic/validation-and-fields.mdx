@@ -122,6 +122,30 @@ class Order(BaseModel):
 
 Descriptions appear in generated JSON schemas and API documentation.
 
+#### Another example
+
+
+```python
+from pydantic import BaseModel, Field
+
+class Product(BaseModel):
+    name: str = Field(..., min_length=2, max_length=50)
+    price: float = Field(..., gt=0)
+    stock: int = Field(default=0, ge=0)
+    category: str | None = Field(None)
+    product_name: str = Field(alias="name")
+```
+
+### Common Usage
+
+| Syntax | Meaning |
+|--------|---------|
+| `Field(...)` | Required field. The client **must** provide a value. |
+| `Field(None)` | Optional field. Defaults to `None` if omitted. |
+| `Field(default=value)` | Uses the given default value when no input is provided. |
+| `Field(alias="field_name")` | Accepts a different name in the input while using another attribute name in the model. |
+
+
 ## Custom validators (80/20 overview)
 
 Sometimes built-in constraints aren't enough. Pydantic supports custom validators for business logic:

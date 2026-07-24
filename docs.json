@@ -289,7 +289,8 @@
             "pages": [
               "fastapi/index",
               "fastapi/fundamentals",
-              "fastapi/student-api-1",
+              "fastapi/student-api",
+              "fastapi/grocery-simple",
               "fastapi/data-handling",
               "fastapi/streamlit-app1",
               "fastapi/streamlit-app2"

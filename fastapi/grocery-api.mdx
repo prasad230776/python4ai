@@ -1,0 +1,339 @@
+---
+title: Grocery Management API
+description: Learn FastAPI by building a simple Grocery Management REST API
+icon: "shopping-cart"
+---
+
+# Grocery Management API
+
+In this project, you will build a simple **Grocery Management REST API** using FastAPI. Along the way, you will learn the fundamental concepts required to develop REST APIs, including routing, request handling, request validation, and response generation.
+
+By the end of this project, you will be able to create your own APIs using FastAPI.
+
+---
+
+## Project Setup
+
+**Task:** Create the workspace folder, set up a Python virtual environment, and install FastAPI and Uvicorn.
+
+### Step 1: Create the Project Folder
+Create a directory named `grocery-api` and change into it.
+```bash
+mkdir grocery-api
+cd grocery-api
+```
+
+### Step 2: Create a Virtual Environment
+Create a clean environment for your dependencies.
+```bash
+python -m venv .venv
+```
+
+### Step 3: Activate the Virtual Environment
+Activate the environment so that any package you install is isolated to this project.
+
+**Windows**
+```bash
+.venv\Scripts\activate
+```
+
+**macOS / Linux**
+```bash
+source .venv/bin/activate
+```
+
+### Step 4: Install Packages
+Install FastAPI for building the API and Uvicorn to run the server.
+```bash
+pip install fastapi uvicorn
+pip freeze > requirements.txt
+```
+
+---
+
+## First FastAPI App
+
+**Task:** Initialize the FastAPI application and create a simple root endpoint.
+
+Create a file named `main.py` and write the code below to initialize FastAPI and add a homepage endpoint.
+
+<Accordion title="Show Code">
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "Welcome to Grocery Management API"}
+```
+
+</Accordion>
+
+---
+
+## Running the Application
+
+**Task:** Launch the development server and test it in the web browser.
+
+Start the application using Uvicorn with reload enabled:
+```bash
+uvicorn main:app --reload
+```
+
+Open your browser and navigate to `http://127.0.0.1:8000`. You should see the JSON response:
+```json
+{"message": "Welcome to Grocery Management API"}
+```
+
+---
+
+## Understanding an HTTP Request
+
+**Task:** Learn how web clients communicate with servers.
+
+An HTTP Request is composed of:
+1. **Method (Verb):** What action to perform (e.g., `GET` to read, `POST` to create).
+2. **URL / Path:** Where to send the request (e.g., `/groceries`).
+3. **Headers:** Metadata about the request (e.g., Content-Type).
+4. **Query Parameters:** Key-value pairs in the URL (e.g., `?category=fruits`).
+5. **Request Body:** The data payload sent to the server (usually in JSON format).
+
+---
+
+## Creating Your First Endpoint
+
+**Task:** Add a local list of grocery items to simulate a database.
+
+We will initialize a simple dictionary of grocery items inside `main.py`.
+
+<Accordion title="Show Code">
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+# Initial inventory data
+groceries = {
+    1: {"name": "Apple", "price": 1.5, "quantity": 100, "category": "Fruits"},
+    2: {"name": "Milk", "price": 2.2, "quantity": 50, "category": "Dairy"}
+}
+
+@app.get("/")
+def home():
+    return {"message": "Welcome to Grocery Management API"}
+```
+
+</Accordion>
+
+---
+
+## Query Parameters
+
+**Task:** Create an endpoint to retrieve all groceries, allowing filtering by category using query parameters.
+
+We will define a path `/groceries` that optionally accepts a query parameter `category` to filter items.
+
+<Accordion title="Show Code">
+
+```python
+from typing import Optional
+
+# ... (Previous code)
+
+@app.get("/groceries")
+def get_all_groceries(category: Optional[str] = None):
+    if category:
+        filtered = {id: item for id, item in groceries.items() if item["category"].lower() == category.lower()}
+        return filtered
+    return groceries
+```
+
+</Accordion>
+
+---
+
+## Path Parameters
+
+**Task:** Retrieve a specific grocery item using its ID from the URL path.
+
+We will define an endpoint `/groceries/{item_id}` where `item_id` is passed as part of the URL path.
+
+<Accordion title="Show Code">
+
+```python
+# ... (Previous code)
+
+@app.get("/groceries/{item_id}")
+def get_grocery_by_id(item_id: int):
+    return groceries[item_id]
+```
+
+</Accordion>
+
+---
+
+## HTTPException
+
+**Task:** Handle errors gracefully when a requested item ID is not found.
+
+If a client requests an item ID that doesn't exist, we must return an appropriate error message and status code (e.g., `404 Not Found`).
+
+<Accordion title="Show Code">
+
+```python
+from fastapi import HTTPException
+
+# ... (Previous code)
+
+@app.get("/groceries/{item_id}")
+def get_grocery_by_id(item_id: int):
+    if item_id not in groceries:
+        raise HTTPException(status_code=404, detail="Grocery item not found")
+    return groceries[item_id]
+```
+
+</Accordion>
+
+---
+
+## Request Body & Pydantic Models
+
+**Task:** Define a schema to receive and validate incoming JSON data for creating new grocery items.
+
+Using Pydantic's `BaseModel`, we define the expected structure and types of the request body. If the client sends data with the wrong structure or types, FastAPI will automatically reject it.
+
+<Accordion title="Show Code">
+
+```python
+from pydantic import BaseModel
+
+class GroceryItem(BaseModel):
+    name: str
+    price: float
+    quantity: int
+    category: str
+```
+
+</Accordion>
+
+---
+
+## POST Request
+
+**Task:** Create an endpoint to add a new grocery item to our local inventory dictionary.
+
+We will create a `POST /groceries` endpoint that parses the validated request body and saves the item.
+
+<Accordion title="Show Code">
+
+```python
+# ... (Previous code)
+
+@app.post("/groceries")
+def create_grocery_item(item: GroceryItem):
+    new_id = max(groceries.keys()) + 1 if groceries else 1
+    groceries[new_id] = item.model_dump()
+    return {"id": new_id, "item": groceries[new_id]}
+```
+
+</Accordion>
+
+---
+
+## Response Models
+
+**Task:** Control and filter the response format returned to the client using a Pydantic model.
+
+We can define a Pydantic model specifically for response payloads to ensure consistency and filter out sensitive or internal fields if needed.
+
+<Accordion title="Show Code">
+
+```python
+class GroceryResponse(BaseModel):
+    id: int
+    item: GroceryItem
+
+# ... (Previous code)
+
+@app.post("/groceries", response_model=GroceryResponse)
+def create_grocery_item(item: GroceryItem):
+    new_id = max(groceries.keys()) + 1 if groceries else 1
+    groceries[new_id] = item.model_dump()
+    return {"id": new_id, "item": groceries[new_id]}
+```
+
+</Accordion>
+
+---
+
+## Swagger UI
+
+**Task:** Interact with and test all the endpoints using FastAPI's built-in interactive docs.
+
+Navigate to `http://127.0.0.1:8000/docs` in your browser. From here, you can test:
+1. `GET /groceries` (with and without query filters)
+2. `GET /groceries/{item_id}` (testing both valid and invalid IDs)
+3. `POST /groceries` (testing body validation)
+
+---
+
+## Complete Application
+
+**Task:** Consolidate all the steps into a single, fully functional `main.py` file.
+
+Below is the complete code containing all imports, schemas, endpoints, and error handling.
+
+<Accordion title="Show Code">
+
+```python
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import Optional
+
+app = FastAPI()
+
+# Pydantic Schemas
+class GroceryItem(BaseModel):
+    name: str
+    price: float
+    quantity: int
+    category: str
+
+class GroceryResponse(BaseModel):
+    id: int
+    item: GroceryItem
+
+# Local Data Store
+groceries = {
+    1: {"name": "Apple", "price": 1.5, "quantity": 100, "category": "Fruits"},
+    2: {"name": "Milk", "price": 2.2, "quantity": 50, "category": "Dairy"}
+}
+
+@app.get("/")
+def home():
+    return {"message": "Welcome to Grocery Management API"}
+
+@app.get("/groceries")
+def get_all_groceries(category: Optional[str] = None):
+    if category:
+        filtered = {id: item for id, item in groceries.items() if item["category"].lower() == category.lower()}
+        return filtered
+    return groceries
+
+@app.get("/groceries/{item_id}")
+def get_grocery_by_id(item_id: int):
+    if item_id not in groceries:
+        raise HTTPException(status_code=404, detail="Grocery item not found")
+    return groceries[item_id]
+
+@app.post("/groceries", response_model=GroceryResponse)
+def create_grocery_item(item: GroceryItem):
+    new_id = max(groceries.keys()) + 1 if groceries else 1
+    groceries[new_id] = item.model_dump()
+    return {"id": new_id, "item": groceries[new_id]}
+```
+
+</Accordion>

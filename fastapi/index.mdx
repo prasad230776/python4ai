@@ -164,6 +164,117 @@ https://api.company.com/employees/101?active=true
 > **Note:** The **URL** contains the protocol, host, endpoint (path), path parameters, and query parameters. The complete **HTTP request** additionally includes the HTTP method, headers, cookies, and an optional request body.
 
 ---
+## How to Identify an Endpoint and a Path Parameter from a URL?
+
+A common question is:
+
+> **Given a URL, how can we tell which part is the endpoint and which part is a path parameter?**
+
+<Accordion title="Show Answer">
+
+### Short Answer
+
+**You cannot determine it by looking at the URL alone.**
+
+It depends on **how the route is defined in the application**.
+
+---
+
+### Example
+
+Consider the following URL:
+
+```text
+https://api.company.com/employees/101
+```
+
+The path is:
+
+```text
+/employees/101
+```
+
+Is `101` part of the endpoint or a path parameter?
+
+**We don't know until we see the route definition.**
+
+---
+
+### Case 1: `101` is a Path Parameter
+
+```python
+@app.get("/employees/{employee_id}")
+def get_employee(employee_id: int):
+    ...
+```
+
+Request:
+
+```text
+/employees/101
+```
+
+FastAPI extracts:
+
+```text
+employee_id = 101
+```
+
+| Component | Value |
+|----------|-------|
+| Endpoint Pattern | `/employees/{employee_id}` |
+| Requested URL | `/employees/101` |
+| Path Parameter | `employee_id = 101` |
+
+---
+
+### Case 2: `101` is Part of the Endpoint
+
+```python
+@app.get("/employees/101")
+def get_special_employee():
+    ...
+```
+
+Here, `101` is a fixed part of the endpoint.
+
+| Component | Value |
+|----------|-------|
+| Endpoint | `/employees/101` |
+| Path Parameter | None |
+
+---
+
+### Easy Way to Remember
+
+**Route Definition**
+
+```text
+/employees/{employee_id}
+```
+
+**Actual Request**
+
+```text
+/employees/101
+```
+
+- `{employee_id}` → Placeholder
+- `101` → Actual value
+
+---
+
+### Key Takeaway
+
+You **cannot identify a path parameter by looking only at the URL**.
+
+You must compare the URL with the **route definition**.
+
+- **Route Definition:** `/employees/{employee_id}`
+- **Request URL:** `/employees/101`
+- **Path Parameter Value:** `employee_id = 101`
+
+</Accordion>
 
 ## Anatomy of an HTTP Response
 

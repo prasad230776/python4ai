@@ -283,18 +283,25 @@
               "weather-project/complete-setup",
               "weather-project/weather-data-analysis-project"
             ]
-          },
-          {
+          },{
             "group": "FastAPI Fundamentals",
             "pages": [
-              "fastapi/index",
-              "fastapi/fundamentals",
-              "fastapi/student-api",
-              "fastapi/grocery-simple",
-              "fastapi/dependency-injection",
-              "fastapi/data-handling"
+              "fastapi-foundations/index",
+              "fastapi-foundations/fundamentals",
+              "fastapi-foundations/student-api",
+              "fastapi-foundations/grocery-simple",
+              "fastapi-foundations/request-handling",
+              "fastapi-foundations/response-handling",
+              "fastapi-foundations/data-validation-models",
+              "fastapi-foundations/local-crud",
+              "fastapi-foundations/apirouter",
+              "fastapi-foundations/dependency-injection",
+              "fastapi-foundations/dependency-emp-app",
+              "fastapi-foundations/emp-mgmt-all-concepts",
+              "fastapi-foundations/api-documentation"
             ]
           },
+
           {
             "group": "Streamlit Fundamentals",
             "pages": [

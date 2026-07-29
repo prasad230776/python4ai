@@ -390,17 +390,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "Resources",
-        "groups": [
-          {
-            "group": "General Resources",
-            "pages": [
-              "resources/index"
-            ]
-          }
-        ]
       }
     ],
     "global": {

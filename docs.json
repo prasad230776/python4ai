@@ -300,7 +300,8 @@
               "fastapi-foundations/dependency-emp-app",
               "fastapi-foundations/annotated-deep",
               "fastapi-foundations/emp-mgmt-all-concepts",
-              "fastapi-foundations/api-documentation"
+              "fastapi-foundations/api-documentation",
+              "fastapi-foundations/data-class"
             ]
           },
 

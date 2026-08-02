@@ -1,0 +1,513 @@
+---
+title: "Dataclasses in Python: A Complete Guide"
+description: "Learn Python dataclasses, their features, and how they differ from Pydantic BaseModel."
+---
+## Dataclasses in Python
+
+### What are Dataclasses?
+
+A **dataclass** is a special type of class introduced in **Python 3.7** (PEP 557) that automatically generates common methods for classes whose primary purpose is to store data.
+
+Instead of writing boilerplate methods like `__init__()`, `__repr__()`, and `__eq__()`, Python generates them automatically.
+
+Import the `dataclass` decorator from the `dataclasses` module.
+
+```python
+from dataclasses import dataclass
+```
+
+### Why use Dataclasses?
+
+Dataclasses help you:
+
+- Reduce boilerplate code
+- Create clean, readable models
+- Automatically generate constructors
+- Automatically generate string representations
+- Automatically compare objects
+- Easily convert objects into dictionaries
+
+### Basic Example
+
+Without Dataclass
+
+```python
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+s = Student("John", 20)
+print(s.name)
+```
+
+With Dataclass
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Student:
+    name: str
+    age: int
+
+s = Student("John", 20)
+
+print(s)
+```
+
+Output
+
+```
+Student(name='John', age=20)
+```
+
+Python automatically generates:
+
+- `__init__()`
+- `__repr__()`
+- `__eq__()`
+
+### Generated Methods
+
+Given
+
+```python
+@dataclass
+class Student:
+    name: str
+    age: int
+```
+
+Python roughly creates
+
+```python
+class Student:
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __repr__(self):
+        ...
+
+    def __eq__(self, other):
+        ...
+```
+
+### Fields
+
+Every **type-annotated attribute** becomes a dataclass field.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Product:
+    id: int
+    name: str
+    price: float
+```
+
+Each object stores its own copy of these fields.
+
+### Default Values
+
+Fields can have default values.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class User:
+    name: str
+    active: bool = True
+```
+
+### Using `default_factory`
+
+Never use mutable objects directly as defaults.
+
+❌ Incorrect
+
+```python
+@dataclass
+class Team:
+    members: list = []
+```
+
+All objects share the same list.
+
+✅ Correct
+
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class Team:
+    members: list = field(default_factory=list)
+```
+
+Each object gets a separate list.
+
+### Adding Methods
+
+Dataclasses can contain normal methods.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Rectangle:
+    width: int
+    height: int
+
+    def area(self):
+        return self.width * self.height
+```
+
+### Immutable Dataclasses
+
+Use `frozen=True` to make objects immutable.
+
+```python
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Point:
+    x: int
+    y: int
+```
+
+Attempting to modify an attribute raises an error.
+
+### Ordering Support
+
+```python
+from dataclasses import dataclass
+
+@dataclass(order=True)
+class Student:
+    age: int
+    name: str
+```
+
+Python automatically generates comparison methods like
+
+- `<`
+- `<=`
+- `>`
+- `>=`
+
+### Useful Decorator Options
+
+| Option | Description |
+|---------|-------------|
+| `frozen=True` | Makes objects immutable |
+| `order=True` | Generates comparison methods |
+| `slots=True` | Reduces memory usage |
+| `kw_only=True` | Makes fields keyword-only |
+
+Example
+
+```python
+@dataclass(frozen=True, order=True)
+class Employee:
+    id: int
+    name: str
+```
+
+## Instance Variables vs Class Variables
+
+### Instance Variables
+
+Type-annotated attributes become instance fields.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Student:
+    name: str
+    age: int
+```
+
+Each object has its own values.
+
+### Class Variables
+
+Use `ClassVar`.
+
+```python
+from dataclasses import dataclass
+from typing import ClassVar
+
+@dataclass
+class Student:
+    school: ClassVar[str] = "ABC School"
+
+    name: str
+    age: int
+```
+
+Usage
+
+```python
+s = Student("John", 20)
+
+print(Student.school)
+print(s.school)
+```
+
+Output
+
+```
+ABC School
+ABC School
+```
+
+Notice
+
+```python
+print(s)
+```
+
+Output
+
+```
+Student(name='John', age=20)
+```
+
+The `school` attribute is **not part of the dataclass fields** because it is marked as a `ClassVar`.
+
+### What happens without `ClassVar`?
+
+```python
+@dataclass
+class Student:
+    school: str = "ABC School"
+    name: str = ""
+```
+
+Now `school` becomes an instance field and appears in the constructor and object representation.
+
+## Dataclass Utility Functions
+
+### `asdict()`
+
+Convert a dataclass object into a dictionary.
+
+```python
+from dataclasses import dataclass, asdict
+
+@dataclass
+class Student:
+    name: str
+    age: int
+
+s = Student("John", 20)
+
+print(asdict(s))
+```
+
+Output
+
+```python
+{
+    "name": "John",
+    "age": 20
+}
+```
+
+### `astuple()`
+
+Convert to a tuple.
+
+```python
+from dataclasses import astuple
+
+print(astuple(s))
+```
+
+Output
+
+```
+('John', 20)
+```
+
+### `replace()`
+
+Create a modified copy.
+
+```python
+from dataclasses import replace
+
+s2 = replace(s, age=21)
+```
+
+## Dataclass vs Pydantic BaseModel
+
+Both are used for modeling structured data, but they serve different purposes.
+
+| Feature | Dataclass | Pydantic BaseModel |
+|---------|-----------|--------------------|
+| Purpose | Store data | Validate and store data |
+| Runtime validation | ❌ No | ✅ Yes |
+| Automatic type conversion | ❌ No | ✅ Yes |
+| Serialization | `asdict()` | `model_dump()` |
+| JSON support | Manual | Built-in |
+| Error reporting | No | Detailed validation errors |
+| Performance | Faster | Slightly slower (validation overhead) |
+| Mutable by default | Yes | Yes (configurable) |
+| Supports `ClassVar` | Yes | Yes |
+| Supports `default_factory` | Yes | Yes |
+| Best suited for | Internal models | API request/response models |
+
+### Type Validation
+
+Dataclass
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class User:
+    age: int
+
+u = User("25")
+
+print(u.age)
+print(type(u.age))
+```
+
+Output
+
+```
+25
+<class 'str'>
+```
+
+Dataclasses do **not** validate or convert types.
+
+Pydantic BaseModel
+
+```python
+from pydantic import BaseModel
+
+class User(BaseModel):
+    age: int
+
+u = User(age="25")
+
+print(u.age)
+print(type(u.age))
+```
+
+Output
+
+```
+25
+<class 'int'>
+```
+
+Pydantic automatically validates and converts the value to the declared type.
+
+### Serialization
+
+Dataclass
+
+```python
+from dataclasses import asdict
+
+asdict(user)
+```
+
+Pydantic BaseModel
+
+```python
+user.model_dump()
+```
+
+### Validation Errors
+
+Dataclass
+
+```python
+@dataclass
+class User:
+    age: int
+
+User("abc")
+```
+
+No error is raised during object creation because type hints are not enforced at runtime.
+
+Pydantic
+
+```python
+class User(BaseModel):
+    age: int
+
+User(age="abc")
+```
+
+Raises
+
+```
+ValidationError
+```
+
+with detailed information about the invalid field.
+
+## When to Use Dataclasses
+
+Use dataclasses when:
+
+- Objects primarily hold data.
+- Validation is unnecessary.
+- The data is created within your application.
+- Performance and simplicity are important.
+- Building internal domain or business models.
+
+Examples:
+
+- Product
+- Employee
+- Student
+- Point
+- Configuration objects
+- Domain entities
+
+## When to Use Pydantic BaseModel
+
+Use BaseModel when:
+
+- Accepting external input.
+- Building REST APIs.
+- Reading JSON data.
+- Parsing configuration files.
+- Validating user input.
+- Returning API responses.
+
+Examples:
+
+- Request models
+- Response models
+- Configuration settings
+- API payloads
+
+## Summary
+
+| Dataclass | BaseModel |
+|-----------|-----------|
+| Lightweight | Feature-rich |
+| No validation | Built-in validation |
+| Faster | Slightly slower |
+| Ideal for internal data | Ideal for external data |
+| Generates utility methods | Generates validation and serialization methods |
+
+**Rule of Thumb**
+
+- **Dataclass** → *"I already trust the data; I just need a convenient container."*
+- **Pydantic BaseModel** → *"I don't trust the data yet; validate and parse it before using it."*
+````

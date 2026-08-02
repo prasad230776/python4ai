@@ -224,14 +224,15 @@
               "advanced-python/comprehensions",
               "advanced-python/functions",
               "advanced-python/functional-programming",
-              "advanced-python/advanced-oop"
+              "advanced-python/advanced-oop",
+              "advanced-python/type-hints",
+              "advanced-python/data-class"
             ]
           },
           {
             "group": "Pydantic",
             "pages": [
               "pydantic/introduction",
-              "pydantic/type-hints",
               "pydantic/your-first-model",
               "pydantic/validation-and-fields",
               "pydantic/nested-models",
@@ -292,8 +293,14 @@
               "weather-project/complete-setup",
               "weather-project/weather-data-analysis-project"
             ]
-          },{
-            "group": "FastAPI Fundamentals",
+          }
+        ]
+      },
+       {
+        "tab": "Fullstack",
+        "groups": [
+          {
+            "group": "FastAPI",
             "pages": [
               "fastapi-foundations/index",
               "fastapi-foundations/fundamentals",
@@ -309,9 +316,7 @@
               "fastapi-foundations/dependency-emp-app",
               "fastapi-foundations/annotated-deep",
               "fastapi-foundations/emp-mgmt-all-concepts",
-              "fastapi-foundations/api-documentation",
-              "fastapi-foundations/data-class"
-            ]
+              "fastapi-foundations/api-documentation"            ]
           },
 
           {
@@ -355,18 +360,6 @@
         ]
       },
       {
-        "tab": "Next Steps",
-        "groups": [
-          {
-            "group": "Continue learning",
-            "pages": [
-              "next-steps/course-summary",
-              "next-steps/gen-ai"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Route Map",
         "groups": [
           {
@@ -397,6 +390,18 @@
             "group": "Data Analysis Module",
             "pages": [
               "data-analysis/numpy"
+            ]
+          }
+        ]
+      },
+       {
+        "tab": "Next Steps",
+        "groups": [
+          {
+            "group": "Continue learning",
+            "pages": [
+              "next-steps/course-summary",
+              "next-steps/gen-ai"
             ]
           }
         ]

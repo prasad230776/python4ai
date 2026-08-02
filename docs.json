@@ -83,6 +83,15 @@
               "getting-started/packages-and-pip",
               "getting-started/interactive-python"
             ]
+          },
+          {
+            "group": "uv",
+            "pages": [
+              "uv/index",
+              "uv/uv-intro",
+              "uv/virtual-env",
+              "uv/complete-setup"
+            ]
           }
         ]
       },

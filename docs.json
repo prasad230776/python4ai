@@ -67,7 +67,8 @@
               "getting-started/vscode-setup",
               "getting-started/vscode-workspace",
               "getting-started/first-python-file",
-              "getting-started/ipynb-notebooks"
+              "getting-started/ipynb-notebooks",
+              "getting-started/ruff"
             ]
           },
           {
@@ -266,12 +267,6 @@
               "tools/environment/index",
               "tools/environment/variables",
               "tools/environment/dotenv"
-            ]
-          },
-          {
-            "group": "Code quality",
-            "pages": [
-              "tools/code-quality/index"
             ]
           }
         ]

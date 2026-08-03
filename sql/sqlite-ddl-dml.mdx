@@ -14,11 +14,11 @@ icon: "table"
 
 ### Practice
 
-<Question>
+<Question />
 
 <Accordion title="Solution">
 
-...
+Explain why SQLite is called a **serverless database**.
 
 </Accordion>
 
@@ -26,44 +26,48 @@ icon: "table"
 
 ### DDL (Data Definition Language)
 
-- Purpose
-- Commands
-  - CREATE
-  - ALTER
-  - DROP
+**Purpose:** Defines and modifies the structure of database objects.
+
+**Commands**
+
+- CREATE
+- ALTER
+- DROP
 
 #### Practice
 
-<Question>
+<Question />
 
 <Accordion title="Solution">
 
-...
+DDL commands change the database schema by creating, modifying, or deleting database objects.
 
 </Accordion>
 
 ### DML (Data Manipulation Language)
 
-- Purpose
-- Commands
-  - INSERT
-  - UPDATE
-  - DELETE
+**Purpose:** Inserts, updates, and deletes data stored in tables.
+
+**Commands**
+
+- INSERT
+- UPDATE
+- DELETE
 
 #### Practice
 
-<Question>
+<Question />
 
 <Accordion title="Solution">
 
-...
+DML commands work with the data inside existing tables.
 
 </Accordion>
 
 ### DQL (Brief Introduction)
 
 - SELECT
-- Mention that it will be covered in the next chapter.
+- Covered in detail in the next chapter.
 
 ### TCL (Brief Introduction)
 
@@ -74,26 +78,30 @@ icon: "table"
 ## SQLite Data Types
 
 | Type | Description | Example |
-|------|-------------|---------|
-| INTEGER | Whole Numbers | 10 |
-| REAL | Decimal Numbers | 99.5 |
+| ----- | ----------- | ------- |
+| INTEGER | Whole numbers | 10 |
+| REAL | Decimal numbers | 99.5 |
 | TEXT | Strings | "Rahul" |
-| BLOB | Binary Data | Images |
-| NULL | Missing Value | NULL |
+| BLOB | Binary data | Images |
+| NULL | Missing value | NULL |
 
 ### Practice
 
-<Question>
+<Question />
 
 <Accordion title="Solution">
 
-...
+Choose the appropriate SQLite data type for:
+
+- Age → INTEGER
+- Salary → REAL
+- Name → TEXT
 
 </Accordion>
 
 ## Creating Tables
 
-Explain the syntax.
+### Syntax
 
 ```sql
 CREATE TABLE department (
@@ -115,11 +123,11 @@ CREATE TABLE employee (
 );
 ```
 
-Explain:
+### Explanation
 
-- PRIMARY KEY
-- NOT NULL
-- FOREIGN KEY
+- **PRIMARY KEY** — Uniquely identifies each row.
+- **NOT NULL** — Prevents NULL values.
+- **FOREIGN KEY** — Creates a relationship with another table.
 
 ### Practice
 
@@ -176,7 +184,7 @@ Deletes an entire table permanently.
 DROP TABLE employee;
 ```
 
-> **Note:** Use carefully because all data in the table is lost.
+> **Note:** All data in the table is permanently deleted.
 
 ### Practice
 
@@ -192,7 +200,7 @@ DROP TABLE student;
 
 ## INSERT Statement
 
-Used to insert new rows.
+Used to insert new rows into a table.
 
 ### Insert a Single Row
 
@@ -206,32 +214,42 @@ VALUES (1, 'Engineering');
 ```sql
 INSERT INTO department
 VALUES
-(2, 'HR'),
-(3, 'Sales');
+    (2, 'HR'),
+    (3, 'Sales');
 ```
 
 ### Insert by Specifying Columns
 
 ```sql
-INSERT INTO employee
-(employee_id, employee_name, salary)
-
-VALUES
-(101, 'Rahul', 65000);
+INSERT INTO employee (
+    employee_id,
+    employee_name,
+    salary
+)
+VALUES (
+    101,
+    'Rahul',
+    65000
+);
 ```
 
 ### Practice
 
-Insert an employee named **Anitha** with salary **55000**.
+Insert an employee named **Anitha** with a salary of **55000**.
 
 <Accordion title="Solution">
 
 ```sql
-INSERT INTO employee
-(employee_id, employee_name, salary)
-
-VALUES
-(102, 'Anitha', 55000);
+INSERT INTO employee (
+    employee_id,
+    employee_name,
+    salary
+)
+VALUES (
+    102,
+    'Anitha',
+    55000
+);
 ```
 
 </Accordion>
@@ -273,11 +291,11 @@ DELETE FROM employee
 WHERE employee_id = 101;
 ```
 
-> **Important:** Without a `WHERE` clause, all rows will be deleted.
+> **Important:** Omitting the `WHERE` clause deletes all rows.
 
 ### Practice
 
-Delete the employee named Sneha.
+Delete the employee named **Sneha**.
 
 <Accordion title="Solution">
 

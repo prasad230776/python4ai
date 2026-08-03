@@ -225,6 +225,11 @@
               "advanced-python/functions",
               "advanced-python/functional-programming",
               "advanced-python/advanced-oop",
+              "advanced-python/context-mgmt",
+              "advanced-python/working-with-data",
+              "advanced-python/dotenv",
+              "advanced-python/async-programming",
+              "advanced-python/di",
               "advanced-python/type-hints",
               "advanced-python/data-class"
             ]

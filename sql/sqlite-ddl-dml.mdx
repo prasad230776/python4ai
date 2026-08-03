@@ -1,0 +1,305 @@
+---
+title: "SQLite, DDL & DML"
+description: "Learn SQLite basics, SQL command categories, table creation, and data manipulation."
+icon: "table"
+---
+
+## Why SQLite?
+
+- What is SQLite?
+- Features of SQLite
+- Advantages
+- Limitations
+- SQLite Data Types
+
+### Practice
+
+<Question>
+
+<Accordion title="Solution">
+
+...
+
+</Accordion>
+
+## SQL Command Categories
+
+### DDL (Data Definition Language)
+
+- Purpose
+- Commands
+  - CREATE
+  - ALTER
+  - DROP
+
+#### Practice
+
+<Question>
+
+<Accordion title="Solution">
+
+...
+
+</Accordion>
+
+### DML (Data Manipulation Language)
+
+- Purpose
+- Commands
+  - INSERT
+  - UPDATE
+  - DELETE
+
+#### Practice
+
+<Question>
+
+<Accordion title="Solution">
+
+...
+
+</Accordion>
+
+### DQL (Brief Introduction)
+
+- SELECT
+- Mention that it will be covered in the next chapter.
+
+### TCL (Brief Introduction)
+
+- BEGIN
+- COMMIT
+- ROLLBACK
+
+## SQLite Data Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| INTEGER | Whole Numbers | 10 |
+| REAL | Decimal Numbers | 99.5 |
+| TEXT | Strings | "Rahul" |
+| BLOB | Binary Data | Images |
+| NULL | Missing Value | NULL |
+
+### Practice
+
+<Question>
+
+<Accordion title="Solution">
+
+...
+
+</Accordion>
+
+## Creating Tables
+
+Explain the syntax.
+
+```sql
+CREATE TABLE department (
+    department_id INTEGER PRIMARY KEY,
+    department_name TEXT NOT NULL
+);
+```
+
+```sql
+CREATE TABLE employee (
+    employee_id INTEGER PRIMARY KEY,
+    employee_name TEXT NOT NULL,
+    salary REAL NOT NULL,
+    city TEXT,
+    joining_date TEXT,
+    department_id INTEGER,
+    FOREIGN KEY (department_id)
+        REFERENCES department(department_id)
+);
+```
+
+Explain:
+
+- PRIMARY KEY
+- NOT NULL
+- FOREIGN KEY
+
+### Practice
+
+Create a `student` table with `student_id`, `student_name`, and `email`.
+
+<Accordion title="Solution">
+
+```sql
+CREATE TABLE student (
+    student_id INTEGER PRIMARY KEY,
+    student_name TEXT NOT NULL,
+    email TEXT
+);
+```
+
+</Accordion>
+
+## ALTER TABLE
+
+Used to modify an existing table.
+
+### Add a Column
+
+```sql
+ALTER TABLE employee
+ADD COLUMN email TEXT;
+```
+
+### Rename a Column
+
+```sql
+ALTER TABLE employee
+RENAME COLUMN joining_date TO start_date;
+```
+
+### Practice
+
+Add a `phone` column to the `employee` table.
+
+<Accordion title="Solution">
+
+```sql
+ALTER TABLE employee
+ADD COLUMN phone TEXT;
+```
+
+</Accordion>
+
+## DROP TABLE
+
+Deletes an entire table permanently.
+
+```sql
+DROP TABLE employee;
+```
+
+> **Note:** Use carefully because all data in the table is lost.
+
+### Practice
+
+Delete the `student` table.
+
+<Accordion title="Solution">
+
+```sql
+DROP TABLE student;
+```
+
+</Accordion>
+
+## INSERT Statement
+
+Used to insert new rows.
+
+### Insert a Single Row
+
+```sql
+INSERT INTO department
+VALUES (1, 'Engineering');
+```
+
+### Insert Multiple Rows
+
+```sql
+INSERT INTO department
+VALUES
+(2, 'HR'),
+(3, 'Sales');
+```
+
+### Insert by Specifying Columns
+
+```sql
+INSERT INTO employee
+(employee_id, employee_name, salary)
+
+VALUES
+(101, 'Rahul', 65000);
+```
+
+### Practice
+
+Insert an employee named **Anitha** with salary **55000**.
+
+<Accordion title="Solution">
+
+```sql
+INSERT INTO employee
+(employee_id, employee_name, salary)
+
+VALUES
+(102, 'Anitha', 55000);
+```
+
+</Accordion>
+
+## UPDATE Statement
+
+Used to modify existing records.
+
+### Syntax
+
+```sql
+UPDATE employee
+SET salary = 70000
+WHERE employee_id = 101;
+```
+
+> **Important:** Always use a `WHERE` clause unless you intend to update every row.
+
+### Practice
+
+Increase Rahul's salary to ₹75,000.
+
+<Accordion title="Solution">
+
+```sql
+UPDATE employee
+SET salary = 75000
+WHERE employee_name = 'Rahul';
+```
+
+</Accordion>
+
+## DELETE Statement
+
+Deletes one or more rows.
+
+```sql
+DELETE FROM employee
+WHERE employee_id = 101;
+```
+
+> **Important:** Without a `WHERE` clause, all rows will be deleted.
+
+### Practice
+
+Delete the employee named Sneha.
+
+<Accordion title="Solution">
+
+```sql
+DELETE FROM employee
+WHERE employee_name = 'Sneha';
+```
+
+</Accordion>
+
+## Summary
+
+In this chapter, you learned:
+
+- SQLite basics
+- SQL command categories
+- SQLite data types
+- CREATE TABLE
+- ALTER TABLE
+- DROP TABLE
+- INSERT
+- UPDATE
+- DELETE
+
+The next chapter focuses entirely on **DQL (SELECT)**, where you'll learn how to retrieve and analyze data from the database.

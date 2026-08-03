@@ -247,8 +247,8 @@
           }
         ]
       },
-        {
-        "tab": "Tools",
+      {
+        "tab": "Developing Projects",
         "groups": [
           {
             "group": "Essential Tools",
@@ -268,12 +268,7 @@
               "tools/environment/variables",
               "tools/environment/dotenv"
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Developing Projects",
-        "groups": [
+          },
           {
             "group": "Practical Python",
             "pages": [
@@ -292,6 +287,32 @@
               "weather-project/virtual-env",
               "weather-project/complete-setup",
               "weather-project/weather-data-analysis-project"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Data Processing",
+        "groups": [
+          {
+            "group": "SQL & Databases",
+            "pages": [
+              "sql/intro",
+              "sql/sqlite-ddl-dml",
+              "sql/sqlite-dbsetup",
+              "sql/dql",
+              "sql/joins",
+              "sql/adv-sql"
+            ]
+          },
+          {
+            "group": "Libraries",
+            "pages": [
+              "data-analysis/numpy",
+              "data-analysis/pandas",
+              "data-analysis/matplotlib",
+              "data-analysis/seaborn",
+              "data-analysis/visualization-guide"
             ]
           }
         ]
@@ -317,7 +338,9 @@
               "fastapi-foundations/annotated-deep",
               "fastapi-foundations/emp-mgmt-all-concepts",
               "fastapi-foundations/api-documentation",
-            "fastapi-foundations/modularisation"
+            "fastapi-foundations/modularisation",
+            "fastapi-foundations/sql-orm",
+            "fastapi-foundations/jwt-auth"
           ]
           },
 
@@ -329,21 +352,6 @@
               "streamlit/widgets",
               "streamlit/data-handling",
               "streamlit/streamlit-app"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Data Analysis",
-        "groups": [
-          {
-            "group": "Libraries",
-            "pages": [
-              "data-analysis/numpy",
-              "data-analysis/pandas",
-              "data-analysis/matplotlib",
-              "data-analysis/seaborn",
-              "data-analysis/visualization-guide"
             ]
           }
         ]

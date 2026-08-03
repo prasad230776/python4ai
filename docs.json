@@ -339,7 +339,7 @@
               "fastapi-foundations/emp-mgmt-all-concepts",
               "fastapi-foundations/api-documentation",
             "fastapi-foundations/modularisation",
-            "fastapi-foundations/sql-orm",
+            "fastapi-foundations/sql-orm-2",
             "fastapi-foundations/jwt-auth"
           ]
           },

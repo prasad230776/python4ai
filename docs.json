@@ -256,6 +256,7 @@
               "tools/index",
               "tools/git/index",
               "tools/git/version-control",
+              "tools/git/git-internals",
               "tools/git/github-setup",
               "tools/git/clone-create",
               "tools/git/vscode-git"

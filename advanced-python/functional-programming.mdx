@@ -1,246 +1,1285 @@
 ---
-title: Functional Programming
-description: Learn functional programming concepts in Python using map, filter, and reduce
-icon: "function"
+title: "Functional Programming"
+
+description: "Learn the fundamentals of functional programming in Python using lambda expressions, higher-order functions, and a declarative programming style."
+icon: function
 ---
 
-Python supports multiple programming paradigms, including **Functional Programming (FP)**. In functional programming, code is structured around passing functions as arguments, returning functions, and avoiding changing state or mutable data.
+Functional programming is a **programming paradigm** that solves problems by **applying and composing functions**. It combines the power of **higher-order functions** with a **declarative programming style** to write clean, reusable, and expressive code.
 
-This paradigm relies heavily on two primary concepts: the **Declarative Approach** and **Higher-Order Functions**.
+Python supports multiple programming paradigms, including:
 
----
+- Procedural Programming
+- Object-Oriented Programming (OOP)
+- Functional Programming
 
-## Key Aspects of Functional Programming
+Although Python is not a purely functional programming language, it provides several features that make writing functional-style programs simple and effective.
 
-### 1. The Declarative Approach
-Unlike **Imperative Programming**, which focuses on *how* to solve a problem step-by-step (using loops, conditionals, and state updates), **Declarative Programming** focuses on *what* you want to accomplish. You express the logic of computation without describing its control flow.
+## Learning Objectives
 
-#### Comparison: Doubling a List
+After completing this lesson, you will be able to:
 
-* **Imperative Approach (How to do it):**
-  ```python
-  # We manually manage state, initialize a list, and loop
-  numbers = [1, 2, 3, 4]
-  doubled = []
-  for num in numbers:
-      doubled.append(num * 2)
-  print(doubled)  # [2, 4, 6, 8]
-  ```
+- Explain the functional programming paradigm.
+- Understand the role of higher-order functions.
+- Create anonymous functions using `lambda`.
+- Use built-in higher-order functions such as `map()`, `filter()`, and `reduce()`.
+- Write programs using a functional programming style.
 
-* **Declarative Approach (What to do):**
-  ```python
-  # We declare the transformation without managing loops or state
-  numbers = [1, 2, 3, 4]
-  doubled = list(map(lambda x: x * 2, numbers))
-  print(doubled)  # [2, 4, 6, 8]
-  ```
+## What is Functional Programming?
 
----
+Functional programming is a style of programming where **functions are the primary building blocks** of a program.
 
-### 2. Higher-Order Functions
-A **Higher-Order Function** is a function that does at least one of the following:
-* Takes one or more functions as arguments.
-* Returns a function as its result.
+It is based on two key ideas:
 
-Let's look at three examples of higher-order functions:
+- **Higher-order functions**, which allow functions to be passed and returned like any other object.
+- **Declarative programming**, where we describe **what** transformation should happen rather than **how** to perform it step by step.
 
-#### Example 1: Passing a Function
+> **Note:** A declarative programming style alone does **not** make a language a functional programming language. For example, SQL is declarative because we specify **what** data we want rather than **how** to retrieve it. Functional programming combines a declarative style with higher-order functions and function composition.
+
+### Procedural Approach
+
+The following program explicitly performs each step.
+
 ```python
-def process_numbers(numbers, operation):
-    result = []
-    for num in numbers:
-        result.append(operation(num))
-    return result
+numbers = [1, 2, 3, 4, 5]
 
+result = []
+
+for number in numbers:
+    if number % 2 == 0:
+        result.append(number * number)
+
+print(result)
+```
+
+**Output**
+
+```text
+[4, 16]
+```
+
+### Functional Approach
+
+The same problem can be expressed by composing functions.
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+result = map(
+    lambda x: x * x,
+    filter(lambda x: x % 2 == 0, numbers)
+)
+
+print(list(result))
+```
+
+**Output**
+
+```text
+[4, 16]
+```
+
+The procedural approach describes **how** to perform each step, whereas the functional approach describes **what transformations** should be applied to the data.
+
+## Characteristics of Functional Programming
+
+- Functions are the primary building blocks.
+- Uses higher-order functions extensively.
+- Encourages function composition.
+- Follows a declarative programming style.
+- Focuses on transforming data rather than modifying it.
+- Produces modular and reusable code.
+
+## Practice
+
+<Question>
+
+Which two concepts form the foundation of functional programming?
+
+</Question>
+
+<Accordion title="Solution">
+
+Functional programming combines:
+
+- **Higher-order functions**
+- **Declarative programming**
+
+</Accordion>
+
+<Question>
+
+What is the main difference between procedural programming and functional programming?
+
+</Question>
+
+<Accordion title="Solution">
+
+- **Procedural programming** focuses on **how** to perform a task step by step.
+- **Functional programming** focuses on **what** transformations should be applied by composing functions.
+
+</Accordion>
+
+<Question>
+
+Is SQL a functional programming language? Why?
+
+</Question>
+
+<Accordion title="Solution">
+
+No. SQL follows a **declarative programming style**, but it is **not** a functional programming language because it does not use higher-order functions and function composition as its primary programming model.
+
+</Accordion>
+
+> Python supports functional programming through features such as **lambda expressions** and built-in higher-order functions like `map()`, `filter()`, and `reduce()`. We'll begin by exploring **lambda functions** in the next section.
+
+## Lambda Functions
+
+A **lambda function** is a small anonymous function created using the `lambda` keyword. It is commonly used when a function is required for a short period of time and does not need a name.
+
+Lambda functions are frequently used with higher-order functions such as `map()`, `filter()`, and `sorted()`.
+
+### Syntax
+
+```python
+lambda parameters: expression
+```
+
+A lambda function:
+
+- Can have one or more parameters.
+- Contains only a single expression.
+- Automatically returns the result of the expression.
+- Does not require the `return` keyword.
+
+### Example
+
+A normal function:
+
+```python
 def square(x):
     return x * x
 
+print(square(5))
+```
+
+The same function using `lambda`:
+
+```python
+square = lambda x: x * x
+
+print(square(5))
+```
+
+**Output**
+
+```text
+25
+```
+
+### Lambda with Multiple Parameters
+
+```python
+add = lambda a, b: a + b
+
+print(add(10, 20))
+```
+
+**Output**
+
+```text
+30
+```
+
+### Lambda with `sorted()`
+
+Lambda functions are commonly used to specify a custom sorting rule.
+
+```python
+students = [
+    ("John", 82),
+    ("Alice", 95),
+    ("Bob", 76)
+]
+
+students.sort(key=lambda student: student[1])
+
+print(students)
+```
+
+**Output**
+
+```text
+[
+    ('Bob', 76),
+    ('John', 82),
+    ('Alice', 95)
+]
+```
+
+The `key` function returns the second element (marks) of each tuple, so the list is sorted by marks.
+
+### When to Use Lambda Functions
+
+Use lambda functions when:
+
+- The function is simple.
+- It is used only once.
+- A higher-order function expects another function as an argument.
+
+Avoid lambda functions when:
+
+- The logic is complex.
+- Multiple statements are required.
+- The function will be reused in multiple places.
+
+## Practice
+
+<Question>
+
+Convert the following function into a lambda function.
+
+```python
 def cube(x):
     return x ** 3
-
-nums = [1, 2, 3, 4, 5]
-
-print(process_numbers(nums, square))            # Output: [1, 4, 9, 16, 25]
-print(process_numbers(nums, cube))              # Output: [1, 8, 27, 64, 125]
-print(process_numbers(nums, lambda x: x + 10))  # Output: [11, 12, 13, 14, 15]
 ```
-**Interpretation:** `process_numbers()` doesn't know what operation to perform. It simply calls whatever function is passed to it.
 
-#### Example 2: Returning a Function (Closure)
+</Question>
+
+<Accordion title="Solution">
+
 ```python
-def multiplier(factor):
-    def multiply(number):
-        return number * factor
-    return multiply
-
-double = multiplier(2)
-triple = multiplier(3)
-
-print(double(10))  # Output: 20
-print(triple(10))  # Output: 30
+cube = lambda x: x ** 3
 ```
-**Interpretation:** Here, `multiplier()` returns another function, making it a higher-order function.
 
-#### Example 3: Real-World Example (Strategy Pattern)
-Suppose you want to process employee salaries differently depending on different policies.
+</Accordion>
+
+<Question>
+
+Predict the output.
+
 ```python
-def process_salary(salary, policy):
-    return policy(salary)
+multiply = lambda a, b: a * b
 
-def tax(salary):
-    return salary * 0.9
-
-def bonus(salary):
-    return salary * 1.2
-
-salary = 50000
-
-print(process_salary(salary, tax))    # Output: 45000.0
-print(process_salary(salary, bonus))  # Output: 60000.0
+print(multiply(5, 6))
 ```
-**Interpretation:** This demonstrates the **Strategy Pattern**: `process_salary()` remains generic, and different policies (`tax`, `bonus`) can be plugged in dynamically.
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+30
+```
+
+</Accordion>
+
+<Question>
+
+Predict the output.
+
+```python
+names = ["John", "Alexander", "Bob"]
+
+names.sort(key=lambda name: len(name))
+
+print(names)
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+['Bob', 'John', 'Alexander']
+```
+
+The list is sorted based on the length of each string.
+
+</Accordion>
+
+<Question>
+
+When should you prefer a normal function over a lambda function?
+
+</Question>
+
+<Accordion title="Solution">
+
+A normal function should be preferred when the logic is complex, requires multiple statements, or will be reused in multiple places.
+
+</Accordion>
+
+> Lambda functions become especially useful when working with built-in higher-order functions such as **`map()`**, **`filter()`**, and **`reduce()`**, which we'll explore next.
+
+## Built-in Higher-Order Functions
+
+Python provides several **built-in higher-order functions** that simplify common data processing tasks. These functions are widely used in functional programming to transform, filter, and combine data.
+
+The most commonly used built-in higher-order functions are:
+
+- `map()` – Applies a function to every element.
+- `filter()` – Selects elements that satisfy a condition.
+- `reduce()` – Combines all elements into a single value.
+- `sorted()` – Sorts elements using a custom key function.
+- `any()` – Returns `True` if at least one element satisfies a condition.
+- `all()` – Returns `True` only if all elements satisfy a condition.
+
+We'll explore each of these functions in the following sections.
 
 ---
 
-## Built-In Higher-Order Functions
+## The `map()` Function
 
-### The `map()` Function
-Applies a given function to all items in an iterable and returns an iterator.
+The `map()` function applies a function to **every element** of an iterable and returns a **map object**, which is an iterator.
 
 ```python
-numbers = [1, 2, 3, 4]
-squared = map(lambda x: x * x, numbers)
-print(list(squared))  # [1, 4, 9, 16]
+map(function, iterable)
 ```
 
-#### Example: Calling a separate multi-line function inside `map()`
-When your mapping logic is complex and spans multiple lines, you can define a separate named helper function and call it inside a lambda wrapper:
+Since `map()` returns an iterator, it is commonly converted into a list using the `list()` function.
+
+### Using a Normal Function
+
 ```python
-def get_grade(marks):
-    # Multi-line logic defined separately
-    if marks >= 90:
-        return "A"
-    elif marks >= 75:
-        return "B"
-    elif marks >= 50:
-        return "C"
-    else:
-        return "F"
+def square(x):
+    return x * x
 
-student_marks = [88, 45, 92, 67]
-# Calling the multi-line helper function directly by passing its reference
-student_grades = list(map(get_grade, student_marks))
-print(student_grades)  # ['B', 'F', 'A', 'C']
+
+numbers = [1, 2, 3, 4, 5]
+
+result = map(square, numbers)
+
+print(list(result))
 ```
 
-### The `filter()` Function
-Filters elements from an iterable based on whether a function returns `True` or `False` for each element.
+**Output**
+
+```text
+[1, 4, 9, 16, 25]
+```
+
+### Using a Lambda Function
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+result = map(lambda x: x * x, numbers)
+
+print(list(result))
+```
+
+**Output**
+
+```text
+[1, 4, 9, 16, 25]
+```
+
+### Mapping Multiple Iterables
+
+```python
+numbers1 = [1, 2, 3]
+numbers2 = [10, 20, 30]
+
+result = map(lambda x, y: x + y, numbers1, numbers2)
+
+print(list(result))
+```
+
+**Output**
+
+```text
+[11, 22, 33]
+```
+
+## Practice
+
+<Question>
+
+Predict the output.
+
+```python
+numbers = [2, 4, 6]
+
+result = map(lambda x: x + 1, numbers)
+
+print(list(result))
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+[3, 5, 7]
+```
+
+</Accordion>
+
+<Question>
+
+When should you use `map()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+Use `map()` when the **same transformation** needs to be applied to every element of an iterable.
+
+</Accordion>
+
+> While `map()` transforms every element, sometimes we need to **select only the elements that satisfy a condition**. For this purpose, Python provides the **`filter()`** function.
+
+## The `filter()` Function
+
+The `filter()` function selects only those elements that satisfy a given condition and returns a **filter object**, which is an iterator.
+
+```python
+filter(function, iterable)
+```
+
+The function passed to `filter()` should return either `True` or `False`.
+
+Since `filter()` returns an iterator, it is commonly converted into a list using the `list()` function.
+
+### Using a Normal Function
+
+```python
+def is_even(number):
+    return number % 2 == 0
+
+
+numbers = [1, 2, 3, 4, 5, 6]
+
+result = filter(is_even, numbers)
+
+print(list(result))
+```
+
+**Output**
+
+```text
+[2, 4, 6]
+```
+
+### Using a Lambda Function
 
 ```python
 numbers = [1, 2, 3, 4, 5, 6]
-even_numbers = filter(lambda x: x % 2 == 0, numbers)
-print(list(even_numbers))  # [2, 4, 6]
+
+result = filter(lambda number: number % 2 == 0, numbers)
+
+print(list(result))
 ```
 
-### The `reduce()` Function
-Must be imported from the `functools` module. It applies a function cumulatively to items of an iterable, reducing the sequence to a single value.
+**Output**
+
+```text
+[2, 4, 6]
+```
+
+### Another Example
+
+Filter students who scored at least 75 marks.
+
+```python
+students = [
+    ("John", 82),
+    ("Alice", 95),
+    ("Bob", 68),
+    ("David", 75)
+]
+
+result = filter(lambda student: student[1] >= 75, students)
+
+print(list(result))
+```
+
+**Output**
+
+```text
+[
+    ('John', 82),
+    ('Alice', 95),
+    ('David', 75)
+]
+```
+
+### Procedural vs Functional
+
+**Procedural Approach**
+
+```python
+numbers = [1, 2, 3, 4, 5, 6]
+
+result = []
+
+for number in numbers:
+    if number % 2 == 0:
+        result.append(number)
+
+print(result)
+```
+
+**Functional Approach**
+
+```python
+numbers = [1, 2, 3, 4, 5, 6]
+
+result = filter(lambda number: number % 2 == 0, numbers)
+
+print(list(result))
+```
+
+The procedural approach manually checks every element, whereas the functional approach simply specifies the filtering condition.
+
+## Practice
+
+<Question>
+
+Predict the output.
+
+```python
+numbers = [10, 15, 20, 25]
+
+result = filter(lambda x: x > 15, numbers)
+
+print(list(result))
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+[20, 25]
+```
+
+</Accordion>
+
+<Question>
+
+Predict the output.
+
+```python
+words = ["Python", "AI", "Programming", "ML"]
+
+result = filter(lambda word: len(word) > 2, words)
+
+print(list(result))
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+['Python', 'Programming']
+```
+
+</Accordion>
+
+<Question>
+
+When should you use `filter()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+Use `filter()` when you want to **select only those elements that satisfy a condition**.
+
+</Accordion>
+
+---
+
+## The `reduce()` Function
+
+The `reduce()` function repeatedly applies a function to the elements of an iterable and combines them into a **single value**.
+
+Unlike `map()` and `filter()`, `reduce()` is available in the **`functools`** module.
+
+```python
+from functools import reduce
+
+reduce(function, iterable)
+```
+
+### Using a Normal Function
+
+```python
+from functools import reduce
+
+
+def add(a, b):
+    return a + b
+
+
+numbers = [1, 2, 3, 4, 5]
+
+result = reduce(add, numbers)
+
+print(result)
+```
+
+**Output**
+
+```text
+15
+```
+
+### Using a Lambda Function
+
+```python
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5]
+
+result = reduce(lambda a, b: a + b, numbers)
+
+print(result)
+```
+
+**Output**
+
+```text
+15
+```
+
+### Another Example
+
+Find the product of all numbers.
+
+```python
+from functools import reduce
+
+numbers = [2, 3, 4]
+
+result = reduce(lambda a, b: a * b, numbers)
+
+print(result)
+```
+
+**Output**
+
+```text
+24
+```
+
+### How `reduce()` Works
+
+```text
+[1, 2, 3, 4]
+
+Step 1: 1 + 2 = 3
+Step 2: 3 + 3 = 6
+Step 3: 6 + 4 = 10
+```
+
+The final result is returned.
+
+## Practice
+
+<Question>
+
+Predict the output.
+
+```python
+from functools import reduce
+
+numbers = [2, 4, 6]
+
+result = reduce(lambda a, b: a + b, numbers)
+
+print(result)
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+12
+```
+
+</Accordion>
+
+<Question>
+
+Predict the output.
 
 ```python
 from functools import reduce
 
 numbers = [1, 2, 3, 4]
-# Calculated as: ((1 * 2) * 3) * 4 = 24
-product = reduce(lambda x, y: x * y, numbers)
-print(product)  # 24
+
+result = reduce(lambda a, b: a * b, numbers)
+
+print(result)
 ```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+24
+```
+
+</Accordion>
+
+<Question>
+
+When should you use `reduce()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+Use `reduce()` when you want to **combine all elements of an iterable into a single value**, such as computing a sum, product, maximum, or minimum.
+
+</Accordion>
+
+> We have now seen how to **transform** data using `map()`, **filter** data using `filter()`, and **combine** data using `reduce()`. Next, we'll explore other useful built-in higher-order functions such as **`sorted()`**, **`any()`**, and **`all()`**.
+
+## Other Built-in Higher-Order Functions
+
+Besides `map()`, `filter()`, and `reduce()`, Python provides several other higher-order functions that are frequently used in functional programming.
 
 ---
 
-## Combined Example: Sum of Squares of Even Numbers
+## The `sorted()` Function
 
-Let's combine the **declarative approach** and **higher-order functions** into a single pipeline. We will take a list of numbers and compute the **sum of the squares of the even numbers**.
+The `sorted()` function returns a new sorted list. Using the `key` parameter, we can specify a function that determines how the elements should be sorted.
 
-### Step-by-Step Breakdown:
-1. **Filter:** Keep only even numbers: `x % 2 == 0`
-2. **Map:** Square each remaining number: `x ** 2`
-3. **Reduce:** Sum the squared results: `x + y`
+```python
+sorted(iterable, key=function, reverse=False)
+```
 
-### Functional Code:
+### Sorting Numbers
+
+```python
+numbers = [5, 2, 8, 1, 4]
+
+result = sorted(numbers)
+
+print(result)
+```
+
+**Output**
+
+```text
+[1, 2, 4, 5, 8]
+```
+
+### Sorting by Length
+
+```python
+names = ["John", "Alexander", "Bob"]
+
+result = sorted(names, key=lambda name: len(name))
+
+print(result)
+```
+
+**Output**
+
+```text
+['Bob', 'John', 'Alexander']
+```
+
+### Sorting Student Records
+
+```python
+students = [
+    ("John", 82),
+    ("Alice", 95),
+    ("Bob", 76)
+]
+
+result = sorted(
+    students,
+    key=lambda student: student[1]
+)
+
+print(result)
+```
+
+**Output**
+
+```text
+[
+    ('Bob', 76),
+    ('John', 82),
+    ('Alice', 95)
+]
+```
+
+## Practice
+
+<Question>
+
+Predict the output.
+
+```python
+numbers = [8, 3, 5, 1]
+
+print(sorted(numbers, reverse=True))
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+[8, 5, 3, 1]
+```
+
+</Accordion>
+
+<Question>
+
+When should you use the `key` parameter?
+
+</Question>
+
+<Accordion title="Solution">
+
+Use the `key` parameter when the sorting order depends on a custom property rather than the element itself.
+
+</Accordion>
+
+---
+
+## The `any()` Function
+
+The `any()` function returns **`True`** if **at least one** element in an iterable evaluates to `True`.
+
+```python
+any(iterable)
+```
+
+### Example
+
+```python
+numbers = [0, 0, 5, 0]
+
+print(any(numbers))
+```
+
+**Output**
+
+```text
+True
+```
+
+### Using `any()` with a Generator Expression
+
+```python
+numbers = [2, 4, 7, 8]
+
+result = any(
+    number % 2 != 0
+    for number in numbers
+)
+
+print(result)
+```
+
+**Output**
+
+```text
+True
+```
+
+The expression checks whether **any number is odd**.
+
+## Practice
+
+<Question>
+
+Predict the output.
+
+```python
+numbers = [0, 0, 0]
+
+print(any(numbers))
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+False
+```
+
+All elements evaluate to `False`.
+
+</Accordion>
+
+---
+
+## The `all()` Function
+
+The `all()` function returns **`True`** only if **every** element in an iterable evaluates to `True`.
+
+```python
+all(iterable)
+```
+
+### Example
+
+```python
+numbers = [2, 4, 6, 8]
+
+result = all(
+    number % 2 == 0
+    for number in numbers
+)
+
+print(result)
+```
+
+**Output**
+
+```text
+True
+```
+
+### Another Example
+
+```python
+numbers = [2, 4, 5, 8]
+
+result = all(
+    number % 2 == 0
+    for number in numbers
+)
+
+print(result)
+```
+
+**Output**
+
+```text
+False
+```
+
+Since one element does not satisfy the condition, `all()` returns `False`.
+
+## Practice
+
+<Question>
+
+Predict the output.
+
+```python
+values = [True, True, False]
+
+print(all(values))
+```
+
+</Question>
+
+<Accordion title="Solution">
+
+```text
+False
+```
+
+Since one element is `False`, the result is `False`.
+
+</Accordion>
+
+<Question>
+
+What is the difference between `any()` and `all()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+- `any()` returns `True` if **at least one** element satisfies the condition.
+- `all()` returns `True` only if **every** element satisfies the condition.
+
+</Accordion>
+
+## Summary of Built-in Higher-Order Functions
+
+| Function | Purpose |
+|----------|---------|
+| `map()` | Applies a function to every element. |
+| `filter()` | Selects elements satisfying a condition. |
+| `reduce()` | Combines all elements into a single value. |
+| `sorted()` | Sorts elements using a custom key function. |
+| `any()` | Returns `True` if at least one element satisfies a condition. |
+| `all()` | Returns `True` only if every element satisfies a condition. |
+
+> These higher-order functions can be combined to build concise and expressive programs. In the next section, we'll see how to **write programs in a functional programming style** by composing these functions.
+
+## Writing Programs in Functional Style
+
+Functional programming encourages solving problems by **composing small functions**. Instead of writing step-by-step instructions, we describe the sequence of transformations that should be applied to the data.
+
+A common functional programming workflow is:
+
+```text
+Input Data
+    ↓
+Filter
+    ↓
+Transform
+    ↓
+Combine
+    ↓
+Result
+```
+
+### Example 1: Sum of Squares of Even Numbers
+
+**Procedural Approach**
+
+```python
+numbers = [1, 2, 3, 4, 5, 6]
+
+result = 0
+
+for number in numbers:
+    if number % 2 == 0:
+        result += number * number
+
+print(result)
+```
+
+**Output**
+
+```text
+56
+```
+
+**Functional Approach**
+
 ```python
 from functools import reduce
 
 numbers = [1, 2, 3, 4, 5, 6]
 
-# 1. Filter even numbers -> [2, 4, 6]
-evens = filter(lambda x: x % 2 == 0, numbers)
+result = reduce(
+    lambda total, value: total + value,
+    map(
+        lambda number: number * number,
+        filter(lambda number: number % 2 == 0, numbers)
+    )
+)
 
-# 2. Square the numbers -> [4, 16, 36]
-squares = map(lambda x: x ** 2, evens)
-
-# 3. Sum the squares -> 4 + 16 + 36 = 56
-total_sum = reduce(lambda x, y: x + y, squares)
-
-print(total_sum)  # 56
+print(result)
 ```
 
-### Writing it as a Single Pipeline:
-You can chain these functional calls directly into a single statement:
+**Output**
+
+```text
+56
+```
+
+The data flows through three stages:
+
+```text
+numbers
+   │
+   ▼
+filter()   → Select even numbers
+   │
+   ▼
+map()      → Square each number
+   │
+   ▼
+reduce()   → Add all squares
+   │
+   ▼
+Result
+```
+
+### Example 2: Student Grades
+
+Calculate the average marks of students who scored at least 75 marks.
+
 ```python
-total_sum = reduce(lambda x, y: x + y, map(lambda x: x**2, filter(lambda x: x % 2 == 0, numbers)))
-print(total_sum)  # 56
+students = [
+    ("John", 82),
+    ("Alice", 95),
+    ("Bob", 68),
+    ("David", 75)
+]
+
+passed = filter(
+    lambda student: student[1] >= 75,
+    students
+)
+
+marks = map(
+    lambda student: student[1],
+    passed
+)
+
+marks = list(marks)
+
+average = sum(marks) / len(marks)
+
+print(average)
 ```
 
----
+**Output**
 
-## The Pythonic Equivalent
-
-While the nested higher-order function pipeline works, it can sometimes be difficult to read. In Python, you can achieve the exact same declarative result using a list comprehension combined with the built-in `sum()` function:
-
-```python
-numbers = [1, 2, 3, 4, 5, 6]
-
-# Extremely clean, declarative, and readable
-total_sum = sum(x**2 for x in numbers if x % 2 == 0)
-print(total_sum)  # 56
+```text
+84.0
 ```
 
-<Tip>
-  Prefer built-in functions like `sum()` and comprehensions for mathematical operations on collections, but use `map`/`filter`/`reduce` when working with functional pipelines or preexisting callback interfaces.
-</Tip>
+The program first **filters** the required students and then **transforms** the data before calculating the result.
 
----
+## When to Use Functional Programming
 
-## Practice & Exercises
+Functional programming works well when:
 
-To reinforce what you've learned in this section (Declarative programming, higher-order functions, map/filter/reduce, and combined functional pipelines), practice with these interactive notebooks:
+- Transforming collections of data.
+- Filtering data based on conditions.
+- Performing calculations on data.
+- Building data processing pipelines.
+- Writing reusable functions.
 
-<CardGroup cols={2}>
-  <Card
-    title="Follow-Along Practice"
-    icon="laptop-code"
-  >
-    Practice implementing imperative vs declarative loops, processing functions as arguments, defining dynamic salary strategy policies, mapping values, filtering collections, and applying functional reduction.
+Avoid using functional programming when:
 
-    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Functional_Programming_Practice.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Functional_Programming_Practice.ipynb) | <a href="/public/notebooks/basics_exercises/Functional_Programming_Practice.ipynb" download>📥 Download</a>
-  </Card>
-  <Card
-    title="Practice Exercises"
-    icon="pen-to-square"
-  >
-    Test your knowledge with hands-on exercises on declarative string capitalization, flat vs percentage discount strategy builders, compound map/filter calculations, and sequence reduction.
+- The logic becomes difficult to read.
+- Multiple nested function calls reduce clarity.
+- A simple loop is easier to understand.
 
-    [💻 VS Code](vscode://file/Users/sivaprasad/Downloads/python%20material/python4ai/public/notebooks/basics_exercises/Functional_Programming_Exercises.ipynb) | [🚀 Colab](https://colab.research.google.com/github/prasad230776/python4ai/blob/master/public/notebooks/basics_exercises/Functional_Programming_Exercises.ipynb) | <a href="/public/notebooks/basics_exercises/Functional_Programming_Exercises.ipynb" download>📥 Download</a>
-  </Card>
-</CardGroup>
+> **Readability is more important than writing everything in a functional style.**
 
-## What's next?
+## Real-World Applications
 
-Now let's dive into Advanced OOP concepts (metaclasses, class creation, and framework designs)!
+Functional programming concepts are widely used in Python libraries and frameworks, including:
 
-<Card
-  title="Advanced OOP"
-  icon="arrow-right"
-  href="/advanced-python/advanced-oop"
->
-  Learn metaclasses, dunder methods, and dynamic creation
-</Card>
+- Data processing and analysis
+- Machine learning
+- ETL pipelines
+- Web APIs
+- Asynchronous programming
+- Background task processing
+- Event-driven systems
+- Stream processing
+
+Frameworks such as **FastAPI**, **Pandas**, **PySpark**, **Apache Beam**, and **Dask** make extensive use of higher-order functions and functional programming concepts.
+
+## Key Takeaways
+
+- Functional programming combines **higher-order functions** with a **declarative programming style**.
+- Python supports functional programming through **lambda expressions** and built-in higher-order functions.
+- `map()` transforms data.
+- `filter()` selects data.
+- `reduce()` combines data into a single value.
+- `sorted()` performs custom sorting using a key function.
+- `any()` and `all()` simplify condition checking.
+- Functional programming emphasizes composing small functions to build expressive and reusable programs.
+
+## Check Your Understanding
+
+<Question>
+
+What are the two main ideas behind functional programming?
+
+</Question>
+
+<Accordion title="Solution">
+
+Functional programming combines:
+
+- **Higher-order functions**
+- **Declarative programming**
+
+</Accordion>
+
+<Question>
+
+What is the purpose of a lambda function?
+
+</Question>
+
+<Accordion title="Solution">
+
+A lambda function provides a concise way to create a small anonymous function, typically used with higher-order functions.
+
+</Accordion>
+
+<Question>
+
+When should you use `map()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+Use `map()` when the same transformation needs to be applied to every element of an iterable.
+
+</Accordion>
+
+<Question>
+
+When should you use `filter()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+Use `filter()` when selecting elements that satisfy a given condition.
+
+</Accordion>
+
+<Question>
+
+When should you use `reduce()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+Use `reduce()` when combining all elements of an iterable into a single value.
+
+</Accordion>
+
+<Question>
+
+What is the difference between `any()` and `all()`?
+
+</Question>
+
+<Accordion title="Solution">
+
+- `any()` returns `True` if at least one element satisfies the condition.
+- `all()` returns `True` only if every element satisfies the condition.
+
+</Accordion>
+
+<Question>
+
+Why is SQL not considered a functional programming language?
+
+</Question>
+
+<Accordion title="Solution">
+
+SQL follows a declarative programming style, but it is not a functional programming language because it does not use higher-order functions and function composition as its primary programming model.
+
+</Accordion>
+
+<Question>
+
+What is the main advantage of functional programming?
+
+</Question>
+
+<Accordion title="Solution">
+
+Functional programming encourages writing modular, reusable, and expressive programs by composing small functions.
+
+</Accordion>

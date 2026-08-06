@@ -223,7 +223,8 @@
             "pages": [
               "advanced-python/internals",
               "advanced-python/comprehensions",
-              "advanced-python/functions",
+              "advanced-python/closures-decorators",
+              "advanced-python/iterator-generator",
               "advanced-python/functional-programming",
               "advanced-python/advanced-oop",
               "advanced-python/context-mgmt",
